@@ -80,3 +80,11 @@ Raw dataset: All the raw datasets are stored in [https://deploy.laion.ai](https:
 
 Preprocessed dataset & webdataset: all the preprocessed dataset & webdataset are stored in (TBD) (TODO: figure out a
 place to save). If you contribute to process a new dataset, please move the final webdataset to the above location.
+
+## Contribute
+
+To contribute, please make a branch of yourself and make pull requests to the main branch.
+
+If you contribute to process a new dataset, please add your scripts to `data_preprocess`folder.
+
+If you contribute to process a new dataset, please move the final webdataset to the [TODO: determine location].
