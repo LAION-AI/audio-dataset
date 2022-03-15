@@ -1,3 +1,8 @@
+"""
+Code for preprocess Clotho dataset:
+https://zenodo.org/record/4783391#.YgdAa9-ZNPY
+"""
+
 import pandas as pd
 import os
 from tqdm import tqdm
