@@ -8,10 +8,13 @@ import os
 from tqdm import tqdm
 import glob
 import numpy as np
+import sys
 
-from ..utils.file_utils import json_load, json_dump
-from ..utils.audio_utils import audio_to_flac
-from ..utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from utils.file_utils import json_load, json_dump
+from utils.audio_utils import audio_to_flac
+from utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
 import random
 
 random.seed(1234)
