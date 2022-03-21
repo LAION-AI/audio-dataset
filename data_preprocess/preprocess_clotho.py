@@ -7,9 +7,9 @@ import pandas as pd
 import os
 from tqdm import tqdm
 
-from utils.file_utils import json_load, json_dump
-from utils.audio_utils import audio_to_flac
-from utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
+from ..utils.file_utils import json_load, json_dump
+from ..utils.audio_utils import audio_to_flac
+from ..utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
 
 if __name__ == '__main__':
     data_dir = r'/mnt/yusong_tianyu/raw_datasets/Clotho'
