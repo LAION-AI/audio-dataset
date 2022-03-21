@@ -6,6 +6,9 @@ https://zenodo.org/record/4783391#.YgdAa9-ZNPY
 import pandas as pd
 import os
 from tqdm import tqdm
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utils.file_utils import json_load, json_dump
 from utils.audio_utils import audio_to_flac
