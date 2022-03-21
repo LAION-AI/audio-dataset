@@ -20,8 +20,8 @@ import random
 random.seed(1234)
 
 if __name__ == '__main__':
-    data_dir = r'/mnt/yusong_tianyu/raw_datasets/BBCSoundEffectsComplete/sounds'
-    output_dir = '/mnt/yusong_tianyu/processed_dataset/BBCSoundEffects'
+    data_dir = r'/mnt/yusong_tianyu/raw_datasets/audiocaps'
+    output_dir = '/mnt/yusong_tianyu/processed_dataset/audiocaps'
     test_portion = 0.1
 
     splits = ['train', 'test']
@@ -39,8 +39,8 @@ if __name__ == '__main__':
         os.makedirs(split_output_dir, exist_ok=True)
         for file in tqdm(split_file_list[split]):
             file_name = os.path.basename(file)
-            audio_id = file_name.split('.')[-2]
-            audio_description = file_name[:-1-len(audio_id)-1-4]
+            text_file_name = file_name.replace('.wav', '.txt')
+            audio_description = open(text_file_name).readlines()[0].strip()
             audio_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.flac'))
             audio_json = {'text': audio_description}
             audio_json_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.json'))
