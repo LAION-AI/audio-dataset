@@ -16,6 +16,8 @@ from [https://deploy.laion.ai](https://deploy.laion.ai)). They might have variou
 captions, or labels, stored in different format. We will take the raw dataset and process them to a unified data storage
 format.
 
+Please find the list of raw dataset in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTfpgiYLjTLe0qwk6QtPR9w/edit
+
 ## Processed dataset
 
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
@@ -24,12 +26,12 @@ same filename as the `.flac` file.
 
 ### Key of each type of label and its format
 
-The key of the data labels and its format:
+The label of the audio is saved in a `.json` file as a dict. The key of the data labels and its format:
 
-- captions: The captions or natural text description of the audio. The text is a list containing strings where each
-  entry is one caption/description.
-- (more TBD): (TODO @yusong)
-  (Please add more to here if you come up with more types of label)
+- `text`: The text of the audio which would be used to train the model. The `text` is a list containing strings where each entry is one caption/description. This could be caption, description, or made up text description of the audio from tags (e.g.: "This is an audio containing A, B, and C."). 
+- `tag`: The tag of the audio. `tag` is a list containing strings where each entry is one tag. This could be class label (e.g., AudioSet) or tag of the audio without having the notion of class label, or metadata of the audio.
+- `original_data`: Any form of original data associated with the audio. Can be in arbitary form as long as consistent inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you could save the original data here.
+- (Please add more to here if you come up with more types of label)
 
 ### Preprocess scripts
 
