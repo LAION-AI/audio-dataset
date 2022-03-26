@@ -22,28 +22,30 @@ random.seed(1234)
 if __name__ == '__main__':
     data_dir = r'/mnt/yusong_tianyu/raw_datasets/audiocaps'
     output_dir = '/mnt/yusong_tianyu/processed_dataset/audiocaps'
-    test_portion = 0.1
 
-    splits = ['train', 'test']
+    if not os.path.exists(f'{data_dir}/train.csv'):
+        os.system(f'wget https://raw.githubusercontent.com/cdjkim/audiocaps/master/dataset/train.csv -P {data_dir}')
+        os.system(f'wget https://raw.githubusercontent.com/cdjkim/audiocaps/master/dataset/test.csv -P {data_dir}')
+        os.system(f'wget https://raw.githubusercontent.com/cdjkim/audiocaps/master/dataset/val.csv -P {data_dir}')
+        os.system(f'mv {data_dir}/val.csv {data_dir}/valid.csv')
+
+    splits = ['train', 'valid', 'test']
 
     file_list = glob.glob(f'{data_dir}/**/*.wav', recursive=True)
-    random.shuffle(file_list)
-
-    split_idx = int(np.round(len(file_list) * test_portion))
-    test_list = file_list[:split_idx]
-    train_list = file_list[split_idx:]
-    split_file_list = {'train': train_list, 'test': test_list}
 
     for split in splits:
         split_output_dir = os.path.join(output_dir, split)
         os.makedirs(split_output_dir, exist_ok=True)
-        for file in tqdm(split_file_list[split]):
-            file_name = os.path.basename(file)
-            text_file_name = file_name.replace('.wav', '.txt')
-            audio_description = open(text_file_name).readlines()[0].strip()
-            audio_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.flac'))
-            audio_json = {'text': audio_description}
-            audio_json_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.json'))
+        metadata = pd.read_csv(os.path.join(data_dir, split + '.csv'))
+        for i, data in tqdm(metadata.iterrows(), total=len(metadata.index)):
+            audio_file = os.path.join(data_dir, data['youtube_id'] + '.wav')
+            text_file = audio_file.replace('.wav', '.txt')
+            if os.path.exists(audio_file) and os.path.exists(text_file):
+                audio_description = open(text_file).readlines()[0].strip()
+                audio_save_path = os.path.join(split_output_dir, os.path.basename(audio_file).replace('.wav', '.flac'))
+                audio_json = {'text': audio_description}
+                audio_json_save_path = os.path.join(split_output_dir,
+                                                    os.path.basename(audio_file).replace('.wav', '.json'))
 
-            audio_to_flac(file, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
-            json_dump(audio_json, audio_json_save_path)
+                audio_to_flac(audio_file, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
+                json_dump(audio_json, audio_json_save_path)
