@@ -66,6 +66,10 @@ preprocessed_dataset_dir
 │   ├── custom_split_1
 │   └── custom_split_2
 ```
+### Making tar files
+The `tardir` function in the `make_tar_utils.py` script creates the tars that includes the audio and text files in the same folder. One can indicate how much pairs of files should be in the tar. For example, calling this `make_tar_utils.tardir(file_path='PATH\TO\THE\WHERE\AUDIO_TEXT_PAIRS\LOCATE', tar_name='PATH\TO\THE\OUTPUT\FOLDER\TARFILENAME', n_entry_each=some int number)` will give you `n_entry_each` pairs of (audio, text) files pairs in each tar files naming like `TARFILENAME0`, `TARFILENAME1` etc. All the audio `.flac` and text `.json` files in `file_path` will be packed up.
+
+The `load_from_tar` load `(audio, text, name)` tuples from a specific `.tar` file with some choice of audio decoding parameters. See the documentation of the function in detail. And, of course, we have a different function for the `dataloader`. This function is just for debugging and reading `tar` files temporarily.
 
 ## Webdataset
 
