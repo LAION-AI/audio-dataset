@@ -20,8 +20,8 @@ import random
 random.seed(1234)
 
 if __name__ == '__main__':
-    data_dir = r'/mnt/yusong_tianyu/raw_datasets/audiocaps'
-    output_dir = '/mnt/yusong_tianyu/processed_dataset/audiocaps'
+    data_dir = r'/mnt/audio_clip/raw_datasets/audiocaps'
+    output_dir = '/mnt/audio_clip/processed_datasets/audiocaps'
 
     if not os.path.exists(f'{data_dir}/train.csv'):
         os.system(f'wget https://raw.githubusercontent.com/cdjkim/audiocaps/master/dataset/train.csv -P {data_dir}')

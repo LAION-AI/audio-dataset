@@ -20,8 +20,8 @@ import random
 random.seed(1234)
 
 if __name__ == '__main__':
-    data_dir = r'/mnt/yusong_tianyu/raw_datasets/BBCSoundEffectsComplete/sounds'
-    output_dir = '/mnt/yusong_tianyu/processed_dataset/BBCSoundEffects'
+    data_dir = r'/mnt/audio_clip/raw_datasets/BBCSoundEffectsComplete/sounds'
+    output_dir = '/mnt/audio_clip/processed_datasets/BBCSoundEffects'
     test_portion = 0.1
 
     splits = ['train', 'test']

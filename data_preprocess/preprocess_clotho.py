@@ -15,8 +15,8 @@ from utils.audio_utils import audio_to_flac
 from utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
 
 if __name__ == '__main__':
-    data_dir = r'/mnt/yusong_tianyu/raw_datasets/Clotho'
-    output_dir = '/mnt/yusong_tianyu/processed_dataset/Clotho'
+    data_dir = r'/mnt/audio_clip/raw_datasets/Clotho'
+    output_dir = '/mnt/audio_clip/processed_datasets/Clotho'
 
     splits = ['development', 'evaluation', 'validation']
 
