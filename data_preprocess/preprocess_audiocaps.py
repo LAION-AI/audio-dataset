@@ -33,6 +33,7 @@ if __name__ == '__main__':
 
     file_list = glob.glob(f'{data_dir}/**/*.wav', recursive=True)
 
+    file_id = 1
     for split in splits:
         split_output_dir = os.path.join(output_dir, split)
         os.makedirs(split_output_dir, exist_ok=True)
@@ -42,10 +43,11 @@ if __name__ == '__main__':
             text_file = audio_file.replace('.wav', '.txt')
             if os.path.exists(audio_file) and os.path.exists(text_file):
                 audio_description = open(text_file).readlines()[0].strip()
-                audio_save_path = os.path.join(split_output_dir, os.path.basename(audio_file).replace('.wav', '.flac'))
+                audio_save_path = os.path.join(split_output_dir, f'{file_id}.flac')
                 audio_json = {'text': audio_description}
-                audio_json_save_path = os.path.join(split_output_dir,
-                                                    os.path.basename(audio_file).replace('.wav', '.json'))
+                audio_json_save_path = audio_save_path.replace('.flac', '.json')
 
                 audio_to_flac(audio_file, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
                 json_dump(audio_json, audio_json_save_path)
+
+                file_id += 1

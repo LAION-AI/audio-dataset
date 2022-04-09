@@ -16,21 +16,28 @@ from [https://deploy.laion.ai](https://deploy.laion.ai)). They might have variou
 captions, or labels, stored in different format. We will take the raw dataset and process them to a unified data storage
 format.
 
-Please find the list of raw dataset in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTfpgiYLjTLe0qwk6QtPR9w/edit
+Please find the list of raw dataset
+in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTfpgiYLjTLe0qwk6QtPR9w/edit
 
 ## Processed dataset
 
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
 of `48000`. The label of the audio, including captions/class labels/tags/metadata, are stored in a `.json` file with
-same filename as the `.flac` file.
+same filename as the `.flac` file. The file is renamed in processed dataset, and name format in precessed dataset is in
+number id (`1.wav`, `1.json`), to avoid parsing error in subsequent processing caused by file name.
 
 ### Key of each type of label and its format
 
 The label of the audio is saved in a `.json` file as a dict. The key of the data labels and its format:
 
-- `text`: The text of the audio which would be used to train the model. The `text` is a list containing strings where each entry is one caption/description. This could be caption, description, or made up text description of the audio from tags (e.g.: "This is an audio containing A, B, and C."). 
-- `tag`: The tag of the audio. `tag` is a list containing strings where each entry is one tag. This could be class label (e.g., AudioSet) or tag of the audio without having the notion of class label, or metadata of the audio.
-- `original_data`: Any form of original data associated with the audio. Can be in arbitary form as long as consistent inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you could save the original data here.
+- `text`: The text of the audio which would be used to train the model. The `text` is a list containing strings where
+  each entry is one caption/description. This could be caption, description, or made up text description of the audio
+  from tags (e.g.: "This is an audio containing A, B, and C.").
+- `tag`: The tag of the audio. `tag` is a list containing strings where each entry is one tag. This could be class
+  label (e.g., AudioSet) or tag of the audio without having the notion of class label, or metadata of the audio.
+- `original_data`: Any form of original data associated with the audio. Can be in arbitary form as long as consistent
+  inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you
+  could save the original data here.
 - (Please add more to here if you come up with more types of label)
 
 ### Preprocess scripts
@@ -66,10 +73,18 @@ preprocessed_dataset_dir
 │   ├── custom_split_1
 │   └── custom_split_2
 ```
-### Making tar files
-The `tardir` function in the `make_tar_utils.py` script creates the tars that includes the audio and text files in the same folder. One can indicate how much pairs of files should be in the tar. For example, calling this `make_tar_utils.tardir(file_path='PATH\TO\THE\WHERE\AUDIO_TEXT_PAIRS\LOCATE', tar_name='PATH\TO\THE\OUTPUT\FOLDER\TARFILENAME', n_entry_each=some int number)` will give you `n_entry_each` pairs of (audio, text) files pairs in each tar files naming like `TARFILENAME0`, `TARFILENAME1` etc. All the audio `.flac` and text `.json` files in `file_path` will be packed up.
 
-The `load_from_tar` load `(audio, text, name)` tuples from a specific `.tar` file with some choice of audio decoding parameters. See the documentation of the function in detail. And, of course, we have a different function for the `dataloader`. This function is just for debugging and reading `tar` files temporarily.
+### Making tar files
+
+The `tardir` function in the `make_tar_utils.py` script creates the tars that includes the audio and text files in the
+same folder. One can indicate how much pairs of files should be in the tar. For example, calling
+this `make_tar_utils.tardir(file_path='PATH\TO\THE\WHERE\AUDIO_TEXT_PAIRS\LOCATE', tar_name='PATH\TO\THE\OUTPUT\FOLDER\TARFILENAME', n_entry_each=some int number)`
+will give you `n_entry_each` pairs of (audio, text) files pairs in each tar files naming like `TARFILENAME0`
+, `TARFILENAME1` etc. All the audio `.flac` and text `.json` files in `file_path` will be packed up.
+
+The `load_from_tar` load `(audio, text, name)` tuples from a specific `.tar` file with some choice of audio decoding
+parameters. See the documentation of the function in detail. And, of course, we have a different function for
+the `dataloader`. This function is just for debugging and reading `tar` files temporarily.
 
 ## Webdataset
 
