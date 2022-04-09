@@ -34,6 +34,7 @@ if __name__ == '__main__':
     train_list = file_list[split_idx:]
     split_file_list = {'train': train_list, 'test': test_list}
 
+    file_id = 1
     for split in splits:
         split_output_dir = os.path.join(output_dir, split)
         os.makedirs(split_output_dir, exist_ok=True)
@@ -41,9 +42,10 @@ if __name__ == '__main__':
             file_name = os.path.basename(file)
             audio_id = file_name.split('.')[-2]
             audio_description = file_name[:-1-len(audio_id)-1-4]
-            audio_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.flac'))
+            audio_save_path = os.path.join(split_output_dir, f'{file_id}.flac')
             audio_json = {'text': audio_description}
-            audio_json_save_path = os.path.join(split_output_dir, file_name.replace('.wav', '.json'))
+            audio_json_save_path = audio_save_path.replace('.flac', '.json')
 
             audio_to_flac(file, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
             json_dump(audio_json, audio_json_save_path)
+            file_id += 1
