@@ -11,8 +11,11 @@ import soundfile as sf
 from tqdm import tqdm
 import tarfile
 
-def tardir(file_path, tar_name, n_entry_each, audio_ext=".flac", text_ext=".json", shuffle=True):
-    '''
+
+def tardir(
+    file_path, tar_name, n_entry_each, audio_ext=".flac", text_ext=".json", shuffle=True
+):
+    """
     This function create the tars that includes the audio and text files in the same folder
     @param file_path      | string  | the path where audio and text files located
     @param tar_name       | string  | the tar name
@@ -20,34 +23,59 @@ def tardir(file_path, tar_name, n_entry_each, audio_ext=".flac", text_ext=".json
     @param audio_ext      | string  | the extension of the audio
     @param text_ext       | string  | the extension of the text
     @param shuffle        | boolean | True to shuffle the file seqence before packing up
-    '''
-    filelist=os.listdir(file_path)
-    for fichier in filelist[:]: # filelist[:] makes a copy of filelist.
-        if not(fichier.endswith(audio_ext)):
+    """
+    filelist = os.listdir(file_path)
+
+    for fichier in filelist[:]:  # filelist[:] makes a copy of filelist.
+        if not (fichier.endswith(audio_ext)):
             filelist.remove(fichier)
     if shuffle:
         random.shuffle(filelist)
     count = 0
-    n_split = len(filelist)//n_entry_each
-    if n_split*n_entry_each != len(filelist):
+    n_split = len(filelist) // n_entry_each
+    if n_split * n_entry_each != len(filelist):
         n_split += 1
+    size_dict = {
+        os.path.basename(tar_name) + str(i) + ".tar": n_entry_each
+        for i in range(n_split)
+    }
+    if n_split * n_entry_each != len(filelist):
+        size_dict[os.path.basename(tar_name) + str(n_split - 1) + ".tar"] = (
+            len(filelist) - (n_split - 1) * n_entry_each
+        )
     for i in range(n_split):
-        with tarfile.open(tar_name+str(i)+".tar", "w") as tar_handle:
+        with tarfile.open(tar_name + str(i) + ".tar", "w") as tar_handle:
             for j in tqdm(range(count, len(filelist))):
                 audio = filelist[j]
                 basename = ".".join(audio.split(".")[:-1])
-                text_file_path = os.path.join(file_path, basename+text_ext)
+                text_file_path = os.path.join(file_path, basename + text_ext)
                 audio_file_path = os.path.join(file_path, audio)
                 tar_handle.add(audio_file_path)
                 tar_handle.add(text_file_path)
-                if (j+1) % n_entry_each == 0:
-                    count = j+1
+                if (j + 1) % n_entry_each == 0:
+                    count = j + 1
                     break
         tar_handle.close()
+    # Serializing json
+    json_object = json.dumps(size_dict, indent=4)
+    # Writing to sample.json
+    with open(os.path.join(os.path.dirname(tar_name), "sizes.json"), "w") as outfile:
+        outfile.write(json_object)
+    return size_dict
 
 
-def load_from_tar(file_path, file_path_type="local", audio_ext="flac", text_ext="json", samplerate=32000, mono=True, max_len=1000000, dtype='float64', res_type="kaiser_best"):
-    '''
+def load_from_tar(
+    file_path,
+    file_path_type="local",
+    audio_ext="flac",
+    text_ext="json",
+    samplerate=32000,
+    mono=True,
+    max_len=1000000,
+    dtype="float64",
+    res_type="kaiser_best",
+):
+    """
     This function load the tar files to 3 entry tuple (audios, texts, names) accordingly
     @param file_path      | string  | the path where audio and text files located
     @param file_path_type | string  | this is meant to control the prefix of the address in case people forget to include it
@@ -59,9 +87,9 @@ def load_from_tar(file_path, file_path_type="local", audio_ext="flac", text_ext=
     @param max_len        | int     | max len of the audio, if exceed, will random crop; elif deficit, will pad
     @param dtype          | string  | the type of the dtype of the audio sample representation
     @param res_type       | string  | the resample method
-    '''
-    if file_path_type == "local" and ('file:\\' not in file_path):
-        file_path = 'file:\\' + file_path
+    """
+    if file_path_type == "local" and ("file:\\" not in file_path):
+        file_path = "file:\\" + file_path
     dataset = wds.WebDataset(file_path)
     audios = []
     texts = []
@@ -71,16 +99,33 @@ def load_from_tar(file_path, file_path_type="local", audio_ext="flac", text_ext=
             if key == audio_ext:
                 audio_data, orig_sr = sf.read(io.BytesIO(value))
                 if samplerate is not None:
-                    audio_data = librosa.resample(audio_data, orig_sr=orig_sr, target_sr=samplerate, res_type=res_type)
+                    audio_data = librosa.resample(
+                        audio_data,
+                        orig_sr=orig_sr,
+                        target_sr=samplerate,
+                        res_type=res_type,
+                    )
                 if len(audio_data) > max_len:
                     overflow = len(audio_data) - max_len
-                    idx = np.random.randint(0, overflow+1)
+                    idx = np.random.randint(0, overflow + 1)
                     if np.random.rand() > 0.5:
-                        audio_data = audio_data[idx:idx+max_len]
+                        audio_data = audio_data[idx : idx + max_len]
                     else:
-                        audio_data = audio_data[len(audio_data)+1-idx-max_len:len(audio_data)+1-idx]
+                        audio_data = audio_data[
+                            len(audio_data)
+                            + 1
+                            - idx
+                            - max_len : len(audio_data)
+                            + 1
+                            - idx
+                        ]
                 else:
-                    audio_data = np.pad(audio_data,(0, max_len - len(audio_data)), mode="constant", constant_values=0)
+                    audio_data = np.pad(
+                        audio_data,
+                        (0, max_len - len(audio_data)),
+                        mode="constant",
+                        constant_values=0,
+                    )
                 if mono:
                     audio_data = librosa.to_mono(audio_data)
                 audios.append((audio_data, samplerate))
