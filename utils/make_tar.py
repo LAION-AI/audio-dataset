@@ -19,7 +19,9 @@ parser.add_argument(
     default="_",
     help="the filename of the tar, generating tar files at output/dataclass/filename_{}.tar",
 )
-parser.add_argument("--dataclass", type=str, help="train or test or valid or all")
+parser.add_argument(
+    "--dataclass", type=str, default="all", help="train or test or valid or all"
+)
 parser.add_argument(
     "--num_element", type=int, default=512, help="train or test or valid or all"
 )
