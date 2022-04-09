@@ -33,6 +33,7 @@ def packup(args, dataclass):
                 dataclass
             )
         )
+        return
     if os.path.exists(os.path.join(args.output, dataclass)):
         tardir(
             os.path.join(args.input, dataclass),
