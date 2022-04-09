@@ -93,7 +93,52 @@ data-loading performance when training the models. The webdataset packs all the 
 `.tar` files. Each `.tar` files contain a subset of the processed dataset files. These `.tar` files would be the one
 read by dataloader when we train the models.
 
-The standard of webdataset and ways to create the webdataset: (TODO @tianyu)
+The standard of webdataset and ways to create the webdataset:
+```
+python make_tar.py --input /mnt/audio_clip/processed_datasets/audiocaps/ --output /mnt/audio_clip/webdataset_tar/audiocaps/ --dataclass all --num_element 512 --filename name
+```
+Meaning of this command:
+- We are expecting (`.flac`, `.json`) file pairs in `/mnt/audio_clip/processed_datasets/audiocaps/{}/` where {} could be `train`, `test`, `valid` which should be indicate in `dataclass`.
+
+```
+......
+   ├── 
+   preprocessed_dataset_dir
+   ├── audiocaps
+   │   ├── train
+   │   ├── valid
+   │   └── test
+```
+
+- We will have outputed tar files like `/mnt/audio_clip/webdataset_tar/audiocaps/train/name0.tar`. Each tar includes 512 (`.flac`, `.json`) file pairs.
+- We will have outputed `sizes.json` indicating the size of each `tar` file in the folder.
+```
+......
+   ├── 
+   webdataset_tar
+   ├── audiocaps
+   │   ├── train
+   |   |     ├── sizes.json
+   |   |     ├── name0.tar
+   |   |     ├── name1.tar
+   |   |     └── ...
+   │   ├── valid
+   |   |     ├── sizes.json
+   |   |     ├── name0.tar
+   |   |     ├── name1.tar
+   |   |     └── ...
+   │   └── test
+             └── ...
+```
+
+The outputed `sizes.json` will be like
+```
+{
+    "name0.tar": 512,
+    "name1.tar": 512,
+    ...
+}
+```
 
 ## Directory Structure
 
