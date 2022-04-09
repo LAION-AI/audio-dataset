@@ -28,7 +28,11 @@ args = parser.parse_args()
 
 def packup(args, dataclass):
     if not os.path.exists(os.path.join(args.input, dataclass)):
-        raise Exception("Wrong dataclass, this folder does not exist")
+        print(
+            "Dataclass {} does not exist, this folder does not exist. Skipping it.".format(
+                dataclass
+            )
+        )
     if os.path.exists(os.path.join(args.output, dataclass)):
         tardir(
             os.path.join(args.input, dataclass),
@@ -52,4 +56,4 @@ if __name__ == "__main__":
     elif args.dataclass in ["train", "valid", "test"]:
         packup(args, args.dataclass)
     else:
-        raise Exception("Wrong dataclass, please read help")
+        raise Exception("Wrong dataclass, please read help.")
