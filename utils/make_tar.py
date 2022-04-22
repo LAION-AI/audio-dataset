@@ -23,7 +23,7 @@ parser.add_argument(
     "--dataclass", type=str, default="all", help="train or test or valid or all"
 )
 parser.add_argument(
-    "--num_element", type=int, default=512, help="train or test or valid or all"
+    "--num_element", type=int, default=512, help="pairs of (audio, text) to be included in a single tar"
 )
 args = parser.parse_args()
 
