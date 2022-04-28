@@ -39,8 +39,6 @@ if __name__ == '__main__':
             audio_save_path = os.path.join(split_output_dir, f'{file_id}.flac')
             audio_json = {'text': audio_caption}
             audio_json_save_path = audio_save_path.replace('.flac', '.json')
-
-            audio_to_flac(audio_path, audio_save_path,
-                          sample_rate=AUDIO_SAVE_SAMPLE_RATE)
+            audio_to_flac(audio_path, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
             json_dump(audio_json, audio_json_save_path)
             file_id += 1

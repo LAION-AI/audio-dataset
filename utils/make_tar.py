@@ -25,6 +25,12 @@ parser.add_argument(
 parser.add_argument(
     "--num_element", type=int, default=512, help="pairs of (audio, text) to be included in a single tar"
 )
+parser.add_argument(
+    "--start_idx", type=int, default=0, help="start index of the tar"
+)
+parser.add_argument(
+    "--delete_file", action='store_true', help="delete the input file when making tars"
+)
 args = parser.parse_args()
 
 
@@ -41,6 +47,8 @@ def packup(args, dataclass):
             os.path.join(args.input, dataclass),
             os.path.join(args.output, dataclass, args.filename),
             args.num_element,
+            start_idx=args.start_idx,
+            delete_file=args.delete_file,
         )
     else:
         os.makedirs(os.path.join(args.output, dataclass))
@@ -48,6 +56,8 @@ def packup(args, dataclass):
             os.path.join(args.input, dataclass),
             os.path.join(args.output, dataclass, args.filename),
             args.num_element,
+            start_idx=args.start_idx,
+            delete_file=args.delete_file,
         )
     return
 
@@ -56,7 +66,14 @@ if __name__ == "__main__":
     if args.dataclass == "all":
         for x in ["train", "valid", "test"]:
             packup(args, x)
-    elif args.dataclass in ["train", "valid", "test"]:
+    elif args.dataclass == "none":
+        os.makedirs(args.output, exist_ok=True)
+        tardir(
+            args.input,
+            args.output,
+            args.num_element,
+            start_idx=args.start_idx,
+            delete_file=args.delete_file,
+        )
+    else:  # if dataclass is in other name
         packup(args, args.dataclass)
-    else:
-        raise Exception("Wrong dataclass, please read help.")

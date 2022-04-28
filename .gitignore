@@ -1,3 +1,4 @@
 /TODO.txt
 .idea/
 utils/__pycache__/make_tar_utils.cpython-37.pyc
+/data_preprocess/process_audioset/
