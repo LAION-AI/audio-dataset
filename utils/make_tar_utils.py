@@ -5,6 +5,7 @@ import numpy as np
 import os
 import random
 import io
+from glob import glob
 from itertools import islice
 import scipy.signal as sps
 import soundfile as sf
@@ -13,7 +14,7 @@ import tarfile
 
 
 def tardir(
-    file_path, tar_name, n_entry_each, audio_ext=".flac", text_ext=".json", shuffle=True
+    file_path, tar_name, n_entry_each, audio_ext=".flac", text_ext=".json", shuffle=True, start_idx=0, delete_file=False
 ):
     """
     This function create the tars that includes the audio and text files in the same folder
@@ -22,13 +23,12 @@ def tardir(
     @param n_entry_each   | int     | how many pairs of (audio, text) will be in a tar
     @param audio_ext      | string  | the extension of the audio
     @param text_ext       | string  | the extension of the text
-    @param shuffle        | boolean | True to shuffle the file seqence before packing up
+    @param shuffle        | boolean | True to shuffle the file sequence before packing up
+    @param start_idx      | int     | the start index of the tar
+    @param delete_file    | boolean | True to delete the audio and text files after packing up
     """
-    filelist = os.listdir(file_path)
+    filelist = glob(file_path+'/*'+audio_ext)
 
-    for fichier in filelist[:]:  # filelist[:] makes a copy of filelist.
-        if not (fichier.endswith(audio_ext)):
-            filelist.remove(fichier)
     if shuffle:
         random.shuffle(filelist)
     count = 0
@@ -43,15 +43,18 @@ def tardir(
         size_dict[os.path.basename(tar_name) + str(n_split - 1) + ".tar"] = (
             len(filelist) - (n_split - 1) * n_entry_each
         )
-    for i in range(n_split):
+    for i in tqdm(range(start_idx, n_split + start_idx)):
         with tarfile.open(tar_name + str(i) + ".tar", "w") as tar_handle:
-            for j in tqdm(range(count, len(filelist))):
+            for j in range(count, len(filelist)):
                 audio = filelist[j]
                 basename = ".".join(audio.split(".")[:-1])
                 text_file_path = os.path.join(file_path, basename + text_ext)
                 audio_file_path = os.path.join(file_path, audio)
                 tar_handle.add(audio_file_path)
                 tar_handle.add(text_file_path)
+                if delete_file:
+                    os.remove(audio_file_path)
+                    os.remove(text_file_path)
                 if (j + 1) % n_entry_each == 0:
                     count = j + 1
                     break
