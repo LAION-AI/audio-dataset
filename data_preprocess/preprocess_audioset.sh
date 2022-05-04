@@ -52,6 +52,10 @@ python data_preprocess/preprocess_audioset.py \
 --wav_dir /mnt/audio_clip/audioset/eval_segments \
 --output_dir /mnt/audio_clip/audioset/processed_data_eval_segments
 
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/audioset/processed_data_eval_segments
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/audioset/processed_data_balanced_train_segments
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/audioset/processed_data
+
 python ./utils/make_tar.py \
 --input /mnt/audio_clip/audioset/processed_data \
 --output /mnt/audio_clip/audioset/webdataset_tar/unbalanced_train/ \
