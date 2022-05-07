@@ -21,7 +21,12 @@ def get_json(file_path, class_metadata, class_to_name_map):
     audio_id = os.path.basename(file_path).replace('.wav', '')[1:]
     class_labels = class_metadata[audio_id].replace('"', '').split(',')
     class_names = [class_to_name_map[c] for c in class_labels]
-    text = "The sounds of " + ", ".join(class_names[:-1]) + " and " + class_names[-1]
+    if len(class_names) > 1:
+        text = "The sounds of " + ", ".join(class_names[:-1]) + " and " + class_names[-1]
+    elif len(class_names) == 1:
+        text = "The sound of " + class_names[0]
+    else:
+        raise ValueError("No class label found for audio id: {}".format(audio_id))
     json_data = {'text': text,
                  'original_data': {'class_labels': class_labels,
                                    'class_names': class_names, }
