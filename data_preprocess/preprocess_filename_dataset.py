@@ -47,8 +47,8 @@ if __name__ == '__main__':
         audio_description = file_name.replace('.wav', '')
         audio_json = {'text': audio_description, 'original_data': {'file_path': file}}
 
-        process_single_audio(file, audio_json, args.output_dir)
+        #process_single_audio(file, audio_json, args.output_dir)
 
-        #futures.append(executor.submit(partial(process_single_audio, file, audio_json, args.output_dir)))
+        futures.append(executor.submit(partial(process_single_audio, file, audio_json, args.output_dir)))
 
-    #result = [future.result() for future in tqdm(futures)]
+    result = [future.result() for future in tqdm(futures)]
