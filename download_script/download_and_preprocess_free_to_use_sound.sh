@@ -47,6 +47,8 @@ cd /mnt/audio_clip/audio-dataset/data_preprocess
 python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds
 rm -r /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/*
 
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds/
+
 cd /mnt/audio_clip/audio-dataset/data_preprocess
 python split_and_rename.py --data_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds/
 

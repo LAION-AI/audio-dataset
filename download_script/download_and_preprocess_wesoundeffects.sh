@@ -11,6 +11,8 @@ cd /mnt/audio_clip/audio-dataset/data_preprocess
 python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/wesoundeffects/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/wesoundeffects
 rm -r /mnt/audio_clip/dataset_creation/raw_datasets/wesoundeffects/*
 
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/wesoundeffects/
+
 cd /mnt/audio_clip/audio-dataset/data_preprocess
 python split_and_rename.py --data_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/wesoundeffects/
 
