@@ -56,6 +56,5 @@ cd /mnt/audio_clip/audio-dataset/
 python ./utils/make_tar.py \
 --input /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds/ \
 --output /mnt/audio_clip/dataset_creation/webdataset_tar/free_to_use_sounds/ \
---dataclass all \
---delete_file
+--dataclass all
 

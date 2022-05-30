@@ -25,5 +25,4 @@ cd /mnt/audio_clip/audio-dataset/
 python ./utils/make_tar.py \
 --input /mnt/audio_clip/dataset_creation/preprocessed_dataset/sonniss_game_effects/ \
 --output /mnt/audio_clip/dataset_creation/webdataset_tar/sonniss_game_effects/ \
---dataclass all \
---delete_file
+--dataclass all

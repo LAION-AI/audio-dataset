@@ -20,5 +20,4 @@ cd /mnt/audio_clip/audio-dataset/
 python ./utils/make_tar.py \
 --input /mnt/audio_clip/dataset_creation/preprocessed_dataset/wesoundeffects/ \
 --output /mnt/audio_clip/dataset_creation/webdataset_tar/wesoundeffects/ \
---dataclass all \
---delete_file
+--dataclass all
