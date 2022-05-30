@@ -4,7 +4,7 @@ import argparse
 import glob
 import random
 import numpy as np
-import tqdm
+from tqdm import tqdm
 
 random.seed(1234)
 

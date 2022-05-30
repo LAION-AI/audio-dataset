@@ -9,7 +9,7 @@ wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaa
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/All%20Sounds%20Edited%20By%20Zapsplat/
 
 cd /mnt/audio_clip/audio-dataset/data_preprocess
-python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sound
+python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds
 rm -r /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/*
 cd /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds
 
@@ -25,6 +25,12 @@ wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaa
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Georgia/
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Germany/
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Hong%20Kong/
+
+cd /mnt/audio_clip/audio-dataset/data_preprocess
+python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds
+rm -r /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/*
+cd /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds
+
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Iceland/
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Indonesia/
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/Sounds%20of%20Japan/
@@ -38,8 +44,10 @@ wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaa
 wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaab/VR%20Sound%20Library/
 
 cd /mnt/audio_clip/audio-dataset/data_preprocess
-python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sound
+python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds
 rm -r /mnt/audio_clip/dataset_creation/raw_datasets/free_to_use_sounds/*
+
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds/
 
 cd /mnt/audio_clip/audio-dataset/data_preprocess
 python split_and_rename.py --data_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/free_to_use_sounds/

@@ -16,7 +16,7 @@ parser.add_argument(
 parser.add_argument(
     "--filename",
     type=str,
-    default="_",
+    default="",
     help="the filename of the tar, generating tar files at output/dataclass/filename_{}.tar",
 )
 parser.add_argument(

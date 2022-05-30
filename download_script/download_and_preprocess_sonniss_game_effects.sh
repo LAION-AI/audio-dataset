@@ -16,6 +16,8 @@ cd /mnt/audio_clip/audio-dataset/data_preprocess
 python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/sonniss_game_effects/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/sonniss_game_effects
 rm -r /mnt/audio_clip/dataset_creation/raw_datasets/sonniss_game_effects/*
 
+python data_check/remove_bad_flac.py --dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/sonniss_game_effects/
+
 cd /mnt/audio_clip/audio-dataset/data_preprocess
 python split_and_rename.py --data_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/sonniss_game_effects/
 
