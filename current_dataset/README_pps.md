@@ -2,6 +2,8 @@
 
 ## Peoples Speech
 
+`git clone git@github.com:knoriy/split_peoples_speech.git`
+
 ### Source
 
 `https://mlcommons.org/en/peoples-speech/`
