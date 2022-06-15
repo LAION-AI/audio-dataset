@@ -1,6 +1,6 @@
 """
-Code for preprocess Multilingual Spoken Words Corpus:
-https://mlcommons.org/en/multilingual-spoken-words/
+Code for preprocess LJSpeech Corpus:
+https://keithito.com/LJ-Speech-Dataset/
 """
 
 import glob
