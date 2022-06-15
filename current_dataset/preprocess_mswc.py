@@ -103,4 +103,3 @@ if __name__ == '__main__':
         # clean extracted files
         shutil.rmtree(splits_path.replace('splits/', 'audio/'))
         shutil.rmtree(splits_path)
-        break
