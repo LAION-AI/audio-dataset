@@ -66,6 +66,32 @@ def tardir(
         outfile.write(json_object)
     return size_dict
 
+def packup(input, output, filename, dataclass='all', num_element=512, start_idx=0, delete_file=False):
+    if not os.path.exists(os.path.join(input, dataclass)):
+        print(
+            "Dataclass {} does not exist, this folder does not exist. Skipping it.".format(
+                dataclass
+            )
+        )
+        return
+    if os.path.exists(os.path.join(output, dataclass)):
+        tardir(
+            os.path.join(input, dataclass),
+            os.path.join(output, dataclass, filename),
+            num_element,
+            start_idx=start_idx,
+            delete_file=delete_file,
+        )
+    else:
+        os.makedirs(os.path.join(output, dataclass))
+        tardir(
+            os.path.join(input, dataclass),
+            os.path.join(output, dataclass, filename),
+            num_element,
+            start_idx=start_idx,
+            delete_file=delete_file,
+        )
+    return
 
 def load_from_tar(
     file_path,
