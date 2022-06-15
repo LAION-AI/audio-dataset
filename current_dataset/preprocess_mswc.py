@@ -13,7 +13,6 @@ import tarfile
 import json
 import shutil
 import fsspec
-import random
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -99,7 +98,6 @@ if __name__ == '__main__':
             s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
             print('File Uploaded to: ', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
             shutil.rmtree(dest_path)
-
 
         # clean extracted files
         shutil.rmtree(splits_path.replace('splits/', 'audio/'))
