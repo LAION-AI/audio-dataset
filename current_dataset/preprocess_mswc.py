@@ -44,17 +44,18 @@ if __name__ == '__main__':
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/mnt/knoriy/raw_datasets/mswc/'
-    tar_dir = "/mnt/knoriy/raw_datasets/mswc/mswc.tar.gz"
+    root_path = '/home/knoriy/datasets/raw_datasets/mswc/'
+    tar_dir = "/home/knoriy/datasets/raw_datasets/mswc/mswc.tar.gz"
     dataset_name = 'mswc'
 
     s3 = fsspec.filesystem('s3')
     s3_dest = f's-laion/multilingual_spoken_words/{dataset_name}_tars/'
 
-    language_tars_dirs = glob.glob(os.path.join(root_path, "audio/**.tar.gz"))
+    language_tars_dirs = sorted(glob.glob(os.path.join(root_path, "audio/**.tar.gz")))
+    if not language_tars_dirs:
+        raise FileNotFoundError(f"Please check that the file have been extracted: {root_path}")
 
-    for dir in language_tars_dirs:
-        print(dir)
+    for dir in tqdm.tqdm(language_tars_dirs, desc=f'processing: '):
         audio_path = dir
         with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
             audio_path = os.path.split(audio_path)[0]
@@ -102,3 +103,4 @@ if __name__ == '__main__':
         # clean extracted files
         shutil.rmtree(splits_path.replace('splits/', 'audio/'))
         shutil.rmtree(splits_path)
+        break
