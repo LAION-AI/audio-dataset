@@ -43,7 +43,7 @@ def tardir(
         size_dict[os.path.basename(tar_name) + str(n_split - 1) + ".tar"] = (
             len(filelist) - (n_split - 1) * n_entry_each
         )
-    for i in tqdm(range(start_idx, n_split + start_idx)):
+    for i in tqdm(range(start_idx, n_split + start_idx), desc='Creating .tar file:'):
         with tarfile.open(tar_name + str(i) + ".tar", "w") as tar_handle:
             for j in range(count, len(filelist)):
                 audio = filelist[j]
