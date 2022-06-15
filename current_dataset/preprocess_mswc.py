@@ -13,11 +13,13 @@ import tarfile
 import json
 import shutil
 import fsspec
+import random
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from utils.audio_utils import audio_to_flac
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from utils.audio_utils import audio_to_flac
+from utils.make_tar_utils import tardir
 
 def convert_and_json_dump(file:str, dest:str, df):
     audio_to_flac(file, dest)
@@ -30,7 +32,7 @@ def split_all_audio_files(df, src_root_path, dest_root_path, max_workers=96):
         raise FileNotFoundError(f'Please Check {dest_root_path} exists')
 
     l = len(df)
-    with tqdm.tqdm(total=l, desc='spliting flac files into 5-10 seconds') as pbar:
+    with tqdm.tqdm(total=l, desc=f'Processing {dest_root_path}') as pbar:
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             threads = [executor.submit(convert_and_json_dump, os.path.join(src_root_path, row['LINK']), os.path.join(dest_root_path, f'{i}.flac'), row) for i, row in enumerate(df.iloc())]
             for _ in as_completed(threads):
@@ -40,7 +42,7 @@ if __name__ == '__main__':
     import multiprocessing
     
     max_workers = multiprocessing.cpu_count()
-    chunk = 1024
+    chunk = 512
     generate_subset_tsv = True
 
     root_path = '/mnt/knoriy/raw_datasets/mswc/'
@@ -72,13 +74,13 @@ if __name__ == '__main__':
 
         for csv_path in csv_paths:
             if 'train' in csv_path:
-                train_test_dev = 'train'
+                train_test_dev = 'train/'
             elif 'test' in csv_path:
-                train_test_dev = 'test'
+                train_test_dev = 'test/'
             elif 'dev' in csv_path:
-                train_test_dev = 'valid'
+                train_test_dev = 'valid/'
             else:
-                train_test_dev = ''
+                train_test_dev = 'other/'
             df = pd.read_csv(csv_path)
 
             # Convert to .flac
@@ -91,5 +93,14 @@ if __name__ == '__main__':
 
             split_all_audio_files(df, src_path, dest_path, max_workers)
 
+            tardir(dest_path, dest_path, chunk, delete_file=True)
+
+            # upload to s3 and delete local
+            s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
+            print('File Uploaded to: ', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
+            shutil.rmtree(dest_path)
+
+
+        # clean extracted files
         shutil.rmtree(splits_path.replace('splits/', 'audio/'))
         shutil.rmtree(splits_path)
