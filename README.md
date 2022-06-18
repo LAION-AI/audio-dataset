@@ -19,7 +19,7 @@ format.
 Please find the list of raw dataset
 in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTf
 
-Now you may find the list at the [end](#dataset_list) of this document.
+Now you may find the list at the [end](#raw-dataset-list) of this document.
 ## Processed dataset
 
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
@@ -156,7 +156,7 @@ If you contribute to process a new dataset, please add your scripts to `data_pre
 
 If you contribute to process a new dataset, please move the final webdataset to the [TODO: determine location].
 
-## *Raw Dataset list {#dataset_list}
+## *Raw Dataset list 
 | Name                                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | URL                                                                      | Text Type                                                                | Status (Location)                     |
 |--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------|-------------------------|
 | AudioSet                                         |The AudioSet dataset is a large-scale collection of human-labeled 10-second sound clips drawn from YouTube videos. To collect all our data we worked with human annotators who verified the presence of sounds they heard within YouTube segments. To nominate segments for annotation, we relied on YouTube metadata and content-based search. The sound events in the dataset consist of a subset of the AudioSet ontology. You can learn more about the dataset construction in our ICASSP 2017 paper. Explore the dataset annotations by sound class below. There are 2,084,320 YouTube videos containing 527 labels   | [click here](https://research.google.com/audioset/)                                                    | tag                                                                      |                                                         |
