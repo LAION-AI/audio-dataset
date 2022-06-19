@@ -17,9 +17,9 @@ captions, or labels, stored in different format. We will take the raw dataset an
 format.
 
 Please find the list of raw dataset
-in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTf
+in: https://docs.google.com/document/d/1Lvbz5A8tXB1s5piBo0JxKTfpgiYLjTLe0qwk6QtPR9w/edit
 
-Now you may find the list at the [end](#raw-dataset-list) of this document.
+You may also find the list at the [end](#raw-dataset-list) of this document.
 ## Processed dataset
 
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
