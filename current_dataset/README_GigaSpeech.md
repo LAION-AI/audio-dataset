@@ -1,16 +1,11 @@
 # List of dataset currently being processed
 
-## Multilingual Spoken Words Corpus
+## GigaSpeech
+
 
 ### Source
 
-`https://mlcommons.org/en/multilingual-spoken-words/`
-
-Audio and Metadata
-
-``` bash
-wget https://storage.googleapis.com/public-datasets-mswc/mswc.tar.gz
-```
+`https://github.com/SpeechColab/GigaSpeech`
 
 ### Processing steps
 
@@ -19,7 +14,6 @@ MSWC consists of two layers of compression. We  first decompress the first layer
 ### Dataformat
 
 Origin
-
 ``` shell
 mswc
 │
@@ -40,7 +34,6 @@ mswc
 ```
 
 processed
-
 ``` shell
 mswc
 │
