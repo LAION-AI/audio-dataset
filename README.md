@@ -41,6 +41,11 @@ The label of the audio is saved in a `.json` file as a dict. The key of the data
   could save the original data here.
 - (Please add more to here if you come up with more types of label)
 
+### Create conda enviroment
+
+```
+conda env create -f environment.yml
+```
 ### Preprocess scripts
 
 In `data_preprocess`folder, you could find the codes and scripts for each raw dataset. If you contribute to process a
