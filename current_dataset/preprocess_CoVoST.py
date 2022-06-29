@@ -39,6 +39,9 @@ def split_all_audio_files(df, dest_root_path, max_workers=96):
                 pbar.update(1)
 
 if __name__ == '__main__':
+    raise NotImplementedError("This processing CoVoST is nto implemented yet")
+
+
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
@@ -64,7 +67,7 @@ if __name__ == '__main__':
     valid, test = train_test_split(test, test_size=0.2)
     train_test_val = {'train/':train, 'test/':test, 'valid/':valid}
 
-    
+
     for key in tqdm.tqdm(train_test_val, desc=f'processing:'):
         df = train_test_val[key]
         
