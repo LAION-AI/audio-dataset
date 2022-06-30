@@ -1,5 +1,5 @@
 import argparse
-from make_tar_utils import tardir
+from make_tar_utils import tardir, packup
 import os
 
 parser = argparse.ArgumentParser()
@@ -34,38 +34,10 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-def packup(args, dataclass):
-    if not os.path.exists(os.path.join(args.input, dataclass)):
-        print(
-            "Dataclass {} does not exist, this folder does not exist. Skipping it.".format(
-                dataclass
-            )
-        )
-        return
-    if os.path.exists(os.path.join(args.output, dataclass)):
-        tardir(
-            os.path.join(args.input, dataclass),
-            os.path.join(args.output, dataclass, args.filename),
-            args.num_element,
-            start_idx=args.start_idx,
-            delete_file=args.delete_file,
-        )
-    else:
-        os.makedirs(os.path.join(args.output, dataclass))
-        tardir(
-            os.path.join(args.input, dataclass),
-            os.path.join(args.output, dataclass, args.filename),
-            args.num_element,
-            start_idx=args.start_idx,
-            delete_file=args.delete_file,
-        )
-    return
-
-
 if __name__ == "__main__":
     if args.dataclass == "all":
         for x in ["train", "valid", "test"]:
-            packup(args, x)
+            packup(args.input, args.output,  args.filename,  x,  args.num_element,  args.start_idx,  args.delete_file)
     elif args.dataclass == "none":
         os.makedirs(args.output, exist_ok=True)
         tardir(
@@ -76,4 +48,4 @@ if __name__ == "__main__":
             delete_file=args.delete_file,
         )
     else:  # if dataclass is in other name
-        packup(args, args.dataclass)
+        packup(args.input, args.output,  args.filename,  args.dataclass,  args.num_element,  args.start_idx,  args.delete_file)
