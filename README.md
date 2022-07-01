@@ -18,8 +18,9 @@ Our team includes LAION members and a researchers group from [Mila](https://mila
 
 ## Contact
 
-- You could find us on LAION Discord server CLAP channel (the channel name is clap in lower case).
+- You could find us on LAION [Discord Server](https://discord.com/invite/eq3cAMZtCC) CLAP channel (the channel name is clap in lower case).
 - In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui, Christoph, Richard V, rom1504, Yusong Wu, Ke Chen or Tianyu Zhang.
+- Moreover, if you need computation resources during contributing, please go into compute-allocation channel of Discord Server and read the **pinned messages** for usage of LAION pods. If any problem is encountered, please feel free to ask any question in the channel. 
 
 ## Project progress
 
@@ -58,3 +59,4 @@ Nervertheless, **for the scrapped dataset, we also receive a CSV file** of which
 i.e. each line is an audio_url-text pair, by which we can write a batch file to handle it easily.
 
 # The End
+Last updated on June 30, 2022
