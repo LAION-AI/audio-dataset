@@ -1,10 +1,7 @@
-environment required:
-python
 numpy
 pandas
 librosa
 tqdm
+ffmpeg
 
- Installation of these packages could be via pip or Conda. Apart from these packages, ffmpeg will be used when we transform audio file to the .flac format, hence it is necessary to install it in your operating system (this is not a python package, but a terminal program). 
- http://ffmpeg.org/documentation.html
 

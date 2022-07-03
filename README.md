@@ -1,25 +1,31 @@
+#### For a quick view of project progress, please see
+### [GitHub Project Page](https://github.com/orgs/LAION-AI/projects/2/views/1) and its [Explication](#project-progress)
+#### For a quick view of the Dataset we collected, see
+### [List of Datasets](./data_collection/README.md) 
+
 # What is Audio Dataset Project?
 
 This repository is created for Audio Dataset Project, an audio dataset collection initiative announced by [LAION](https://laion.ai/). These datasets, each containing enormous amout of audio-text pairs, will be eventually processed and used for training CLAP (Contrastive language-Audio Pretraining) model and other models.
 
 Here is an [explicative video](https://youtu.be/U16VyK2eIYU) introducing you to the project.
 
+
 # Who are we?
 
-Our team includes LAION members and a researchers group from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), as well as many enthusiastic contributors from all over the world.
+Since Audio Dataset is an open source project belongs to LAION, we have a team of open source contributors. They are, along with LAION members, a three-people researchers group including Yusong Wu, Ke Chen and Tianyu Zhang from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), intern Yuchen Hui, as well as many enthusiastic contributors from all over the world, such as @marianna13#7139, @PiEquals4#1909 in Discord server.
 
 # What have we done?
 
 - We are keeping collecting audio datasets and here is the [LIST](./data_collection/README.md) of all waht we found.
 - We define the standard and method to store and process all audio datasets, which is essential in the sense of unifying the final format of datasets to simplify model training. The final dataset format we used for now is [webdataset](https://github.com/webdataset/webdataset). The concret data process pipeline is specified [here](data_preprocess/README.md) 
-- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](environment.txt). Notice that [environment.txt](data_preprocess/environment.txt) may be an inexhaustive list. 
+- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. 
 
 # Contributing
 
 ## Contact
 
 - You could find us on LAION [Discord Server](https://discord.com/invite/eq3cAMZtCC) CLAP channel (the channel name is clap in lower case).
-- In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui, Christoph, Richard V, rom1504, Yusong Wu, Ke Chen or Tianyu Zhang.
+- In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui(@Yuchen Hui#8574), Christoph Schuhmann(@spirit-from-germany#1488), Richard(@rvencu#4120), Romain(@rom1504#5008), Yusong Wu(@Yusong Wu#3047), Ke Chen(@Ke Chen#0709) or Tianyu Zhang(@tianyuzhang#1725).
 - Moreover, if you need computation resources during contributing, please go into compute-allocation channel of Discord Server and read the **pinned messages** for usage of LAION pods. If any problem is encountered, please feel free to ask any question in the channel. 
 
 ## Project progress
