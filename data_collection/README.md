@@ -1,13 +1,15 @@
 
 # Dataset collection
-This dataset list includes all the [raw datasets](../data_preprocess/README.md) we have found up to now. You may also find their Data Type* locations in our AWS S3 bucket.
+This dataset list includes all the [raw datasets](../data_preprocess/README.md) we have found up to now. You may also find their Data Type* and locations in our AWS S3 bucket.
 
-## Data Type Terminology explanation
-- Caption: A natural language sentence describing the content of the audio
+For those datasets who do not have any link in the list, they are purchased by LAION hence we can not make it public due to license issue. Do please contact us if you want to process them.
+
+## *Data Type Terminology explanation
+- **Caption**: A natural language sentence describing the content of the audio
     > Example: A wooden door creaks open and closed multiple times
-- Tag: Type of the audio based on its natural attributes. A audio clip may be associated to several tags
+- **Tag**: Type of the audio based on its natural attributes. A audio clip may be associated to several tags
     > Example: Animal, Bird, Guitar, Wind
-- Class label: In Curated Datasets reserved for training data classification models, Each audio clip is assigned a class label.. 
+- **Class label**: In Curated Datasets reserved for training data classification models, Each audio clip is assigned a class label.. 
 ## Raw Dataset List 
 | Name                                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | URL                                                                      | Data Type                                                                               | Location at AWS S3                     |
 |--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------               |-------------------------|

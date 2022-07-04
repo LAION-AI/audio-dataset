@@ -18,7 +18,7 @@ Since Audio Dataset is an open source project belongs to LAION, we have a team o
 
 - We are keeping collecting audio datasets and here is the [LIST](./data_collection/README.md) of all waht we found.
 - We define the standard and method to store and process all audio datasets, which is essential in the sense of unifying the final format of datasets to simplify model training. The final dataset format we used for now is [webdataset](https://github.com/webdataset/webdataset). The concret data process pipeline is specified [here](data_preprocess/README.md) 
-- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. 
+- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. There is also a list with redundant package (i.e. superclass $\supset$ of necessary  exhaustive list) [here](./data_preprocess/environment.yml). 
 
 # Contributing
 
@@ -47,7 +47,7 @@ There are mainly two ways to contribute to our audio dataset project.
     Please join us in Discord if you want to know which scattered audio sources we currently focus on, or if you have suggestion about what we should scrape next.
     
 2. **Process of curated datasets, i.e. convert them to webdataset format** according to the [pipeline](./data_preprocess/README.md)
-    - Example: [Clotho](https://zenodo.org/record/4783391#.Yr4en3bMLb2) is an curated audio dataset having its own format, thought we ought to convert it to webdataset format with aid of `data_preprocess/preprocess_clotho.py` and `utils/make_tar_utils.py` . For processing details please read the pipeline part.
+    - Example: [Clotho](https://zenodo.org/record/4783391#.Yr4en3bMLb2) is an curated audio dataset having its own format, thought we ought to convert it to webdataset format with aid of `data_preprocess/preprocess_clotho.py` and `utils/make_tar_utils.py` . For more processing details please read the pipeline part.
     
     For this type of contribution, it is suggested to **view the datasets in the Todo board** in the  [github project page](https://github.com/orgs/LAION-AI/projects/2) and join us in Discord server. Please contact Yuchen Hui in CLAP channel after you have chosen one **from** **Todo board** to process, so that we can keep track of the progress and avoid the case where many people work simultaneously on one dataset.
     
