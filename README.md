@@ -25,7 +25,7 @@ Since Audio Dataset is an open source project belongs to LAION, we have a team o
 ## Contact
 
 - You could find us on LAION [Discord Server](https://discord.com/invite/eq3cAMZtCC) CLAP channel (the channel name is clap in lower case).
-- In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui(@Yuchen Hui#8574), Christoph Schuhmann(@spirit-from-germany#1488), Richard(@rvencu#4120), Romain(@rom1504#5008), Yusong Wu(@Yusong Wu#3047), Ke Chen(@Ke Chen#0709) or Tianyu Zhang(@tianyuzhang#1725).
+- In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui(@Yuchen Hui#8574), Christoph Schuhmann(@spirit-from-germany#1488), Richard(@rvencu#4120), Romain(@rom1504#5008), Yusong Wu(@Yusong Wu#3047), Ke Chen(@Ke Chen#0709) or Tianyu Zhang(@tianyuzhang#1725). Text in parenthesis is Discord id.
 - Moreover, if you need computation resources during contributing, please go into compute-allocation channel of Discord Server and read the **pinned messages** for usage of LAION pods. If any problem is encountered, please feel free to ask any question in the channel. 
 
 ## Project progress
