@@ -18,7 +18,7 @@ Since Audio Dataset is an open source project belongs to LAION, we have a team o
 
 - We are keeping collecting audio datasets and here is the [LIST](./data_collection/README.md) of all waht we found.
 - We define the standard and method to store and process all audio datasets, which is essential in the sense of unifying the final format of datasets to simplify model training. The final dataset format we used for now is [webdataset](https://github.com/webdataset/webdataset). The concret data process pipeline is specified [here](data_preprocess/README.md) 
-- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. There is also a list with redundant package (i.e. superclass $\supset$ of necessary  exhaustive list) [here](./data_preprocess/environment.yml). 
+- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. There is also a list with redundant packages (i.e. superclass $\supset$ of necessary  exhaustive list) [here](./data_preprocess/environment.yml). 
 
 # Contributing
 
