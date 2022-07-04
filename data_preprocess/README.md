@@ -17,7 +17,7 @@ Please find the list of all datasets we have found [here](../data_collection/REA
 
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
 of `48000`. The label of the audio, including captions/class labels/tags/metadata, are stored in a `.json` file with
-same filename as the `.flac` file. The file is renamed in processed dataset, and name format in precessed dataset is in
+same filename as the `.flac` file. The file is renamed in processed dataset, and name format in processed dataset is in
 number id (`1.wav`, `1.json`), to avoid parsing error in subsequent processing caused by file name.
 
 ### Key of each type of label and its format
