@@ -52,7 +52,7 @@ There are mainly two ways to contribute to our audio dataset project.
     For this type of contribution, it is suggested to **view the datasets in the Todo board** in the  [github project page](https://github.com/orgs/LAION-AI/projects/2) and join us in Discord server. Please contact Yuchen Hui in CLAP channel after you have chosen one **from** **Todo board** to process, so that we can keep track of the progress and avoid the case where many people work simultaneously on one dataset.
     
 
--  Last but not least, if you found any interesting curated datasets (e.g. Clotho), you can tell us in LAION Discord server. We will eventually add it to the [LIST](data_collection/README.md)
+-  Last but not least, if you find any interesting curated datasets (e.g. Clotho), you can tell us in LAION Discord server. We will eventually add it to the [LIST](data_collection/README.md)
 
 ## Contribution Delivery 
 
