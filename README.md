@@ -1,4 +1,6 @@
+<div align = "center">
 <a href="./data_collection/README.md"><img src= "https://img.shields.io/badge/%20-List%20of%20all%20Datasets-red" width = "200px" /></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/orgs/LAION-AI/projects/2/views/1"><img src= "https://img.shields.io/badge/%20-Github%20Project%20Page-red" width = "210px" /></a>
+</div> 
 
 # What is Audio Dataset Project?
 
@@ -9,7 +11,7 @@ Here is an [explicative video](https://youtu.be/U16VyK2eIYU) introducing you to 
 
 # Who are we?
 
-Since Audio Dataset is an open source project belongs to LAION, we have a team of open source contributors. They are, along with LAION members, a three-people researchers group including Yusong Wu, Ke Chen and Tianyu Zhang from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), intern Yuchen Hui, as well as many enthusiastic contributors from all over the world, such as @marianna13#7139 and @PiEquals4#1909 in Discord server.
+Since Audio Dataset is an open source project belongs to LAION, we have a team of open source contributors. They are, along with LAION members, a three-people researchers group including [Yusong Wu](https://lukewys.github.io/), [Ke Chen](https://www.knutchen.com/) and [Tianyu Zhang](https://mila.quebec/en/person/tianyu-zhang/) from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), intern [Yuchen Hui](https://github.com/YuchenHui22314), as well as many enthusiastic contributors from all over the world, such as @marianna13#7139 and @PiEquals4#1909 in Discord server.
 
 # What have we done?
 
