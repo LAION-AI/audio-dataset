@@ -1,7 +1,4 @@
-#### For a quick view of project progress, please see
-### [GitHub Project Page](https://github.com/orgs/LAION-AI/projects/2/views/1) and its [Explication](#project-progress)
-#### For a quick view of the Dataset we collected, see
-### [List of Datasets](./data_collection/README.md) 
+<a href="./data_collection/README.md"><img src= "https://img.shields.io/badge/%20-List%20of%20all%20Datasets-red" width = "200px" /></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/orgs/LAION-AI/projects/2/views/1"><img src= "https://img.shields.io/badge/%20-Github%20Project%20Page-red" width = "210px" /></a>
 
 # What is Audio Dataset Project?
 
@@ -12,13 +9,13 @@ Here is an [explicative video](https://youtu.be/U16VyK2eIYU) introducing you to 
 
 # Who are we?
 
-Since Audio Dataset is an open source project belongs to LAION, we have a team of open source contributors. They are, along with LAION members, a three-people researchers group including Yusong Wu, Ke Chen and Tianyu Zhang from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), intern Yuchen Hui, as well as many enthusiastic contributors from all over the world, such as @marianna13#7139, @PiEquals4#1909 in Discord server.
+Since Audio Dataset is an open source project belongs to LAION, we have a team of open source contributors. They are, along with LAION members, a three-people researchers group including Yusong Wu, Ke Chen and Tianyu Zhang from [Mila](https://mila.quebec/) and [UCSD](https://ucsd.edu/), intern Yuchen Hui, as well as many enthusiastic contributors from all over the world, such as @marianna13#7139 and @PiEquals4#1909 in Discord server.
 
 # What have we done?
 
 - We are keeping collecting audio datasets and here is the [LIST](./data_collection/README.md) of all waht we found.
 - We define the standard and method to store and process all audio datasets, which is essential in the sense of unifying the final format of datasets to simplify model training. The final dataset format we used for now is [webdataset](https://github.com/webdataset/webdataset). The concret data process pipeline is specified [here](data_preprocess/README.md) 
-- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. There is also a list with redundant packages (i.e. superclass $\supset$ of necessary  exhaustive list) [here](./data_preprocess/environment.yml). 
+- You may also find the processing [code](./data_preprocess/) for each processed audio datasets, respectively. Dependencies required for testing these scripts are specified in the document [`environment.txt`](./data_preprocess/environment.txt). Please Note that [environment.txt](./data_preprocess/environment.txt) may be an inexhaustive list. There is also a list with redundant packages [here](./data_preprocess/environment.yml)(i.e. superclass $\supset$ of the exhaustive list). 
 
 # Contributing
 
