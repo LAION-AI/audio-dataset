@@ -44,12 +44,12 @@ if __name__ == '__main__':
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/home/knoriy/datasets/raw_datasets/mswc/'
-    tar_dir = "/home/knoriy/datasets/raw_datasets/mswc/mswc.tar.gz"
+    root_path = '/home/knoriy/fsx/raw_datasets/mswc/'
+    tar_dir = "/home/knoriy/fsx/raw_datasets/mswc/mswc.tar.gz"
     dataset_name = 'mswc'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion/multilingual_spoken_words/{dataset_name}_tars/'
+    s3_dest = f's-laion/knoriy/mswc/{dataset_name}_tars/'
 
     language_tars_dirs = sorted(glob.glob(os.path.join(root_path, "audio/**.tar.gz")))
     if not language_tars_dirs:
