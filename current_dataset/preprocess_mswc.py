@@ -56,15 +56,22 @@ if __name__ == '__main__':
         raise FileNotFoundError(f"Please check that the file have been extracted: {root_path}")
 
     for dir in tqdm.tqdm(language_tars_dirs, desc=f'processing: '):
-        audio_path = dir
-        with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
+        if dir == '/home/knoriy/fsx/raw_datasets/mswc/audio/en.tar.gz':
+            audio_path = dir
             audio_path = os.path.split(audio_path)[0]
-            mswc_audio.extractall(audio_path)
 
-        splits_path = dir.replace('audio', 'splits')
-        with tarfile.open(splits_path, mode='r:gz') as mswc_split:
+            splits_path = dir.replace('audio', 'splits')
             splits_path = splits_path.replace('.tar.gz', '/')
-            mswc_split.extractall(splits_path)
+        else:
+            audio_path = dir
+            with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
+                audio_path = os.path.split(audio_path)[0]
+                mswc_audio.extractall(audio_path)
+
+            splits_path = dir.replace('audio', 'splits')
+            with tarfile.open(splits_path, mode='r:gz') as mswc_split:
+                splits_path = splits_path.replace('.tar.gz', '/')
+                mswc_split.extractall(splits_path)
 
         tmp = glob.glob(os.path.join(splits_path, '**.csv'), recursive=True)
         csv_paths = []
