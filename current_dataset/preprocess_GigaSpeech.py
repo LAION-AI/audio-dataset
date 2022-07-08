@@ -64,7 +64,7 @@ if __name__ == '__main__':
             except:
                 catagory = 'N/A'
             
-            if seg['text_tn'] == '<SIL>':
+            if seg['text_tn'] == '<SIL>' or seg['text_tn'] == '<NOISE>':
                 continue
 
             new_df_data.append(
