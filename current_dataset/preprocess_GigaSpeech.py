@@ -45,8 +45,8 @@ if __name__ == '__main__':
     max_workers = 2
     chunk = 512
 
-    root_path = '/mnt/knoriy/raw_datasets/gigaspeech/'
-    metadata_dir = "/mnt/knoriy/raw_datasets/gigaspeech/GigaSpeech.json"
+    root_path = '/home/knoriy/fsx/raw_datasets/GigaSpeech/gigaspeech/'
+    metadata_dir = "/home/knoriy/fsx/raw_datasets/GigaSpeech/gigaspeech/GigaSpeech.json"
 
     dataset_name = 'gigaspeech'
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     s3_dest = f's-laion/knoriy/GigaSpeech/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
-    raw_df = pd.read_json(metadata_dir)[:2]
+    raw_df = pd.read_json(metadata_dir)
 
     new_df_data = []
     for row in tqdm.tqdm(raw_df.iloc(), total=len(raw_df), desc='Generating dataframe: '):
