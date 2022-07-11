@@ -79,7 +79,7 @@ if __name__ == '__main__':
             # convert audio to flac and save using ffmpeg
             audio_to_flac(audio_path, audio_save_path, sample_rate=AUDIO_SAVE_SAMPLE_RATE)
 
-            # retrive informations from 4 files
+            # retrieve information from 4 files
             #   1. dev/eval.csv 2. collection_dev/eval.csv 3. ontology.json 4. dev/eval_clips_info_FSD50K.json 
             '''
             text: made-up description by class lables

@@ -1,0 +1,10 @@
+{
+    "text": ["The sounds of Musical instrument, Harp and Music"], // Made up text description from class labels
+    "tags": ["Music", "Oriental", "Game-development", "Intro", "Film-production", "Harp", "Oriental-harp", "Musical instrument", "Bonus-sound"], 
+    "original_data": {
+        "title": "Oriental Harp 3", 
+        "description": "A professional quality sound effect of an Oriental Harp intro/fill. Suited to game development, film production and media use.", 
+        "license": "http://creativecommons.org/licenses/by/3.0/",
+        "uploader": "Soughtaftersounds", "fname": "145450", 
+        "mids(class_label_id)": ["/m/04szw", "/m/03m5k", "/m/04rlf"]}
+}

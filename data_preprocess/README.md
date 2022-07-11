@@ -33,7 +33,20 @@ The label of the audio is saved in a `.json` file as a dict. The key of the data
   inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you
   could save the original data here.
 - (Please add more to here if you come up with more types of label)
-
+- Here is an example of .json file selected from FSD50K dataset:
+#### image.png
+```json
+{
+    "text": ["The sounds of Musical instrument, Harp and Music"],// Made up text description from class labels
+    "tags": ["Music", "Oriental", "Game-development", "Intro", "Film-production", "Harp", "Oriental-harp", "Musical instrument", "Bonus-sound"], 
+    "original_data": { // metadata
+        "title": "Oriental Harp 3", 
+        "description": "A professional quality sound effect of an Oriental Harp intro/fill. Suited to game development, film production and media use.", 
+        "license": "http://creativecommons.org/licenses/by/3.0/",
+        "uploader": "Soughtaftersounds", "fname": "145450", 
+        "mids(class_label_id)": ["/m/04szw", "/m/03m5k", "/m/04rlf"]}
+}
+```
 ### Preprocess scripts
 
 In `data_preprocess`folder, you could find the codes and scripts for each raw dataset. If you contribute to process a
