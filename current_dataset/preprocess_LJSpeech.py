@@ -42,6 +42,7 @@ if __name__ == '__main__':
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
+    print("Num workers: ", max_workers)
     chunk = 512
     generate_subset_tsv = True
 

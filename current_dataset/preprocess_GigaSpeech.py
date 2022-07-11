@@ -42,7 +42,7 @@ if __name__ == '__main__':
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
-    max_workers = 2
+    print("Num workers: ", max_workers)
     chunk = 512
 
     root_path = '/home/knoriy/fsx/raw_datasets/GigaSpeech/gigaspeech/'
