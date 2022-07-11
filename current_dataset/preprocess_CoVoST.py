@@ -21,7 +21,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
 from utils.make_tar_utils import tardir
 
-def convert_and_json_dump(file:str, dest:str, df):
+def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
+    if os.path.isfile(dest) and overwrite==False:
+        print(f'{dest} already exists, skiping')
+        return
+        
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
         json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':df['norm_text'], 'tag':{'raw_text':df['raw_text']}}, f)
