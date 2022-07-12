@@ -41,12 +41,12 @@ We have created a [github project page](https://github.com/orgs/LAION-AI/project
 There are mainly two ways to contribute to our audio dataset project.
 
 1. **Collection of scattered audio sources by means of web scraping technique (and then convert them to webdatset format, i.e. the second point below)**. 
-    - Examples: crawling word-pronunciation pair from Cambridge Dictionary, or scrape videos from youtube, extract the sound and associate then with the title.
+    > Example: crawling word-pronunciation pair from Cambridge Dictionary, or scrape videos from youtube, extract the sound and associate then with the title.
     
     Please join us in Discord if you want to know which scattered audio sources we currently focus on, or if you have suggestion about what we should scrape next.
     
 2. **Process of curated datasets, i.e. convert them to webdataset format** according to the [pipeline](./data_preprocess/README.md)
-    - Example: [Clotho](https://zenodo.org/record/4783391#.Yr4en3bMLb2) is an curated audio dataset having its own format, thought we ought to convert it to webdataset format with aid of `data_preprocess/preprocess_clotho.py` and `utils/make_tar_utils.py` . For more processing details please read the pipeline part.
+    > Example: [Clotho](https://zenodo.org/record/4783391#.Yr4en3bMLb2) is an curated audio dataset having its own format, thought we ought to convert it to webdataset format with aid of `data_preprocess/preprocess_clotho.py` and `utils/make_tar_utils.py` . For more processing details please read the pipeline part.
     
     For this type of contribution, it is suggested to **view the datasets in the Todo board** in the  [github project page](https://github.com/orgs/LAION-AI/projects/2) and join us in Discord server. Please contact Yuchen Hui in CLAP channel after you have chosen one **from** **Todo board** to process, so that we can keep track of the progress and avoid the case where many people work simultaneously on one dataset.
     

@@ -15,26 +15,40 @@ The raw dataset refers to the raw form of the dataset as they downloaded (presum
 Please find the list of all datasets we have found [here](../data_collection/README.md) in our github repository.
 ## Processed dataset
 
+> !! **Important** !!: For the terminology (3 terms: caption, class label and tag) we will use below, please find their explanation [here](../data_collection/README.md/#data-type-terminology-explanation). 
+
 The processed dataset contains only audio files and its labels. The audio is saved in `.flac` format with a sample rate
 of `48000`. The label of the audio, including captions/class labels/tags/metadata, are stored in a `.json` file with
 same filename as the `.flac` file. The file is renamed in processed dataset, and name format in processed dataset is in
 number id (`1.wav`, `1.json`), to avoid parsing error in subsequent processing caused by file name.
 
-### Key of each type of label and its format
+### Json file format specification and explanation 
 
-The label of the audio is saved in a `.json` file as a dict. The key of the data labels and its format:
 
-- `text`: The text of the audio which would be used to train the model. The `text` is a list containing strings where
-  each entry is one caption/description. This could be caption, description, or made up text description of the audio
-  from tags (e.g.: "This is an audio containing A, B, and C.").
-- `tag`: The tag of the audio. `tag` is a list containing strings where each entry is one tag. This could be class
-  label (e.g., AudioSet) or tag of the audio without having the notion of class label, or metadata of the audio.
-- `original_data`: Any form of original data associated with the audio. Can be in arbitary form as long as consistent
-  inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you
-  could save the original data here.
-- (Please add more to here if you come up with more types of label)
-- Here is an example of .json file selected from FSD50K dataset:
-#### image.png
+The label of the audio is saved in a `.json` file as a dictionary form. The keys of the dictionary and its format are specified as follows:
+
+
+#### `text`   
+ The value of key `text` should be a list of strings where each string is a [caption](../data_collection/README.md/#data-type-terminology-explanation). The example below demonstrates a text with 5 captions in its list:
+  ```json
+  {
+    "text": ["A wooden door creaks open and closed multiple times.", 
+    "A creaky door opens and then is shut.", 
+    "A vent releases air in the background and a hinge creaks close by.", 
+    "An air vent in the background and a hinge creaking in the foreground.", 
+    "The squeaky door gets louder the more it moves, Then it suddenly slams shut."]
+  }
+  ```
+  The captions in the list of `text` will be used to form audio-text pair, which is indispensable for the model training. Thus the list must not be empty. Therefore, for those curated datasets who do not offer any caption, **we have to make up a caption from** their [class labels](../data_collection/README.md/#data-type-terminology-explanation).
+    - you may refer to the method adopted by us of making up captions for AudioSet and FSD50K: if we have class labels A, B and C, then we let the caption be "The sounds of A, B and C"  
+#### `tag` 
+ The tags of the audio. Its value is a list of strings where each string could be either a class label (e.g., AudioSet) or a tag (in terms of this [definition](../data_collection/README.md/#data-type-terminology-explanation)). **Note that even if some class labels are utilized for making up captions for the `text` key, they should always be listed here.** See the [complete example](#an-example-of-json-file-selected-from-fsd50k-dataset) below for a list containing both class labels used in caption fabrication and several tags.
+#### `original_data` 
+ Any form of original data associated with the audio. Can be in arbitrary form as long as consistent inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you could save the original data here. In fact, all metadata other than `text` and `tag` should be stored here.
+
+#### `Please add more to here if you come up with more types of label)`
+
+#### An example of .json file selected from processed FSD50K dataset:
 ```json
 {
     "text": ["The sounds of Musical instrument, Harp and Music"],// Made up text description from class labels
