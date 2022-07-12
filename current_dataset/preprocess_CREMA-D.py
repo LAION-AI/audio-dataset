@@ -81,7 +81,7 @@ def create_df(root_path:str, dataset_name:str=None):
         male_or_female = 'woman' if demograpthics_meta["Sex"].values[0] == 'Female' else 'man'
         intensity = '' if text_meta[2] == 'Unspecified' else f'and {text_meta[2]} '
         text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity}voice.'
-        df_data.append({ 'path':wav, 'text':text})
+        df_data.append({ 'path':wav, 'text':text, 'tag':{'transcript':text_meta[0], 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
 
     return pd.DataFrame(df_data)
 
@@ -94,14 +94,13 @@ if __name__ == '__main__':
     chunk = 512
 
     root_path = '/home/knoriy/fsx/raw_datasets/CREMA-D/AudioWAV/'
-    dataset_name = 'crema-d'
+    dataset_name = 'CREMA-D'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion/knoriy/RAVDESS/{dataset_name}_tars/'
+    s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
     df = create_df(root_path)
-    print(df.iloc()[1]['text'])
 
     # create train, test, valid splits
     train, test = train_test_split(df, test_size=0.2)
@@ -116,9 +115,8 @@ if __name__ == '__main__':
         os.makedirs(dest_path, exist_ok=True)
 
         split_all_audio_files(df, dest_path)
-        # tardir(dest_path, dest_path, chunk, delete_file=True)
+        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-        # # upload to s3 and delete local
-        # s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
-        # shutil.rmtree(dest_path)
-        break
+        # upload to s3 and delete local
+        s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
+        shutil.rmtree(dest_path)
