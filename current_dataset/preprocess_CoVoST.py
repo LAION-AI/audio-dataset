@@ -43,54 +43,60 @@ def split_all_audio_files(df, dest_root_path, max_workers=96):
             for _ in as_completed(threads):
                 pbar.update(1)
 
-def download_tsvs(urls:list, output_dir:str):
-    os.makedirs(output_dir)
+def download_tsvs(urls:list, output_dir:str, extract:bool=False):
+    os.makedirs(output_dir, exist_ok=True)
     for url in urls:
-        cmd = f'curl {url} --output {os.path.join(output_dir, url.split("/")[-1])}'
-        os.system(cmd)
+        dest_path = os.path.join(output_dir, url.split("/")[-1])
+        if os.path.isfile(dest_path):
+            continue
+        os.system(f'curl {url} --output {dest_path}')
+
+        if extract:
+            os.system(f'tar -xf {dest_path}')
 
 if __name__ == '__main__':
     x_2_eng = [
         "https://dl.fbaipublicfiles.com/covost/covost_v2.fr_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.de_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.es_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.ca_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.it_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.ru_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.zh-CN_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.pt_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.fa_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.et_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.mn_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.nl_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.tr_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.ar_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.sv-SE_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.lv_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.sl_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.ta_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.ja_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.id_en.tsv.tar.gz",
-        # "https://dl.fbaipublicfiles.com/covost/covost_v2.cy_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.de_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.es_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.ca_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.it_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.ru_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.zh-CN_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.pt_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.fa_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.et_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.mn_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.nl_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.tr_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.ar_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.sv-SE_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.lv_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.sl_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.ta_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.ja_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.id_en.tsv.tar.gz",
+        "https://dl.fbaipublicfiles.com/covost/covost_v2.cy_en.tsv.tar.gz",
     ]
     eng_2_x = [
         'https://dl.fbaipublicfiles.com/covost/covost_v2.en_de.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ca.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_zh-CN.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_fa.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_et.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_mn.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_tr.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ar.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_sv-SE.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_lv.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_sl.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ta.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ja.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_id.tsv.tar.gz',
-        # 'https://dl.fbaipublicfiles.com/covost/covost_v2.en_cy.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ca.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_zh-CN.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_fa.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_et.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_mn.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_tr.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ar.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_sv-SE.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_lv.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_sl.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ta.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_ja.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_id.tsv.tar.gz',
+        'https://dl.fbaipublicfiles.com/covost/covost_v2.en_cy.tsv.tar.gz',
     ]
-    # download_tsvs(eng_2_x, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/eng_2_x")
+    download_tsvs(eng_2_x, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/")
+    download_tsvs(x_2_eng, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs")
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
@@ -106,10 +112,10 @@ if __name__ == '__main__':
     s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
-    df = pd.read_csv('/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/eng_2_x/covost_v2.en_de.tsv', sep='\t')
+    df = pd.read_csv('/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/covost_v2.en_de.dev.tsv', sep='\t')
     print(df.head())
 
-    # # create train, test, valid splits
+    # create train, test, valid splits
     # train, test = train_test_split(df, test_size=0.2)
     # valid, test = train_test_split(test, test_size=0.2)
     # train_test_val = {'train/':train, 'test/':test, 'valid/':valid}

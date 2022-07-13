@@ -58,30 +58,36 @@ if __name__ == '__main__':
     s3_dest = f's-laion/knoriy/GigaSpeech/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
-    raw_df = pd.read_json(metadata_dir)
+    cache_df_path = os.path.join(root_path, 'temp_df.csv')
+    if os.path.isfile(cache_df_path):
+        df = pd.read_csv(cache_df_path, sep='\t')
+    else:
+        raw_df = pd.read_json(metadata_dir)
 
-    new_df_data = []
-    for row in tqdm.tqdm(raw_df.iloc(), total=len(raw_df), desc='Generating dataframe: '):
-        for seg in row['audios']['segments']:
-            try:
-                catagory = row['audios']['category']
-            except:
-                catagory = 'N/A'
-            
-            if seg['text_tn'] == '<SIL>' or seg['text_tn'] == '<NOISE>':
-                continue
+        new_df_data = []
+        for row in tqdm.tqdm(raw_df.iloc(), total=len(raw_df), desc='Generating dataframe: '):
+            for seg in row['audios']['segments']:
+                try:
+                    catagory = row['audios']['category']
+                except:
+                    catagory = 'N/A'
+                
+                if seg['text_tn'] == '<SIL>' or seg['text_tn'] == '<NOISE>':
+                    continue
 
-            new_df_data.append(
-                {'path':f'{os.path.join(root_path, row["audios"]["path"])}', 
-                'begin_time': seg['begin_time'], 
-                'end_time': seg['end_time'], 
-                'text': seg['text_tn'],
-                'tag':{ 'language':row['language'], 
-                        'url':row['audios']['url'], 
-                        'category':catagory,
-                        'speaker':row['audios']['speaker']}
-                })
-    df = pd.DataFrame(new_df_data)
+                new_df_data.append(
+                    {'path':f'{os.path.join(root_path, row["audios"]["path"])}', 
+                    'begin_time': seg['begin_time'], 
+                    'end_time': seg['end_time'], 
+                    'text': seg['text_tn'],
+                    'tag':{ 'language':row['language'], 
+                            'url':row['audios']['url'], 
+                            'category':catagory,
+                            'speaker':row['audios']['speaker']}
+                    })
+        df = pd.DataFrame(new_df_data)
+        df.to_csv(cache_df_path, sep='\t', index=False)
+        
     print(df.head())
 
     # create train, test, valid splits
