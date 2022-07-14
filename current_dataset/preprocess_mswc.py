@@ -20,7 +20,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
 from utils.make_tar_utils import tardir
 
-def convert_and_json_dump(file:str, dest:str, df):
+def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
+    if os.path.isfile(dest) and overwrite==False:
+        print(f'{dest} already exists, skiping')
+        return
+    
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
         json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':df['WORD'], 'tag':{'gender':df['GENDER'], 'language':dest.split('/')[-2]}}, f)
@@ -44,27 +48,34 @@ if __name__ == '__main__':
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/home/knoriy/datasets/raw_datasets/mswc/'
-    tar_dir = "/home/knoriy/datasets/raw_datasets/mswc/mswc.tar.gz"
+    root_path = '/home/knoriy/fsx/raw_datasets/mswc/'
+    tar_dir = "/home/knoriy/fsx/raw_datasets/mswc/mswc.tar.gz"
     dataset_name = 'mswc'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion/multilingual_spoken_words/{dataset_name}_tars/'
+    s3_dest = f's-laion/knoriy/mswc/{dataset_name}_tars/'
 
     language_tars_dirs = sorted(glob.glob(os.path.join(root_path, "audio/**.tar.gz")))
     if not language_tars_dirs:
         raise FileNotFoundError(f"Please check that the file have been extracted: {root_path}")
 
     for dir in tqdm.tqdm(language_tars_dirs, desc=f'processing: '):
-        audio_path = dir
-        with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
+        if dir == '/home/knoriy/fsx/raw_datasets/mswc/audio/en.tar.gz':
+            audio_path = dir
             audio_path = os.path.split(audio_path)[0]
-            mswc_audio.extractall(audio_path)
 
-        splits_path = dir.replace('audio', 'splits')
-        with tarfile.open(splits_path, mode='r:gz') as mswc_split:
+            splits_path = dir.replace('audio', 'splits')
             splits_path = splits_path.replace('.tar.gz', '/')
-            mswc_split.extractall(splits_path)
+        else:
+            audio_path = dir
+            with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
+                audio_path = os.path.split(audio_path)[0]
+                mswc_audio.extractall(audio_path)
+
+            splits_path = dir.replace('audio', 'splits')
+            with tarfile.open(splits_path, mode='r:gz') as mswc_split:
+                splits_path = splits_path.replace('.tar.gz', '/')
+                mswc_split.extractall(splits_path)
 
         tmp = glob.glob(os.path.join(splits_path, '**.csv'), recursive=True)
         csv_paths = []
