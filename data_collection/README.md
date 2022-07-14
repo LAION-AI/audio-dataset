@@ -1,7 +1,7 @@
 # Dataset collection (Dataset List)
 This dataset list includes all the [raw datasets](../data_preprocess/README.md) we have found up to now. You may also find their Data Type* as well as their status*.
 
-For those datasets who do not have any link in the list, they are purchased by LAION hence we can not make it public due to license issue. Do please contact us if you want to process them.
+ Most datasets are made public, hence downloadable through the URL in the list. You may find download scripts for some of them in `audio-dataset/utils/`. For those datasets who do not have any link in the list, they are purchased by LAION hence we can not make it public due to license issue. Do please contact us if you want to process them.
 
 For using the excat processed dataset for training your models, please contact LAION.
 

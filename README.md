@@ -25,7 +25,8 @@ Since Audio Dataset is an open source project belongs to LAION, we have a team o
 
 - You could find us on LAION [Discord Server](https://discord.com/invite/eq3cAMZtCC) CLAP channel (the channel name is clap in lower case).
 - In the CLAP channel, If you have any question about the project, please feel free to talk with Yuchen Hui(@Yuchen Hui#8574), Christoph Schuhmann(@spirit-from-germany#1488), Richard(@rvencu#4120), Romain(@rom1504#5008), Yusong Wu(@Yusong Wu#3047), Ke Chen(@Ke Chen#0709) or Tianyu Zhang(@tianyuzhang#1725). Text in parenthesis is Discord id.
-- Moreover, if you need computation resources during contributing, please go into compute-allocation channel of Discord Server and read the **pinned messages** for usage of LAION pods. If any problem is encountered, please feel free to ask any question in the channel. 
+- Moreover, if you need computation resources during contributing, please go into compute-allocation channel of Discord Server and read the **pinned messages** for usage of LAION pods. If any problem is encountered, please feel free to ask any question in the channel.
+- **7.14 update**: old LAION pods are not accessible any more, so you have to ask Richard(@rvencu#4120) in CLAP channel for access to **new LAION cluster**.
 
 ## Project progress
 
@@ -55,7 +56,9 @@ There are mainly two ways to contribute to our audio dataset project.
 
 ## Contribution Delivery 
 
-Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Yuchen Hui** so that he could move the dataset to the review board.
+Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Yuchen Hui** so that he could move the dataset to the review board. (If possible, please also add the processed (not yet packed up) dataset to `S3://s-laion-audio/webdatset_tar`). 
+
+When it comes to AWS s3 accessibility problem, please see the LAION cluster part in [contact](#contact) entry above, because AWS s3 are accessible if visited from the LAION new cluster.
 
 Nevertheless, **for the scrapped dataset, we also receive a CSV file** of which the structure is:
 
@@ -64,4 +67,4 @@ Nevertheless, **for the scrapped dataset, we also receive a CSV file** of which 
 i.e. each line is an audio_url-text pair, by which we can write a batch file to handle it easily.
 
 # The End
-Last updated on July 9, 2022
+Last updated on July 14 0:57 EST, 2022

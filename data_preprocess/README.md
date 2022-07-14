@@ -40,7 +40,9 @@ The label of the audio is saved in a `.json` file as a dictionary form. The keys
   }
   ```
   The captions in the list of `text` will be used to form audio-text pair, which is indispensable for the model training. Thus the list must not be empty. Therefore, for those curated datasets who do not offer any caption, **we have to make up a caption from** their [class labels](../data_collection/README.md/#data-type-terminology-explanation).
-    - you may refer to the method adopted by us of making up captions for AudioSet and FSD50K: if we have class labels A, B and C, then we let the caption be "The sounds of A, B and C".  
+  - you may refer to the method adopted by us of making up captions for AudioSet and FSD50K: if we have class labels A, B and C, then we let the caption be "The sounds of A, B and C".  
+
+  With regard to Speech datasets with transcript, we prefer to make up the caption like this: `The person is saying "<transcript>"`. If more information are offered by datasets, such as emotions while speaking, please contact Yuchen Hui and discuss with him how to adapt the make-up method so that the caption could include these extra elements.
 #### `tag` 
  The tags of the audio. Its value is a list of strings where each string could be either a class label (e.g., AudioSet) or a tag (in terms of this [definition](../data_collection/README.md/#data-type-terminology-explanation)). **Note that even if some class labels are utilized for making up captions for the `text` key, they should always be listed here.** See the complete example below for a list containing both class labels used in caption fabrication and several tags.
 #### `original_data` 
@@ -158,17 +160,10 @@ The outputed `sizes.json` will be like
 }
 ```
 
-## Directory Structure
-
-Raw dataset: All the raw datasets are stored in [https://deploy.laion.ai](https://deploy.laion.ai). For contributors, you can also freely download datasets by visiting links offered in the [list](../data_collection/README.md). For those datasets who do not have any link in the list, they are purchased by LAION hence we can not make it public due to license issue. Do please contact us if you want to process them.
-
-Preprocessed dataset & webdataset: all the preprocessed dataset & webdataset are stored in AWS S3 bucket: `S3://s-laion-audio/webdataset_tar/` 
-If you contribute to process a new dataset, please move the final webdataset to the above location.
-
 ## Contribute
 
 To contribute, please make a branch of yourself and make pull requests to the main branch.
 
-If you contribute to process a new dataset, please add your scripts to `data_preprocess`folder.
+**If you contribute to process a new dataset, please add your process/scraping scripts to `audio-dataset/data_preprocess`folder. If possible, please add the processed (not yet packed up) dataset to `S3://s-laion-audio/webdatset_tar`**
 
-If you contribute to process a new dataset, please move the final webdataset to the AWS S3 bucket. 
+**If you contribute to process a new dataset, please move the final webdataset to the AWS S3 bucket: `S3://s-laion-audio/webdataset_tar/`.**
