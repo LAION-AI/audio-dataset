@@ -3,8 +3,8 @@ import glob
 from tqdm import tqdm
 import os
 
-data_dir = '/mnt/audio_clip/processed_datasets/Clotho'
-file_extension = 'flac'
+data_dir = './'
+file_extension = 'mp4'
 file_list = glob.glob(f'{data_dir}/**/*.{file_extension}', recursive=True)
 total_duration = 0
 error_number = 0
