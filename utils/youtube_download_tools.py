@@ -1,58 +1,70 @@
 from __future__ import unicode_literals
 from multiprocessing import Pool
-import youtube_dl
+import yt_dlp
 import pandas as pd
-'''
+import functools as ft
+from file_utils import json_dump
+"""
 This module contains auxiliary functions allowing us to download youtube videos
 and transform then to .flac with sampling rate of 4800.
-'''
 
+"""
 def read_CSV(input_Path):
     pass
 
-def transform():
-    pass
 
-def generate_URL(ids,times):
+def generate_URL(ids):
     """ generate_URL
     Args:
-        ids (List[Str]): list of youtube IDs.
-        times (List[Tuple[]]): 
-            List of start time and end time for each audio, unit is second. 
-            example: [(30,40)]
+        ids (List[Str]): List of youtube IDs.
 
     Returns:
-        List[Str]:  
+        List[Str]: List of youtube Links 
     """
-    
-    #prefix = "https://www.youtube.com/embed/" + 
 
-    return URLS
+    return list(map(lambda id: f"https://www.youtube.com/watch?v={id}",ids)) 
 
 
-def download_from_URL(URL, output_dir):
-    '''
-    th
-    '''
+def download_from_URL(URL, output_dir, json_file):
+    """ Use yt-pld package API to download.
+    Args:
+        URL (_type_): _description_
+        output_dir (_type_): _description_
+    """
     ydl_opts = {
-        "outtmpl": output_dir + '%(title)s.%(ext)s',
+        "outtmpl": output_dir + "%(id)s.%(ext)s",
         "format": "bestaudio/best",
-        'postprocessors': [
+        "postprocessors": [
             {   
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'wav'
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "wav"
             },
         ]
     }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        result = ydl.download([URL])
-        print(result)
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([URL])
+        if json_file:
+            info = ydl.extract_info(URL, download=False)
+            id = info["id"]
+            # store all metadatas available from youtube page:
+            # ydl.sanitize_info makes the info json-serializable
+            json_dump(ydl.sanitize_info(info), f"{output_dir}/{id}.json")
 
+def download_multi_process(input_path, output_path, URLS, num_cores, json_file = False):
+    """_summary_
 
-# Note: Multiprocessing may be useless, 
-# since download is an IO intensive task.
-def download_multi_process(input_path, output_path, URLS, num_cores):
-   p = Pool(num_cores)
-   p.map(download_from_URL,URLS) 
+    Args:
+        input_path (str):  
+        output_path (str): _description_df
+        URLS (str): _description_
+        num_cores (_type_): _description_
+        json_file (bool, optional): _description_. Defaults to False.
+    """
+    p = Pool(num_cores)
+    temp = ft.partial(download_from_URL,output_dir = output_path)
+    p.map(temp,URLS) 
+ 
 
-download_from_URL("https://www.youtube.com/watch?v=4kJVb8tPZmw", "/home/yuchenhui/testvideo/")
+URLS = ["https://www.youtube.com/embed/4kJVb8tPZmw/start=10&end=30"]
+download_from_URL("https://www.youtube.com/embed/4kJVb8tPZmw/start=10&end=30", "/home/yuchenhui/testvideo/")
+#download_multi_process(None, "/home/yuchenhui/testvideo/" , URLS, 4)
