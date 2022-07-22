@@ -15,6 +15,7 @@ import pandas as pd
 import functools as ft
 from file_utils import json_dump
 import audio_utils as au
+import os
 
 
 def generate_URL(ids):
@@ -36,7 +37,8 @@ def download_from_URL(URL, output_dir, json_file):
         output_dir (str): literal meaning
     """
     ydl_opts = {
-        "outtmpl": output_dir + "%(id)s.%(ext)s",
+        "outtmpl": output_dir +"temp"+"%(id)s.%(ext)s", 
+        # since ffmpeg can not edit file in place, input and output file name can not be the same
         "format": "bestaudio/best",
         "postprocessors": [
             {   
@@ -97,7 +99,7 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
     URLs = generate_URL(ids)
     #download the audios  
     with Pool(num_cores) as p:
-        temp = ft.partial(download_from_URL,output_dir = output_path)
+        temp = ft.partial(download_from_URL,output_dir = output_path, json_file = json_file)
         p.map(temp,URLs) 
  
     # juge if start_time and end_time are in the csv file
@@ -109,17 +111,33 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
     except KeyError:
         pass
 
-    # (cut audios), transform to .flac and change the sampling rate 
-    def cut_process_audio(id,start,end):
-        if cut_necessary:
-            # cut the audio
-            au.cut_audio(f"{output_path}/{id}.wav", start, end)
+    # cut audios, transform to .flac and change the sampling rate 
+    global cut_process_audio
+    def cut_process_audio(tuple):
+        id = tuple[0]
+        start= tuple[1]
+        end= tuple[2]
         # convert to flac (sampling rate will be set in au.audio_to_flac)
-        au.audio_to_flac(f"{output_path}/{id}.wav", f"{output_path}/{id}.flac")
+        au.audio_to_flac(f"{output_path}/temp{id}.wav", f"{output_path}/temp{id}.flac")
+        os.remove(f"{output_path}/temp{id}.wav")
+        # cut the audio
+        au.cut_audio(f"{output_path}/temp{id}.flac",f"{output_path}/{id}.flac", start, end)
+        os.remove(f"{output_path}/temp{id}.flac")
+
+    global just_process_audio
+    def just_process_audio(id):
+        au.audio_to_flac(f"{output_path}/temp{id}.wav", f"{output_path}/{id}.flac")
+        os.remove(f"{output_path}/temp{id}.wav")
 
 
     with Pool(num_cores) as p:
-        p.map(cut_process_audio,zip(ids, start_times, end_times))
+        if cut_necessary:
+            a =zip(ids, start_times, end_times)
+            for tuple in a:
+                print(tuple)
+            p.map(cut_process_audio,zip(ids, start_times, end_times))
+        else:
+            p.map(just_process_audio,ids)
 
     print("--------------------------------------------------------")
     print("- All audios in csv file are dowloaded and processed!  -")
@@ -130,6 +148,4 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
 
 
 
-URLS = ["https://www.youtube.com/embed/4kJVb8tPZmw/start=10&end=30"]
-download_from_URL("https://www.youtube.com/embed/4kJVb8tPZmw/start=10&end=30", "/home/yuchenhui/testvideo/")
-#download_multi_process(None, "/home/yuchenhui/testvideo/" , URLS, 4)
+download_multi_process("/home/yuchenhui/testvideo/youtube.csv", "/home/yuchenhui/testvideo/", 4)
