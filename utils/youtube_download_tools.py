@@ -2,6 +2,49 @@
 This module contains auxiliary functions allowing us to download youtube videos
 and transform then to .flac with sampling rate of 4800.
 
+This file can also be viewed as a downloading script, 
+it accetps the arguments as follows:
+
+    1. --csv_path: path to the csv file. e.g. --csv_path "./data/youtube.csv"
+    The csv file format specification is:
+
+        id,start_time,end_time,...
+        4kJVb8tPZmw,0,10,...
+        ...
+
+        or:
+
+        id,...,...
+        4kJVb8tPZmw,...,...
+        ....
+
+        !!! Attention: start_time and end_time are in seconds.
+
+    Afterall, the csv file must contain a column named "id", 
+    and can optionally contain a column named "start_time" and "end_time".
+
+    2. --output_dir: path to the output directory.
+    -------------------------------------
+    !!!!! please use absolute path. !!!!!
+    -------------------------------------
+
+        e.g. --output_dir= "/data/youtube_data"
+            --output_dir= "/data/youtube_data/" will not work.
+
+        The downloaded audios will be stored in folder specified by this argument, 
+        their filenames are the same as the ids in the csv file, such as 
+        4kJVb8tPZmw.flac. The folder will be created if it does not exist. 
+
+    3. --cpus: number of cpus to use.
+        e.g. --cpus 4
+
+    4. --json_file: if True, the downloaded metadata will be stored in a json file
+    at the directory specified by --output_dir.
+        e.g. --json_file True 
+        e.g. file name: 4kJVb8tPZmw.json
+
+
+
 requirements:
     - yt_dlp
     - ffmpeg installed in the system
@@ -16,6 +59,9 @@ import functools as ft
 from file_utils import json_dump
 import audio_utils as au
 import os
+import argparse
+
+
 
 
 def generate_URL(ids):
@@ -37,7 +83,7 @@ def download_from_URL(URL, output_dir, json_file):
         output_dir (str): literal meaning
     """
     ydl_opts = {
-        "outtmpl": output_dir +"temp"+"%(id)s.%(ext)s", 
+        "outtmpl": output_dir +"/temp"+"%(id)s.%(ext)s", 
         # since ffmpeg can not edit file in place, input and output file name can not be the same
         "format": "bestaudio/best",
         "postprocessors": [
@@ -101,7 +147,6 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
     with Pool(num_cores) as p:
         temp = ft.partial(download_from_URL,output_dir = output_path, json_file = json_file)
         p.map(temp,URLs) 
- 
     # juge if start_time and end_time are in the csv file
     cut_necessary = False
     try:
@@ -132,12 +177,10 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
 
     with Pool(num_cores) as p:
         if cut_necessary:
-            a =zip(ids, start_times, end_times)
-            for tuple in a:
-                print(tuple)
-            p.map(cut_process_audio,zip(ids, start_times, end_times))
+            tuples =zip(ids, start_times, end_times)
+            p.map(cut_process_audio,tuples)
         else:
-            p.map(just_process_audio,ids)
+            p.map(just_process_audio,ids) 
 
     print("--------------------------------------------------------")
     print("- All audios in csv file are dowloaded and processed!  -")
@@ -145,7 +188,37 @@ def download_multi_process(csv_path, output_path, num_cores, json_file = False):
 
 
 
+if __name__ == "__main__": 
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--csv_path",
+        type=str,
+        help="input csv file path, example: ./data/example.csv"
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        help="output path, where the downloaded files will be stored. Please use absolute path."
+    )
+    parser.add_argument(
+        "--cpu_num",
+        type=str,
+        help="Number of cpu to use for downloading and converting. This script support multiprocessing."
+    )
+    parser.add_argument(
+        "--json_file",
+        type=str,
+        help="Can be True of False. Whether or not to save metadata of a video to a json file. Optional."
+    )
 
 
+    args = parser.parse_args()
+    if args.json_file == "True":
+        json_file = True
+    elif args.json_file == "False":
+        json_file = False
 
-download_multi_process("/home/yuchenhui/testvideo/youtube.csv", "/home/yuchenhui/testvideo/", 4)
+    download_multi_process(args.csv_path, args.output_dir, int(args.cpu_num), args.json_file)
+
+
