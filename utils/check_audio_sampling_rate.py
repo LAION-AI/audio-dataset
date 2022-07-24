@@ -13,7 +13,7 @@ for file_name in file_list:
             frame_rate = wave_file.getframerate()
             if frame_rate < 44100:
                 frame_too_little += 1
-                print(file_name, ":", frame_rate, "Hz")
+                print(file_name, ":", frame_rate, "kHz")
     except:
         error += 1
         continue
