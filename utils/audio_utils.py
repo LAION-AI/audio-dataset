@@ -15,6 +15,7 @@ def audio_to_mp3(audio_in_path, audio_out_path, bit_rate='192k', no_log=True):
         f'ffmpeg -y -i "{audio_in_path}" -vn {log_cmd}  '
         f'-b:a {bit_rate} -ac 1 "{audio_out_path}"')
 
+
 def cut_audio(audio_input_path, audio_output_path, start_time, end_time):
     os.system(
         f'ffmpeg -y  -ss {start_time} -i "{audio_input_path}" -to {end_time - start_time}  "{audio_output_path}"')

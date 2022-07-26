@@ -3,7 +3,6 @@ Code for preprocess FSD50K dataset.
 use condition: download ontology.json from https://github.com/audioset/ontology/blob/master/ontology.json, and put it in the parent folder of FSD50K.dev_audio
 """
 
-from unicodedata import name
 import pandas as pd
 import os
 from tqdm import tqdm
@@ -89,7 +88,7 @@ if __name__ == '__main__':
             '''
             text = []
             tags = []
-            original_data = []; 
+            original_data = {}; 
 
             metadata = info_dict[fname]
 
