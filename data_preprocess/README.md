@@ -116,6 +116,7 @@ The standard of webdataset and ways to create the webdataset:
 python make_tar.py --input /mnt/audio_clip/processed_datasets/audiocaps/ --output /mnt/audio_clip/webdataset_tar/audiocaps/ --dataclass all --num_element 512 --filename name
 ```
 - Note that `make_tar.py` makes use of the fonction `tardir` mentioned above.
+- It is suggested to use absolute path for --input and --output arguments.
 
 **Meaning of this command**:
 - We are expecting (`.flac`, `.json`) file pairs in `/mnt/audio_clip/processed_datasets/audiocaps/{}/` where {} could be `train`, `test`, `valid` which should be indicate in `dataclass`.
