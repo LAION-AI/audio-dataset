@@ -5,7 +5,6 @@ use condition: download UrbanSound8K.csv from https://zenodo.org/record/1203745#
 Author: Yuchen Hui
 """
 
-from winreg import REG_LEGAL_OPTION
 import pandas as pd
 import os
 from tqdm import tqdm
