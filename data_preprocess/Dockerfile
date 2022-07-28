@@ -14,7 +14,12 @@ RUN apt-get update && \
     pip3 install tqdm && \
     pip3 install librosa  && \
     pip3 install torch && \
-    pip3 install webdataset 
+    pip3 install webdataset &&\
+    pip3 install bs4 &&\
+    pip3 install tkinter &&\
+    pip3 install requests
+
+
     
 CMD ["bash"]
 
