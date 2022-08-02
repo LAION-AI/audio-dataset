@@ -100,17 +100,26 @@ def download_getter(csrf_token, csrf_middleware_token, session_id, sound_usernam
 
 
 def download_sound(tuple,csrf_token, csrf_middleware_token, session_id, folder):
-    sound_username = tuple[0] 
-    sound_id = tuple[1] 
-    sound_title = tuple[2]
-    start = time.time()
-    response, filename = download_getter(
-        csrf_token, csrf_middleware_token, session_id, sound_username, sound_id, sound_title)
-    with open(str(folder + '/' + filename), "wb") as f:
-        f.write(response.content)
-    with open("log.txt", "a") as file:
-        file.write(f"Downloaded {sound_id} in {time.time() - start} seconds\n")
-    del response, filename
+    try:
+        sound_username = tuple[0] 
+        sound_id = tuple[1] 
+        sound_title = tuple[2]
+        start = time.time()
+        response, filename = download_getter(
+            csrf_token, csrf_middleware_token, session_id, sound_username, sound_id, sound_title)
+        if os.path.exists(folder + "/" + filename):
+            pass
+        elif os.path.exists(folder + f"/id ={sound_id}| " + filename):pass
+        else:
+            with open(str(folder + f"/id ={sound_id}| " + filename), "wb") as f:
+                f.write(response.content)
+            with open("log.txt", "a") as file:
+                file.write(f"Downloaded {sound_id} in {time.time() - start} seconds\n")
+            del response, filename
+
+    except:
+        with open("log.txt", "a") as file:
+            file.write(f"download id = {sound_id} failed\n")
 
 
 
@@ -125,12 +134,12 @@ num_cores = int(parser.parse_args().cpu_num)
 
 csrf_token, csrf_middleware_token, session_id = get_tokens_session_id()
 parquet_file = "./parquet/freesound_parquet.parquet" 
-save_folder = "/fsx/yuchen/freesound/" 
+save_folder = "/fsx/yuchen/freesound" 
 df = pd.read_parquet(parquet_file)
-print(df.shape)
-time.sleep(20)
 
-df1 = df.head(100000)
+df1 = df.tail(3)
+print(df1)
+exit()
 
 tuples = zip(df1['username'], df1['id'], df1['title']) 
 download = ft.partial(download_sound,csrf_token = csrf_token, csrf_middleware_token=csrf_middleware_token, session_id = session_id, folder=save_folder)
