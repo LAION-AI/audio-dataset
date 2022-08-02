@@ -33,7 +33,6 @@ def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False, verbose=
         print(dest)
         json.dump({'filename': os.path.join(*dest.split('/')[3:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
 
-
 def split_all_audio_files(df, dest_root_path, max_workers=96):
     if not os.path.exists(dest_root_path):
         raise FileNotFoundError(f'Please Check {dest_root_path} exists')
@@ -55,6 +54,20 @@ def download_tsvs(urls:list, output_dir:str, extract:bool=False):
 
         if extract:
             os.system(f'tar -xf {dest_path}')
+
+def extract_covost_2_tsvs(tsv_tar_dir:str, dest:str, cv_tsv:str, version=2):
+    extract_covost_2_tar_cmd = f'tar -xf {tsv_tar_dir} -C {dest}'
+    os.system(extract_covost_2_tar_cmd)
+
+    src_lang, tgt_lang = os.path.basename(tsv_tar_dir).split('.')[1].split('_')
+    get_covost_splits_cmd = f'python /home/knoriy/fsx/raw_datasets/CoVoST_2/covost/get_covost_splits.py \
+        --version {version} \
+        --src-lang {src_lang} \
+        --tgt-lang {tgt_lang} \
+        --root {dest} \
+        --cv-tsv {cv_tsv} \
+        '
+    os.system(get_covost_splits_cmd)
 
 if __name__ == '__main__':
     x_2_eng = [
@@ -139,19 +152,24 @@ if __name__ == '__main__':
     s3 = fsspec.filesystem('s3')
     s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
 
-    # load metadata and configure audio paths
-    tsvs = glob.glob(os.path.join(root_path, 'tsvs/**/*.tsv'), recursive=True)[2:]
+    # for tar in tqdm.tqdm(glob.glob(os.path.join(root_path, 'tsvs/**/*.tar.gz'), recursive=True)):
+    #     extract_covost_2_tsvs(tar, os.path.join(root_path, 'tsvs/'), '/home/knoriy/fsx/raw_datasets/CoVoST_2/cv-corpus-10.0-2022-07-04/en/validated.tsv')
 
+    # load metadata and configure audio paths
+    tsvs = []
+    for tsv in glob.glob(os.path.join(root_path, 'tsvs/**/*.tsv'), recursive=True):
+        if any(word in os.path.basename(tsv) for word in ['test', 'train', 'dev']):
+            tsvs.append(tsv)
 
     for tsv in tqdm.tqdm(tsvs, desc=f'processing:'):
-        raw_df = pd.read_csv(tsv, sep='\t')
-        train_val_or_test, language = tsv.split('.')[-2], tsv.split('.')[-3]
+        raw_df = pd.read_csv(tsv, sep='\t', on_bad_lines='skip')
+        IS_TRAIN_VAL_OR_TEST, LANGUAGE = tsv.split('.')[-2], tsv.split('.')[-3]
 
         data = {}
         for row in raw_df.iloc():
 
-            data.setdefault('paths', []).append(os.path.join(root_path, COMMON_VOICE_VERSION, language.split('_')[0], "clips", row['path']))
-            data.setdefault('text', []).append(f"{row['translation']} translated to {get_language_from_key[language.split('_')[0]]}")
+            data.setdefault('paths', []).append(os.path.join(root_path, COMMON_VOICE_VERSION, LANGUAGE.split('_')[0], "clips", row['path']))
+            data.setdefault('text', []).append(f"{row['translation']} translated to {get_language_from_key[LANGUAGE.split('_')[0]]}")
             data.setdefault('original_data', []).append(
                 {
                     "sentence":row['sentence'],
@@ -161,25 +179,14 @@ if __name__ == '__main__':
             )
 
         df = pd.DataFrame(data)[:2]
-        print(df)
         
-        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'), language, train_val_or_test)
-        print(dest_path)
+        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'), LANGUAGE, IS_TRAIN_VAL_OR_TEST)
         os.makedirs(dest_path, exist_ok=True)
 
         split_all_audio_files(df, dest_path)
-    #     tardir(dest_path, dest_path, chunk, delete_file=True)
+        # tardir(dest_path, dest_path, chunk, delete_file=True)
 
-    #     # upload to s3 and delete local
-    #     s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
-    #     shutil.rmtree(dest_path)
+        # # upload to s3 and delete local
+        # s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
+        # shutil.rmtree(dest_path)
 
-        break
-
-
-    '''
-        python /home/knoriy/fsx/raw_datasets/CoVoST_2/covost/get_covost_splits.py \
-        --version 2 --src-lang en_de --tgt-lang <tgt_lang_code> \
-        --root <root path to the translation TSV and output TSVs> \
-        --cv-tsv /home/knoriy/fsx/raw_datasets/CoVoST_2/cv-corpus-10.0-2022-07-04/en/validated.tsv
-    '''
