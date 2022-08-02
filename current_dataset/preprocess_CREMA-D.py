@@ -28,7 +28,7 @@ def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False, verbose=
         return
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':df['text']}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']]}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):

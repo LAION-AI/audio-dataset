@@ -25,10 +25,10 @@ def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
     if os.path.isfile(dest) and overwrite==False:
         print(f'{dest} already exists, skiping')
         return
-        
+
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':df['norm_text'], 'tag':{'raw_text':df['raw_text']}}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':[df['norm_text']], 'original_data':{'raw_text':df['raw_text']}}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):
@@ -50,9 +50,8 @@ if __name__ == '__main__':
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/home/knoriy/datasets/raw_datasets/ljspeech/'
-    tar_dir = "/home/knoriy/datasets/raw_datasets/ljspeech/LJSpeech-1.1.tar.bz2"
-    metadata_dir = "/home/knoriy/datasets/raw_datasets/ljspeech/metadata.csv"
+    root_path = '/home/knoriy/fsx/raw_datasets/ljspeech/'
+    metadata_dir = "/home/knoriy/fsx/raw_datasets/ljspeech/metadata.csv"
 
     dataset_name = 'ljspeech'
 

@@ -21,13 +21,14 @@ from utils.audio_utils import audio_to_flac
 from utils.make_tar_utils import tardir
 
 def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
+    with open(dest.replace('.flac', '.json'), 'w') as f:
+        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':[df['WORD']], 'original_data':{'gender':df['GENDER'], 'language':dest.split('/')[-2]}}, f)
     if os.path.isfile(dest) and overwrite==False:
         print(f'{dest} already exists, skiping')
         return
-    
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':df['WORD'], 'tag':{'gender':df['GENDER'], 'language':dest.split('/')[-2]}}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':[df['WORD']], 'original_data':{'gender':df['GENDER'], 'language':dest.split('/')[-2]}}, f)
 
 
 def split_all_audio_files(df, src_root_path, dest_root_path, max_workers=96):

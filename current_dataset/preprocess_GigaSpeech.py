@@ -24,11 +24,13 @@ from utils.make_tar_utils import tardir
 def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
     if os.path.isfile(dest) and overwrite==False:
         print(f'{dest} already exists, skiping')
+        with open(dest.replace('.flac', '.json'), 'w') as f:
+            json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
         return
     
     audio_to_flac(file, dest, segment_start=df['begin_time'], segment_end=df['end_time'])
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':df['text'], 'tag':df['tag']}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):
@@ -80,7 +82,7 @@ if __name__ == '__main__':
                     'begin_time': seg['begin_time'], 
                     'end_time': seg['end_time'], 
                     'text': seg['text_tn'],
-                    'tag':{ 'language':row['language'], 
+                    'original_data':{ 'language':row['language'], 
                             'url':row['audios']['url'], 
                             'category':catagory,
                             'speaker':row['audios']['speaker']}

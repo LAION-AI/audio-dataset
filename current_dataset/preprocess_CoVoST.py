@@ -4,6 +4,7 @@ https://keithito.com/LJ-Speech-Dataset/
 """
 
 import glob
+from tabnanny import verbose
 from tokenize import Name
 import tqdm
 import os
@@ -29,7 +30,8 @@ def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False, verbose=
         return
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':df['norm_text'], 'tag':{'raw_text':df['raw_text']}}, f)
+        print(dest)
+        json.dump({'filename': os.path.join(*dest.split('/')[3:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):
@@ -39,7 +41,7 @@ def split_all_audio_files(df, dest_root_path, max_workers=96):
     l = len(df)
     with tqdm.tqdm(total=l, desc=f'Processing {dest_root_path}') as pbar:
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            threads = [executor.submit(convert_and_json_dump, row[0], os.path.join(dest_root_path, f'{i}.flac'), row) for i, row in enumerate(df.iloc())]
+            threads = [executor.submit(convert_and_json_dump, row[0], os.path.join(dest_root_path, f'{i}.flac'), row, overwrite=False, verbose=False) for i, row in enumerate(df.iloc())]
             for _ in as_completed(threads):
                 pbar.update(1)
 
@@ -95,49 +97,89 @@ if __name__ == '__main__':
         'https://dl.fbaipublicfiles.com/covost/covost_v2.en_id.tsv.tar.gz',
         'https://dl.fbaipublicfiles.com/covost/covost_v2.en_cy.tsv.tar.gz',
     ]
+    get_language_from_key = {
+        'en':'english',
+        'de':'german', 
+        'fr':'french', 
+        'nl':'dutch', 
+        'ru':'russian', 
+        'es':'spanish', 
+        'it':'italian', 
+        'tr':'turkish', 
+        'fa':'persian',
+        'ca':'catalan', 
+        'zh-cn':'chinese', 
+        'pt':'portuguese',
+        'et':'estonian',
+        'mn':'mongolian',
+        'ar':'arabic',
+        'sv-se':'swedish',
+        'lv':'latvian',
+        'sl':'slovenian',
+        'ta':'tamil',
+        'ja':'japanese',
+        'id':'indonesian',
+        'cy':'welsh',
+        } 
     download_tsvs(eng_2_x, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/")
     download_tsvs(x_2_eng, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs")
+    
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/home/knoriy/datasets/raw_datasets/CoVoST_2/'
-    metadata_dir = "/home/knoriy/datasets/raw_datasets/CoVoST_2/"
+    root_path = '/home/knoriy/fsx/raw_datasets/CoVoST_2/'
+    metadata_dir = "/home/knoriy/fsx/raw_datasets/CoVoST_2/"
 
     dataset_name = 'CoVoST_2'
+    COMMON_VOICE_VERSION = 'cv-corpus-10.0-2022-07-04'
 
     s3 = fsspec.filesystem('s3')
     s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
-    df = pd.read_csv('/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/covost_v2.en_de.dev.tsv', sep='\t')
-    print(df.head())
-
-    # create train, test, valid splits
-    # train, test = train_test_split(df, test_size=0.2)
-    # valid, test = train_test_split(test, test_size=0.2)
-    # train_test_val = {'train/':train, 'test/':test, 'valid/':valid}
+    tsvs = glob.glob(os.path.join(root_path, 'tsvs/**/*.tsv'), recursive=True)[2:]
 
 
-    # for key in tqdm.tqdm(train_test_val, desc=f'processing:'):
-    #     df = train_test_val[key]
+    for tsv in tqdm.tqdm(tsvs, desc=f'processing:'):
+        raw_df = pd.read_csv(tsv, sep='\t')
+        train_val_or_test, language = tsv.split('.')[-2], tsv.split('.')[-3]
+
+        data = {}
+        for row in raw_df.iloc():
+
+            data.setdefault('paths', []).append(os.path.join(root_path, COMMON_VOICE_VERSION, language.split('_')[0], "clips", row['path']))
+            data.setdefault('text', []).append(f"{row['translation']} translated to {get_language_from_key[language.split('_')[0]]}")
+            data.setdefault('original_data', []).append(
+                {
+                    "sentence":row['sentence'],
+                    "translation":row['translation'],
+                    "client_id":row['client_id'],
+                }
+            )
+
+        df = pd.DataFrame(data)[:2]
+        print(df)
         
-    #     dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'),key )
-    #     os.makedirs(dest_path, exist_ok=True)
+        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'), language, train_val_or_test)
+        print(dest_path)
+        os.makedirs(dest_path, exist_ok=True)
 
-    #     split_all_audio_files(df, dest_path)
+        split_all_audio_files(df, dest_path)
     #     tardir(dest_path, dest_path, chunk, delete_file=True)
 
     #     # upload to s3 and delete local
     #     s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
     #     shutil.rmtree(dest_path)
 
+        break
+
 
     '''
-        python get_covost_splits.py \
+        python /home/knoriy/fsx/raw_datasets/CoVoST_2/covost/get_covost_splits.py \
         --version 2 --src-lang en_de --tgt-lang <tgt_lang_code> \
         --root <root path to the translation TSV and output TSVs> \
-        --cv-tsv <path to validated.tsv>
+        --cv-tsv /home/knoriy/fsx/raw_datasets/CoVoST_2/cv-corpus-10.0-2022-07-04/en/validated.tsv
     '''
