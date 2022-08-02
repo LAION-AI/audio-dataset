@@ -46,7 +46,7 @@ def split_all_audio_files(df, dest_root_path, max_workers=96):
 
 def download_tsvs(urls:list, output_dir:str, extract:bool=False):
     os.makedirs(output_dir, exist_ok=True)
-    for url in urls:
+    for url in tqdm.tqdm(urls, desc="Downloading tsvs"):
         dest_path = os.path.join(output_dir, url.split("/")[-1])
         if os.path.isfile(dest_path):
             continue
@@ -70,6 +70,8 @@ def extract_covost_2_tsvs(tsv_tar_dir:str, dest:str, cv_tsv:str, version=2):
     os.system(get_covost_splits_cmd)
 
 if __name__ == '__main__':
+    import multiprocessing
+
     x_2_eng = [
         "https://dl.fbaipublicfiles.com/covost/covost_v2.fr_en.tsv.tar.gz",
         "https://dl.fbaipublicfiles.com/covost/covost_v2.de_en.tsv.tar.gz",
@@ -134,10 +136,6 @@ if __name__ == '__main__':
         'id':'indonesian',
         'cy':'welsh',
         } 
-    download_tsvs(eng_2_x, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs/")
-    download_tsvs(x_2_eng, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs")
-    
-    import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
     chunk = 512
@@ -152,8 +150,12 @@ if __name__ == '__main__':
     s3 = fsspec.filesystem('s3')
     s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
 
-    # for tar in tqdm.tqdm(glob.glob(os.path.join(root_path, 'tsvs/**/*.tar.gz'), recursive=True)):
-    #     extract_covost_2_tsvs(tar, os.path.join(root_path, 'tsvs/'), '/home/knoriy/fsx/raw_datasets/CoVoST_2/cv-corpus-10.0-2022-07-04/en/validated.tsv')
+    download_tsvs(eng_2_x, os.path.join(root_path, 'tsvs/'))
+    # download_tsvs(x_2_eng, "/home/knoriy/fsx/raw_datasets/CoVoST_2/tsvs")
+
+    for tar in tqdm.tqdm(glob.glob(os.path.join(root_path, 'tsvs/**/*.tar.gz'), recursive=True), desc='Extracting tsvs'):
+        if os.path.isd(tar)
+        extract_covost_2_tsvs(tar, os.path.join(root_path, 'tsvs/'), '/home/knoriy/fsx/raw_datasets/CoVoST_2/cv-corpus-10.0-2022-07-04/en/validated.tsv')
 
     # load metadata and configure audio paths
     tsvs = []
@@ -180,13 +182,13 @@ if __name__ == '__main__':
 
         df = pd.DataFrame(data)[:2]
         
-        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'), LANGUAGE, IS_TRAIN_VAL_OR_TEST)
+        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets'), LANGUAGE, IS_TRAIN_VAL_OR_TEST, "/")
         os.makedirs(dest_path, exist_ok=True)
 
         split_all_audio_files(df, dest_path)
-        # tardir(dest_path, dest_path, chunk, delete_file=True)
+        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-        # # upload to s3 and delete local
-        # s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
+        # upload to s3 and delete local
+        # s3.put(dest_path, os.path.join(s3_dest, LANGUAGE, IS_TRAIN_VAL_OR_TEST)+'/', recursive=True)
         # shutil.rmtree(dest_path)
-
+        print(dest_path)
