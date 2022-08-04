@@ -1,0 +1,36 @@
+duplicate id is:632618
+the 0eme duplicate name is:id =632618|id632618-98e079f9-0ee8-4a85-bb6b-c8f46835cba9filename632618__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-005.wav
+the 1eme duplicate name is:id =632618| 632618-98e079f9-0ee8-4a85-bb6b-c8f46835cba9filename632618__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-005.wav
+duplicate id is:632614
+the 0eme duplicate name is:id =632614| 632614-d1a7ede5-9fdb-48ce-a2cf-8eb22de0d46ffilename632614__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-003.wav
+the 1eme duplicate name is:id =632614|id632614-d1a7ede5-9fdb-48ce-a2cf-8eb22de0d46ffilename632614__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-003.wav
+duplicate id is:632617
+the 0eme duplicate name is:id =632617| 632617-0974d59e-07ec-4b95-acdc-f97d41fedb82filename632617__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-006.wav
+the 1eme duplicate name is:id =632617|id632617-0974d59e-07ec-4b95-acdc-f97d41fedb82filename632617__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-006.wav
+duplicate id is:632623
+the 0eme duplicate name is:id =632623|id632623-88db595f-33d8-4a38-98af-f2761dabc7bdfilename632623__szegvari__tribal-dark-night-forest-sounds-thriller-horror-scary-atmo-folk-ethno-drum-cinematic-surrround.wav
+the 1eme duplicate name is:id =632623| 632623-88db595f-33d8-4a38-98af-f2761dabc7bdfilename632623__szegvari__tribal-dark-night-forest-sounds-thriller-horror-scary-atmo-folk-ethno-drum-cinematic-surrround.wav
+duplicate id is:247660
+the 0eme duplicate name is:id =247660| 247660__mtg__overall20quality20of20single20note20-20violin20-20f6.
+the 1eme duplicate name is:id =247660| 247660-f6039cbd-3937-4b89-b4ea-88a675134975filename247660__mtg__overall-quality-of-single-note-violin-f6.wav
+duplicate id is:632616
+the 0eme duplicate name is:id =632616|id632616-43a13beb-0338-4be0-b3d2-7da4ae09bf24filename632616__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-007.wav
+the 1eme duplicate name is:id =632616| 632616-43a13beb-0338-4be0-b3d2-7da4ae09bf24filename632616__hewn-marrow__16edo-notes-sine-sustain-refnote-130-815hz-note-007.wav
+duplicate id is:632619
+the 0eme duplicate name is:id =632619|id632619-1b8975aa-de3a-4524-a4d2-7dc3c2845c36filename632619__klankbeeld__river-ship-jetfighter-1211pm-220421-0338.mp3
+the 1eme duplicate name is:id =632619| 632619-1b8975aa-de3a-4524-a4d2-7dc3c2845c36filename632619__klankbeeld__river-ship-jetfighter-1211pm-220421-0338.mp3
+duplicate id is:528227
+the 0eme duplicate name is:id =528227| 528227-390c8461-033d-4ae7-a8e7-c4310796b57ffilename528227__vanyamba__modular-chimes-waveform-stereo-b2.wav
+the 1eme duplicate name is:id =528227|528227__vanyamba__modular20chimes20waveform20stereo20b2.
+duplicate id is:632624
+the 0eme duplicate name is:id =632624| 632624-8aaa9f3f-0835-46e4-b342-72fb04ffeeeffilename632624__cyberagency__cybernotific-cyberagency-cyberpanel.mp3
+the 1eme duplicate name is:id =632624|id632624-8aaa9f3f-0835-46e4-b342-72fb04ffeeeffilename632624__cyberagency__cybernotific-cyberagency-cyberpanel.mp3
+duplicate id is:632621
+the 0eme duplicate name is:id =632621|id632621-68a036a8-094d-4f94-85cd-1d4ec57207abfilename632621__eftos__eftos-exa-nano.wav
+the 1eme duplicate name is:id =632621| 632621-68a036a8-094d-4f94-85cd-1d4ec57207abfilename632621__eftos__eftos-exa-nano.wav
+duplicate id is:632625
+the 0eme duplicate name is:id =632625| 632625-f15dc5d7-3cbf-4db5-a72e-02d1328c396dfilename632625__josefpres__bass-loops-045-short-loop-120-bpm.wav
+the 1eme duplicate name is:id =632625|id632625-f15dc5d7-3cbf-4db5-a72e-02d1328c396dfilename632625__josefpres__bass-loops-045-short-loop-120-bpm.wav
+duplicate id is:632620
+the 0eme duplicate name is:id =632620| 632620-f64ecc30-90e6-4ea9-8ccf-8415fcff29a4filename632620__garuda1982__birds-on-the-river-nature-atmosphere.wav
+the 1eme duplicate name is:id =632620|id632620-f64ecc30-90e6-4ea9-8ccf-8415fcff29a4filename632620__garuda1982__birds-on-the-river-nature-atmosphere.wav
