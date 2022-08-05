@@ -7,9 +7,15 @@ data_dir = '/mnt/audio_clip/processed_datasets/Clotho'
 file_extension = 'flac'
 file_list = glob.glob(f'{data_dir}/**/*.{file_extension}', recursive=True)
 total_duration = 0
+error_number = 0
 for file in tqdm(file_list):
-    total_duration += librosa.get_duration(filename=file)
-
+    try:
+        total_duration += librosa.get_duration(filename=file)
+    except:
+        error_number += 1
+        print("the error file is:", file)
+        continue
 os.system('date')
 print(f'Total {len(file_list)} files, '
       f'total duration of {total_duration / 3600 :.2f} hours.')
+print("error times:", error_number)

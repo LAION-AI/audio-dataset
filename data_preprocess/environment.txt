@@ -3,5 +3,7 @@ pandas
 librosa
 tqdm
 ffmpeg
+torch
+webdataset
 
 
