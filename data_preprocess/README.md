@@ -43,8 +43,8 @@ The label of the audio is saved in a `.json` file as a dictionary form. The keys
   - you may refer to the method adopted by us of making up captions for AudioSet and FSD50K: if we have class labels A, B and C, then we let the caption be "The sounds of A, B and C".  
 
   With regard to Speech datasets with transcript, we prefer to make up the caption like this: `The person is saying "<transcript>"`. If more information are offered by datasets, such as emotions while speaking, please contact Yuchen Hui and discuss with him how to adapt the make-up method so that the caption could include these extra elements.
-#### `tag` 
- The tags of the audio. Its value is a list of strings where each string could be either a class label (e.g., AudioSet) or a tag (in terms of this [definition](../data_collection/README.md/#data-type-terminology-explanation)). **Note that even if some class labels are utilized for making up captions for the `text` key, they should always be listed here.** See the complete example below for a list containing both class labels used in caption fabrication and several tags.
+#### `tags` 
+ The tags of the audio. Its value is a list of strings`i.e. "tags":["str1","str2",...]` where each string could be either a class label (e.g., AudioSet) or a tag (in terms of this [definition](../data_collection/README.md/#data-type-terminology-explanation)). **Note that even if some class labels are utilized for making up captions for the `text` key, they should always be listed here.** See the complete example below for a list containing both class labels used in caption fabrication and several tags.
 #### `original_data` 
  Any form of original data associated with the audio. Can be in arbitrary form as long as consistent inside dataset. For example, if the original data of the audio is not in the form of tag or text description, you could save the original data here. In fact, all metadata other than `text` and `tag` should be stored here.
 
