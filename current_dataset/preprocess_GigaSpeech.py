@@ -24,8 +24,6 @@ from utils.make_tar_utils import tardir
 def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
     if os.path.isfile(dest) and overwrite==False:
         print(f'{dest} already exists, skiping')
-        with open(dest.replace('.flac', '.json'), 'w') as f:
-            json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
         return
     
     audio_to_flac(file, dest, segment_start=df['begin_time'], segment_end=df['end_time'])
