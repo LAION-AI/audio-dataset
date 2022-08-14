@@ -82,6 +82,8 @@ train/valid/test (for only two splits, name train/test). For datasets that have 
 split according to the dataset split. If there is no split of the dataset, please randomly leave-out 10% of the dataset
 as test set.
 
+Note that we have a tool aiming at doing this, the path is `/data_preprocess/split_and_rename.py`.
+
 ```
 preprocessed_dataset_dir
 ├── Dataset_A

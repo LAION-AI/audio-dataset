@@ -2,7 +2,8 @@ import re
 import pandas as pd
 import os
 import traceback
-
+import subprocess
+import shlex
 
 parquet_file = "/home/yuchen/raw/freesound/parquet/freesound_parquet.parquet" 
 audio_folder = "/fsx/yuchen/freesound" 
@@ -148,7 +149,7 @@ def get_id(file_name):
         id = int(list_id[0])
         return id
     except:
-        print(file_name, "get id failed")
+        print(file_name, "failed")
         
     
 def duplicated_entry_remove():
@@ -252,18 +253,26 @@ def find_duration_failed():
             file.write(string)
 
     
+def get_sampling_rate(file_name):
+    command = "ffprobe -v error -select_streams a -of default=noprint_wrappers=1:nokey=1 -show_entries stream=sample_rate "
+
+    process = subprocess.run(shlex.split(command+"'"+file_name+"'"), capture_output=True, check=True)
+
+    sampling_rate = float(process.stdout.decode())
+    return sampling_rate
 
 #find_duration_failed()
     
-get_total_duration()
-    
-#find_too_long()
+if __name__ == "__main__":
+    get_total_duration()
+        
+    #find_too_long()
 
-#duplicated_entry_remove()
-#zip_freesound(50000)
-#notyet_downloaded_by_os()
-#modify_filename()
-#zip_freesound()
+    #duplicated_entry_remove()
+    #zip_freesound(50000)
+    #notyet_downloaded_by_os()
+    #modify_filename()
+    #zip_freesound()
 
     
 
