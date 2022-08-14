@@ -101,7 +101,7 @@ preprocessed_dataset_dir
 
 ## Webdataset format 
 ### Making tar files
-To get to Webdataset format, we need the auxiliary fonction `tardir` in the `make_tar_utils.py` (will be used in file `make_tar.py`). This function creates the `.tar` files that includes the audio and text files in the same folder. One can indicate how much pairs of files should be in the `.tar` file. For example, calling this `make_tar_utils.tardir(file_path='PATH\TO\THE\WHERE\AUDIO_TEXT_PAIRS\LOCATE', tar_name='PATH\TO\THE\OUTPUT\FOLDER\TARFILENAME', n_entry_each=some int number)` will give you `n_entry_each` pairs of (audio, text) files pairs in each tar files naming like `TARFILENAME0`, `TARFILENAME1` etc. All the audio `.flac` and text `.json` files in `file_path` will be packed up.
+To get to Webdataset format, we need the auxiliary function `tardir` in the `make_tar_utils.py` (will be used in file `make_tar.py`). This function creates the `.tar` files that includes the audio and text files in the same folder. One can indicate how much pairs of files should be in the `.tar` file. For example, calling this `make_tar_utils.tardir(file_path='PATH\TO\THE\WHERE\AUDIO_TEXT_PAIRS\LOCATE', tar_name='PATH\TO\THE\OUTPUT\FOLDER\TARFILENAME', n_entry_each=some int number)` will give you `n_entry_each` pairs of (audio, text) files pairs in each tar files naming like `TARFILENAME0`, `TARFILENAME1` etc. All the audio `.flac` and text `.json` files in `file_path` will be packed up.
 
 The `load_from_tar` load `(audio, text, name)` tuples from a specific `.tar` file with some choice of audio decoding
 parameters. See the documentation of the function in detail. And, of course, we have a different function for
