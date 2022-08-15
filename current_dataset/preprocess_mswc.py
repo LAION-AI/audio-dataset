@@ -42,6 +42,10 @@ def split_all_audio_files(df, src_root_path, dest_root_path, max_workers=96):
 
 if __name__ == '__main__':
     import multiprocessing
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--job", required=True)
+    args = parser.parse_args()
     
     max_workers = multiprocessing.cpu_count()
     chunk = 512
@@ -58,58 +62,59 @@ if __name__ == '__main__':
     if not language_tars_dirs:
         raise FileNotFoundError(f"Please check that the file have been extracted: {root_path}")
 
-    for dir in tqdm.tqdm(language_tars_dirs, desc=f'processing: '):
-        if dir == '/home/knoriy/fsx/raw_datasets/mswc/audio/en.tar.gz':
-            audio_path = dir
+    dir = args.job
+
+    if dir == '/home/knoriy/fsx/raw_datasets/mswc/audio/en.tar.gz':
+        audio_path = dir
+        audio_path = os.path.split(audio_path)[0]
+
+        splits_path = dir.replace('audio', 'splits')
+        splits_path = splits_path.replace('.tar.gz', '/')
+    else:
+        audio_path = dir
+        with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
             audio_path = os.path.split(audio_path)[0]
+            mswc_audio.extractall(audio_path)
 
-            splits_path = dir.replace('audio', 'splits')
+        splits_path = dir.replace('audio', 'splits')
+        with tarfile.open(splits_path, mode='r:gz') as mswc_split:
             splits_path = splits_path.replace('.tar.gz', '/')
+            mswc_split.extractall(splits_path)
+
+    tmp = glob.glob(os.path.join(splits_path, '**.csv'), recursive=True)
+    csv_paths = []
+    for csv_path in tmp:
+        if '_splits.csv' not in csv_path:
+            csv_paths.append(csv_path)
+
+    for csv_path in csv_paths:
+        if 'train' in csv_path:
+            train_test_dev = 'train/'
+        elif 'test' in csv_path:
+            train_test_dev = 'test/'
+        elif 'dev' in csv_path:
+            train_test_dev = 'valid/'
         else:
-            audio_path = dir
-            with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
-                audio_path = os.path.split(audio_path)[0]
-                mswc_audio.extractall(audio_path)
+            train_test_dev = 'other/'
+        df = pd.read_csv(csv_path)
 
-            splits_path = dir.replace('audio', 'splits')
-            with tarfile.open(splits_path, mode='r:gz') as mswc_split:
-                splits_path = splits_path.replace('.tar.gz', '/')
-                mswc_split.extractall(splits_path)
+        # Convert to .flac
+        dest_path  = splits_path.replace('.tar.gz', '/').replace('/raw_datasets/', '/processed_datasets/').replace('splits/', '')
+        dest_path  = os.path.join(dest_path, train_test_dev)
 
-        tmp = glob.glob(os.path.join(splits_path, '**.csv'), recursive=True)
-        csv_paths = []
-        for csv_path in tmp:
-            if '_splits.csv' not in csv_path:
-                csv_paths.append(csv_path)
+        src_path = os.path.join(splits_path.replace('.tar.gz', '/').replace('splits/', 'audio/'), 'clips')
+        os.makedirs(dest_path, exist_ok=True)
+        os.makedirs(src_path, exist_ok=True)
 
-        for csv_path in csv_paths:
-            if 'train' in csv_path:
-                train_test_dev = 'train/'
-            elif 'test' in csv_path:
-                train_test_dev = 'test/'
-            elif 'dev' in csv_path:
-                train_test_dev = 'valid/'
-            else:
-                train_test_dev = 'other/'
-            df = pd.read_csv(csv_path)
+        split_all_audio_files(df, src_path, dest_path, max_workers)
 
-            # Convert to .flac
-            dest_path  = splits_path.replace('.tar.gz', '/').replace('/raw_datasets/', '/processed_datasets/').replace('splits/', '')
-            dest_path  = os.path.join(dest_path, train_test_dev)
+        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-            src_path = os.path.join(splits_path.replace('.tar.gz', '/').replace('splits/', 'audio/'), 'clips')
-            os.makedirs(dest_path, exist_ok=True)
-            os.makedirs(src_path, exist_ok=True)
+        # upload to s3 and delete local
+        s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
+        print('File Uploaded to: ', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
+        shutil.rmtree(dest_path)
 
-            split_all_audio_files(df, src_path, dest_path, max_workers)
-
-            tardir(dest_path, dest_path, chunk, delete_file=True)
-
-            # upload to s3 and delete local
-            s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
-            print('File Uploaded to: ', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
-            shutil.rmtree(dest_path)
-
-        # clean extracted files
-        shutil.rmtree(splits_path.replace('splits/', 'audio/'))
-        shutil.rmtree(splits_path)
+    # clean extracted files
+    shutil.rmtree(splits_path.replace('splits/', 'audio/'))
+    shutil.rmtree(splits_path)
