@@ -30,7 +30,7 @@ def convert_and_json_dump(df:pd.DataFrame, overwrite:bool=False, verbose:bool=Fa
         return
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[3:]), 'text':[df['text']], 'original_data':None}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[3:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
     return dest.replace('.flac', '.json')
 
 def extract_tars(dir:pathlib.Path, dest:pathlib.Path):
@@ -50,7 +50,7 @@ def run_tasks(extract:bool=False, overwrite:bool=False, verbose:bool=False, chun
     chunk = 512
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = pathlib.Path(f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/')
+    s3_dest = pathlib.Path(f's-laion-audio/webdataset_tar/{dataset_name}/')
 
     root_data_dir = pathlib.Path('/home/knoriy/fsx/raw_datasets/EmoV_db/')
     extracted_data_dir = pathlib.Path('/home/knoriy/fsx/raw_datasets/EmoV_db/raw/')
@@ -84,7 +84,9 @@ def run_tasks(extract:bool=False, overwrite:bool=False, verbose:bool=False, chun
             data['emotion'] = emotion
             data['path'] = path
             data['dest'] = str(pathlib.Path(dest_path).joinpath(f'{i}.flac'))
-            data['text'] = current_file[1]
+            data['text'] = f'A {EmoV_DB_gender[actor]} saying "{current_file[1]}" in a {emotion} voice'
+            data['original_data'] = {'gender':EmoV_DB_gender[actor], 'emotion':emotion, 'raw_text':current_file[1]}
+
 
             df_data.append(data)
 
