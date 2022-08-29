@@ -163,6 +163,15 @@ The outputed `sizes.json` will be like
 }
 ```
 
+## Data Check
+To make sure that all datasets uploaded to `s3://s-laion-audio` are bug-free and usable, we invite every contributor to follow the three steps of data check below:
+
+1. Before using `FFmpeg` to convert any audio files to `.flac` format, please apply method `soundfile.read()` from python [`soundfile`](https://pysoundfile.readthedocs.io/en/0.8.0/#soundfile.SoundFile) module to every audio file in raw dataset. If any exception is threw when applying soundfile.read() to an audio, then we consider that this audio is broken and we just discard it and will not convert it to `.flac` format (i.e. it will not be included in the final dataset.). You may refer to [`remove_bad_flac.py`](/data_check/remove_bad_flac.py) and adapt it to do this work.
+
+2. After using `FFmpeg` to convert all audio files into `.flac` format while before they are packed up with json files: repeat the process mentioned in point 1. Discard those flac audios with exception threw when read by `soundfile.read()`.
+
+3. Once a dataset is converted to Webdataset format and uploaded to `s3://s-laion-judio/webdatset_tar/`, we have to check it for the last time: Using the script written described [here](https://github.com/LAION-AI/CLAP/tree/clap#test-if-tar-is-invalid) to check that the tar files are indeed not broken.
+  
 ## Contribute
 
 To contribute, please make a branch of yourself and make pull requests to the main branch.

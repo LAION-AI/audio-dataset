@@ -150,6 +150,7 @@ def get_id(file_name):
         return id
     except:
         print(file_name, "failed")
+    
         
     
 def duplicated_entry_remove():
