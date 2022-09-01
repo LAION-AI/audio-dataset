@@ -1,8 +1,4 @@
 # Freesound Data Card
-## Dataset Overview
-|Size of dataset|Number of audios|
-|:----:|:-----:|
-|4.4TB| 518486 |
 ## Data Collection
 
 |Source|<center>Collecting Method<center>|
@@ -19,7 +15,7 @@ from these 6 fields and form a 3-field `.json` file for each audio. Here are som
 
 #### 
 <audio id="audio" controls="controls" preload="yes">
-      <source id="flac" src="1.flac">
+      <source id="flac" src="https://github.com/YuchenHui22314/audio-dataset/blob/main/data_card/1.flac">
 </audio><br>
 
 ```json
@@ -44,7 +40,7 @@ from these 6 fields and form a 3-field `.json` file for each audio. Here are som
 ```
 
 <audio id="audio" controls="controls" preload="yes">
-      <source id=".flac" src="2.flac">
+      <source id=".flac" src="./2.flac">
 </audio>
 
 ```json
