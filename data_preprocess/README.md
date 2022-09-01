@@ -171,7 +171,21 @@ To make sure that all datasets uploaded to `s3://s-laion-audio` are bug-free and
 2. After using `FFmpeg` to convert all audio files into `.flac` format while before they are packed up with json files: repeat the process mentioned in point 1. Discard those flac audios with exception threw when read by `soundfile.read()`.
 
 3. Once a dataset is converted to Webdataset format and uploaded to `s3://s-laion-judio/webdatset_tar/`, we have to check it for the last time: Using the script written described [here](https://github.com/LAION-AI/CLAP/tree/clap#test-if-tar-is-invalid) to check that the tar files are indeed not broken.
-  
+
+## Data Card
+Aiming at archiving the methods we used to processed datasets, we decide to make a "data card" for each dataset. As a result, we invite you to make a data card for datasets you processed. You may refer to [the data card of freesound dataset](/data_card/freesound.md)  as a template.
+
+There are two essential parts in a data card:
+1. Data collection: In this part we write how we collect the dataset, which includes two aspects:
+   - the source of the dataset, usually an URL
+   - the collecting method, could be, for example, downloading directly or scrawling a website, etc.
+2. Preprocessing principles:
+   - we hope you can put 2 audio-json pairs as an illustration for the preprocessing principles. However, the audio format have to be `.mp4` or `.mov` (so have to be video format, audio format will not work 555) to be supported by github markdown engine. You can refer to this: https://stackoverflow.com/questions/44185716/add-audio-in-github-readme-md
+   - **json file generation principle:** (most important part)
+      - **What is the content of "text" entry** (most important, since we will use this to train the model)
+      - what is the content of "tag" entry 
+      - what is the content of "original_data" entry
+   - audio filtering principles and audio format specification: same for all datasets, so just copy that of freesound dataset.
 ## Contribute
 
 To contribute, please make a branch of yourself and make pull requests to the main branch.
