@@ -7,4 +7,4 @@ do
 done
 
 wget -c https://zenodo.org/record/5114771/files/MACS.yaml
-wget -c https://zenodo.org/record/5114771/files/MACS_competence.csv?download=1
+wget -c https://zenodo.org/record/5114771/files/MACS_competence.csv
