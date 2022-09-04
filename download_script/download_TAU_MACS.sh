@@ -7,3 +7,5 @@ do
 done
 
 wget -c https://zenodo.org/record/5114771/files/MACS.yaml
+
+unzip '*.zip'
