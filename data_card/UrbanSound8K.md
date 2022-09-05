@@ -12,6 +12,10 @@ You may refer to [preprocess_UrbanSound8K.py](https://github.com/LAION-AI/audio-
 Some audio-json pairs selected from the processed dataset:
 
 
+
+https://user-images.githubusercontent.com/64437243/188514643-e725ceb7-af62-4f3f-9206-c3fed9b9d6a2.mov
+
+
       
 ```json
 {
@@ -37,6 +41,10 @@ Some audio-json pairs selected from the processed dataset:
 
       
       
+
+
+https://user-images.githubusercontent.com/64437243/188514649-091b1cf6-f3a4-4d13-aab6-6db5df35a75b.mov
+
 
 
 
