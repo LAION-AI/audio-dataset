@@ -1,8 +1,8 @@
-# audio-dataset
+# Dataset proprocessing pipline
 
 Audio Dataset for training CLAP and other models. In this readme, we define the standard and method to store and process
 the audio data. Please feel free to propose idea or comments for this documentation. We will iterate several rounds to
-have a final version.
+have a final version. If something confuses you while reading this doc, you can refer to [the end of this doc](#example-of-the-entire-pipeline) for a complete example. If you are still confused after that, **do please contact us** at discord!!!!!!!
 
 ## Overview
 
@@ -70,7 +70,7 @@ new dataset, **please add your scripts to `data_preprocess`folder**.
 
 You can find the codes to process audio files in `utils/audio_utils`. You can begin with learning from the codes if you would love to contribute.
 
-An example of preprocess raw dataset can be found in `data_preprocess/preprocess_clotho.py`.
+An example of preprocess raw dataset can be found at [`data_preprocess/preprocess_clotho.py`](/data_preprocess/preprocess_clotho.py) or [`data_preprocess/preprocess_MACS_yuchen.py`](/data_preprocess/preprocess_MACS_yuchen.py).
 
 ### Split the Dataset
 
@@ -121,7 +121,7 @@ python make_tar.py --input /mnt/audio_clip/processed_datasets/audiocaps/ --outpu
 - It is suggested to use absolute path for --input and --output arguments.
 
 **Meaning of this command**:
-- We are expecting (`.flac`, `.json`) file pairs in `/mnt/audio_clip/processed_datasets/audiocaps/{}/` where {} could be `train`, `test`, `valid` which should be indicate in `dataclass`.
+- We are expecting (`.flac`, `.json`) file pairs in `/mnt/audio_clip/processed_datasets/audiocaps/{}/` where {} could be `train`, `test`, `valid` which should be indicate in `dataclass`. (See the example at the end of the document)
 
 ```
 ......
@@ -166,9 +166,9 @@ The outputed `sizes.json` will be like
 ## Data Check
 To make sure that all datasets uploaded to `s3://s-laion-audio` are bug-free and usable, we invite every contributor to follow the three steps of data check below:
 
-1. Before using `FFmpeg` to convert any audio files to `.flac` format, please apply method `soundfile.read()` from python [`soundfile`](https://pysoundfile.readthedocs.io/en/0.8.0/#soundfile.SoundFile) module to every audio file in raw dataset. If any exception is threw when applying soundfile.read() to an audio, then we consider that this audio is broken and we just discard it and will not convert it to `.flac` format (i.e. it will not be included in the final dataset.). You may refer to [`remove_bad_flac.py`](/data_check/remove_bad_flac.py) and adapt it to do this work.
+1. Before using `FFmpeg` to convert any audio files to `.flac` format, please apply method `soundfile.read()` from python [`soundfile`](https://pysoundfile.readthedocs.io/en/0.8.0/#soundfile.SoundFile) module to every audio file in raw dataset. If any exception is threw when applying soundfile.read() to an audio, then we consider that this audio is broken and we just discard it and will not convert it to `.flac` format (i.e. it will not be included in the final dataset.). You can use [`check_audio.py`](/data_check/check_audio.py) for this. (See the example at the end of this document.)
 
-2. After using `FFmpeg` to convert all audio files into `.flac` format while before they are packed up with json files: repeat the process mentioned in point 1. Discard those flac audios with exception threw when read by `soundfile.read()`.
+2. After using `FFmpeg` to convert all audio files into `.flac` format while before they are packed up with json files: repeat the process mentioned in point 1. Discard those flac audios with exception threw when read by `soundfile.read()`.You can use [`check_audio.py`](/data_check/check_audio.py) for this. (See the example at the end of the document.)
 
 3. Once a dataset is converted to Webdataset format and uploaded to `s3://s-laion-judio/webdatset_tar/`, we have to check it for the last time: Using the script written described [here](https://github.com/LAION-AI/CLAP/tree/clap#test-if-tar-is-invalid) to check that the tar files are indeed not broken.
 
@@ -186,6 +186,37 @@ There are two essential parts in a data card:
       - what is the content of "tag" entry 
       - what is the content of "original_data" entry
    - audio filtering principles and audio format specification: same for all datasets, so just copy that of freesound dataset.
+
+## Example of the entire pipeline
+We provide an example to illustrate the entire process. The example is based on the MACS dataset.
+```bash
+#!/bin/bash
+# /fsx/MACS/TAU2019/TAU-urban-acoustic-scenes-2019-development/audio    raw dataset path
+# /fsx/yuchen/macs/processed/                                           processed dataset path
+
+cd /fsx/yuchen/macs/
+#upload raw dataset to s3
+aws s3 cp --recursive /fsx/MACS/TAU2019/TAU-urban-acoustic-scenes-2019-development/audio/ s3://s-laion-audio/raw_dataset/MACS/
+# data check before processing:
+python3 check_audio.py --dir /fsx/MACS/TAU2019/TAU-urban-acoustic-scenes-2019-development/audio --ext wav  
+# data preprocess:
+python3 preprocess_MACS_yuchen.py
+# data check after processing
+python3 check_audio.py --dir /fsx/yuchen/macs/processed --ext flac
+# split (train 90% test 10%)
+python3 split_and_rename.py --data_dir /fsx/yuchen/macs/processed/  --output_dir /fsx/yuchen/macs/split/   
+cd /fsx/yuchen/utils/
+# make tar (train)
+python3 make_tar.py --input /fsx/yuchen/macs/split --output /fsx/yuchen/macs/webdataset/ --dataclass train --num_element 512     
+# make tar (test)
+python3 make_tar.py --input /fsx/yuchen/macs/split --output /fsx/yuchen/macs/webdataset/ --dataclass test --num_element 512     
+# upload to s3
+aws s3 cp --recursive /fsx/yuchen/macs/webdataset/ s3://s-laion-audio/webdataset_tar/MACS/                                      
+cd /fsx/yuchen/check_tar/
+# data check after uploading
+python3 test_tars.py --tar-path "pipe:aws s3 --cli-connect-timeout 0 cp s3://s-laion-audio/webdataset_tar/MACS/train" --start 0 --end 7 --batch-size 1 --order  
+python3 test_tars.py --tar-path "pipe:aws s3 --cli-connect-timeout 0 cp s3://s-laion-audio/webdataset_tar/MACS/test" --start 0 --end 1 --batch-size 1 --order  
+```
 ## Contribute
 
 To contribute, please make a branch of yourself and make pull requests to the main branch.
