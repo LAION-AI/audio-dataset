@@ -1,11 +1,7 @@
 # Freesound Data Card
-## Dataset Overview
-|Size of dataset|Number of audios|
-|:----:|:-----:|
-|4.4TB| 518486 |
 ## Data Collection
 
-|Source|<center>Collecting Method<center>|
+|Source|Collecting Method|
 |:---------:|:--------|
 | [Freesound website](https://freesound.org/)  |1.Scrape from the [Freesound website](https://freesound.org/) and get the [metadata](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/parquet/freesound_parquet.parquetb/main/metadata/freesound/parquet/freesound_parquet.parquet) <br>2. Download according to URLs provided in the metadata file, using a  [downloading script](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/freesound_stability_download.py) in python|
 
@@ -18,10 +14,9 @@ from these 6 fields and form a 3-field `.json` file for each audio. Here are som
 
 
 #### 
-<audio id="audio" controls="controls" preload="yes">
-      <source id="flac" src="1.flac">
-</audio><br>
 
+https://user-images.githubusercontent.com/64437243/188022285-68272a97-641c-42dc-b408-59afefb96e9a.mov
+      
 ```json
 {
     "text": [
@@ -44,8 +39,14 @@ from these 6 fields and form a 3-field `.json` file for each audio. Here are som
 ```
 
 <audio id="audio" controls="controls" preload="yes">
-      <source id=".flac" src="2.flac">
+      <source id=".flac" src="./2.flac">
 </audio>
+      
+      
+
+https://user-images.githubusercontent.com/64437243/188022499-ee6b5c4b-9e19-4b04-9dfe-c21b821e554c.mov
+
+
 
 ```json
 {
@@ -64,6 +65,10 @@ from these 6 fields and form a 3-field `.json` file for each audio. Here are som
         }
     }
 ```
+
+
+
+
 
 
 
