@@ -10,7 +10,10 @@ You may refer to [preprocess_MACS_yuchen.py](/data_preprocess/preprocess_MACS_yu
 ### Overview
 Some audio-json pairs selected from the processed dataset:
 
+https://user-images.githubusercontent.com/64437243/188529274-9cb2e8ac-fd97-46f6-8690-d7247271f2d2.mov
+
 ```json
+
 {
     "text": [
         "ball game with the ball bouncing and people running",
@@ -32,6 +35,10 @@ Some audio-json pairs selected from the processed dataset:
     }
 }
 ```
+
+
+https://user-images.githubusercontent.com/64437243/188529311-38f148e8-f518-44a1-911d-2b4773f9f6d2.mov
+
 
 
 ```json
