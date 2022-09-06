@@ -83,8 +83,8 @@ https://user-images.githubusercontent.com/64437243/188514649-091b1cf6-f3a4-4d13-
 -  **` text  entry`**  There are not any human-written captions available, hence we have to make up caption by this template: 
     > "The sound of " + class_label (retrieved according to `class_id`) + "."    
 - **`tag  entry`** In UrbanSound8K, each audio has just a unique class label, we put it here.
-- **`tag  entry`** All above information in the two `.csv` files mentioned above are stored here
+- **`original_data  entry`** All above information in the two `.csv` files mentioned above are stored here
 ### II. Audio filtering principles
-3. Discard all audios failed to be read by `soundfile.read()` method or denied by FFmpeg while processing.
+Discard all audios failed to be read by `soundfile.read()` method or denied by FFmpeg while processing.
 ### III. Audio format specifications
 After the preprocessing work, all audio files should be in FLAC format with sampling rate of 48KHZ. (Processed by ffmpeg).
