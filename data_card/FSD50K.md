@@ -11,6 +11,10 @@ You may refer to [preprocess_FSD50K.py](https://docs.google.com/document/u/0/d/1
 Some audio-json pairs selected from the processed dataset:
 
 
+
+https://user-images.githubusercontent.com/64437243/188525091-4ac692ad-9aef-4c4c-983f-262c6fb7723b.mov
+
+
       
 ```json
 {
@@ -30,6 +34,10 @@ Some audio-json pairs selected from the processed dataset:
     ]
 }
 ```
+
+https://user-images.githubusercontent.com/64437243/188525108-b1b6394c-da47-4b4e-be0f-5cdd030dea59.mov
+
+
 
 ```json
 {
