@@ -4,7 +4,9 @@ https://www.mllp.upv.es/europarl-st/
 """
 
 import os
-from utils.audio_utils import audio_to_flac
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from utils.file_utils import json_load, json_dump
 from utils.audio_utils import audio_to_flac
@@ -16,8 +18,8 @@ def read_lst_file(filename):
     return lines
 
 if __name__ == '__main__':
-    data_dir = '/Users/tj/DEV/audio-dataset/v1.1'
-    output_dir = '/Users/tj/DEV/audio-dataset/processed_datasets/Europarl-ST'
+    data_dir = '/audio-dataset/Datasets/v1.1'
+    output_dir = '/audio-dataset/processed_datasets/Europarl-ST'
 
     # transfer "train, dev, test, train-noisy" to "train, test, valid".
     split_output_name_dict = {
@@ -29,13 +31,20 @@ if __name__ == '__main__':
 
     languages = ['es', 'de', 'en', 'fr', 'nl', 'pl', 'pt', 'ro', 'it']
 
-    languages = ['es', 'en', 'it']
 
-    dict_skeleton = {'es': None, 'de': None, 'en': None, 'fr': None, 'nl': None, 'pl': None, 'pt': None, 'ro': None, 'it': None}
+    dict_skeleton = {'es': None, 'de': None, 'en': 'None', 'fr': None, 'nl': None, 'pl': None, 'pt': None, 'ro': None, 'it': None}
+
+    speech_skeleton = {'es': 'Una persona esta diciendo: ', 'de': 'Eine Person sagt: ',
+                        'en': 'A person is saying: ', 'fr': 'Une personne dit: ', 
+                        'nl': 'Een persoon zegt: ', 'pl': 'Osoba mówi: ', 
+                        'pt': 'Uma pessoa está dizendo: ', 'ro': 'Spune o persoană: ', 
+                        'it': 'Una persona sta dicendo: '}
 
     file_ids = {'train': 1, 'dev': 1, 'test': 1}
     
     for source_lang in languages:
+
+        print(f"Processing {source_lang} dataset...\n")
 
         language_folder = os.path.join(data_dir, source_lang)
 
@@ -62,11 +71,10 @@ if __name__ == '__main__':
              
                 for segment in segments_timestamps:
 
-                    segments_dict.setdefault(segment, dict_skeleton.copy())                                         
-                    segments_dict[segment][source_lang] = segments_source_lang_transcriptions_dict[segment]
+                    segments_dict.setdefault(segment, dict_skeleton.copy())                                        
+                    segments_dict[segment][source_lang] = segments_source_lang_transcriptions_dict[segment]                   
                     segments_dict[segment][dest_lang] = segments_dest_lang_transcriptions_dict[segment]
             
-
             for segment in segments_dict:
                 audio, segment_start, segment_end = segment.split()
 
@@ -77,8 +85,8 @@ if __name__ == '__main__':
                 audio_to_flac(audio_path, audio_output_path, sample_rate = AUDIO_SAVE_SAMPLE_RATE, segment_start = segment_start, segment_end = segment_end)
 
                 audio_json = {
-                    "text": [segments_dict[segment][source_lang]],
-                    "tag": ['Speech', 'Translation', 'Parliament'],
+                    "text": [speech_skeleton[source_lang] + f'"{segments_dict[segment][source_lang]}"'],
+                    "tag": ['Speech', 'Politician', 'Parliament'],
                     "original data": {  # Metadata
                         "title": "Europarl-ST Dataset",
                         "description": "Europarl-ST is a Multilingual Speech Translation Corpus, that contains paired audio-text samples for Speech Translation, constructed using the debates carried out in the European Parliament in the period between 2008 and 2012.",
