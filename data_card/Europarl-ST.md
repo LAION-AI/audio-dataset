@@ -9,7 +9,11 @@
 
 You may refer to [preprocess_Europarl-st.py](/data_preprocess/preprocess_Europarl-st.py) for all the details. Here is a concise summary:
 
-The dataset contains audio and transcriptions of 9 different languages. It is first divided by the 9 languages. Inside each language, there is a folder with the audios and 8 different folders from the remaining 8 languages wich contains the the timestamps, the original transcription and the translated text. 
+The dataset contains audio and transcriptions of 9 different languages. It is first divided by the 9 languages. Inside each language, there is a folder with the audios and 8 different folders from the remaining 8 languages. Each folder contains: 
+
+- **`segments.source_language`** A text file containing for each line a transcription in the original language.
+- **`segments.destination_language`** A text file containing for each line a transcription in the translated language.
+- **`segments.lst`** A text file containing for each line the timestamps.
 
 We create a json file with the transcription in the text field but we also include the translations. 
 
@@ -70,7 +74,7 @@ We create a json file with the transcription in the text field but we also inclu
 }
 ```
 ### I. Json file generation principles 
--  **` text  entry`**  We include in the 9 different languages a text with the following structure: `A person is saying: "**ORIGINAL TRANSCRIPTION**"`.
+-  **` text  entry`**  We include in the 9 different languages a text with the following structure: `A person is saying: "ORIGINAL TRANSCRIPTION"`.
 
 - **`tag  entry`** Speech, Politician, Parliament.
 - **`Original_data`** We include a `translations  entry` with the text translated to the other languages.  
