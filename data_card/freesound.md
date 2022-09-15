@@ -80,7 +80,7 @@ https://user-images.githubusercontent.com/64437243/188022499-ee6b5c4b-9e19-4b04-
     As a result, the text entry eventually looks like  `"text": [processed title, first sentence of description without HTML tags]`. When training we will randomly choose one of them in the list to be the caption.
 
 - **`tag  entry`** Just take `tags:` field of the metadata file split by delimiter `,` as the content of `tag` entry.
-- **`tag  entry`** All the six fields’ contents are stored here.
+- **`original_data  entry`** All the six fields’ contents are stored here.
 ### II. Audio filtering principles
 1. Keep samples no longer than **3** minutes, and discard the rest.
 2. Keep audios with sampling rate higher than **16KHZ** and discard the rest.
