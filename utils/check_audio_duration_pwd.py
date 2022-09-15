@@ -3,7 +3,7 @@ import glob
 from tqdm import tqdm
 import os
 
-data_dir = ''
+data_dir = '.'
 file_extension = 'wav'
 file_list = glob.glob(f'{data_dir}/**/*.{file_extension}', recursive=True)
 total_duration = 0
