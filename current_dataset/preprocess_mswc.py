@@ -59,12 +59,50 @@ if __name__ == '__main__':
         audio_path = dir
         with tarfile.open(audio_path, mode='r:gz') as mswc_audio:
             audio_path = os.path.split(audio_path)[0]
-            mswc_audio.extractall(audio_path)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(mswc_audio, audio_path)
 
         splits_path = dir.replace('audio', 'splits')
         with tarfile.open(splits_path, mode='r:gz') as mswc_split:
             splits_path = splits_path.replace('.tar.gz', '/')
-            mswc_split.extractall(splits_path)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(mswc_split, splits_path)
 
         tmp = glob.glob(os.path.join(splits_path, '**.csv'), recursive=True)
         csv_paths = []
