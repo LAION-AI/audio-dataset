@@ -4,8 +4,8 @@ author:
 Yuchen Hui 
 
 '''
-from turtle import down
 from p_tqdm import p_map 
+from tqdm import tqdm
 import os
 import re
 import sys
@@ -13,7 +13,8 @@ import glob
 import pandas as pd
 import os
 from pathlib import Path
-from keytotext import pipeline
+#from keytotext import pipeline
+
 # tests
 # ls = ["wood", "fire", "large", "crackle", "wood fire crackle"]
 # ls = ["household", "door", "creak", "squeak", "door", "creak", "squeaks", "whiny"]
@@ -31,10 +32,10 @@ from utils.file_utils import json_load, json_dump
 from utils.audio_utils import audio_to_flac
 from utils.dataset_parameters import AUDIO_SAVE_SAMPLE_RATE
 
-audio_dir = f'/home/yuchenhui/diro/CLAP/metadata/'
-meta_dir = f'/home/yuchenhui/diro/CLAP/metadata/Epidemic_Sound/Epidemic_sound(sound effects)'
-output_dir = f'/home/yuchenhui/diro/CLAP/metadata/'
-raw_dir = f"/home/yuchenhui/diro/CLAP/metadata/"
+cpu_num = os.cpu_count()-1
+audio_dir = f'/mnt/epidemic_sound_effects/raw/'
+meta_dir = f'/home/ubuntu/epidemic_meta/'
+output_dir = f'/mnt/epidemic_sound_effects/processed/'
 
 file_list = glob.glob(f"{meta_dir}/**/*.parquet", recursive=True)
 
@@ -70,17 +71,10 @@ def download_audio(tuple):
     root_ext = os.path.splitext(url)
     ext = root_ext[1]            # ext = .mp3 
     file_name = str(id) + ext
-    print(file_name)
-    file_path = os.path.join(raw_dir, file_name)
+    file_path = os.path.join(audio_dir, file_name)
     os.system(f"wget {url} -O {file_path}")
 
-#p_map(download_audio, tuples, num_cpus=8, desc="Downloading audio files")
-count = 0
-for url, id in tuples:
-    download_audio((url, id))
-    count += 1
-    if count > 10:
-        break
+#p_map(download_audio, tuples, num_cpus=cpu_num, desc="Downloading audio files")
 
 # procssing function
 # read all columns of dataframe ('title', 'id', 'added', 'length', 'bpm', 
@@ -102,7 +96,7 @@ big_tuples = zip(df["title"],
 # "id" "genre" "title" "metadataTags","url", "Class_name"
 
 # key to text
-nlp = pipeline("mrm8488/t5-base-finetuned-common_gen")
+#nlp = pipeline("mrm8488/t5-base-finetuned-common_gen")
 
 def process(tuples):
     title, id, added, length, bpm, isSfx, hasVocals, energyLevel, genres, url, metadataTags, Class_name = tuples
@@ -111,19 +105,23 @@ def process(tuples):
 
     # process the title: remove the space and number at the end of the title
     title = re.sub(r'\d+$', '', title).strip()
-    print("the title is", title)
+    #print("the title is", title)
 
     # process the metadataTags: use keytotext to make a caption using metadataTags
-    made_up_caption = nlp(metadataTags)
-    print("the made up caption is", made_up_caption)
+    #made_up_caption = nlp(metadataTags)
+    #print("the made up caption is", made_up_caption)
+
+    # 2nd way of processing metadataTags: "the sounds of tag1, tag2, tag3... "
+    made_up_caption_2 = "the sounds of " + ", ".join(metadataTags[:-1]) + ", and " + metadataTags[-1] + "."
+
 
     # determine the "text" entry of the json file
-    text = [title,made_up_caption]
-    print("the text is", text)
+    text = [title,made_up_caption_2]
+    #print("the text is", text)
     # determine the "tag" entry of the json file
     tag = [Class_name, genres] 
     tag.extend(metadataTags)
-    print("the tag is", tag)
+    #print("the tag is", tag)
 
     # determine the "original_data" entry of the json file
     original_data = {
@@ -139,7 +137,7 @@ def process(tuples):
         "url": url, 
         "metadataTags": metadataTags.tolist(), 
         "Class_name": Class_name}
-    print("the original_data is", original_data)
+    #print("the original_data is", original_data)
     # json file content
     json_dic = {"text" : text, "tag" : tag, "original_data" : original_data}
 
@@ -161,14 +159,15 @@ def process(tuples):
     json_dump(json_dic, json_save_path)
 
 if __name__ == '__main__':
+    n = 0
+    # for bit_tuples in tqdm(big_tuples, desc="Processing audio files"):
+    #     process(bit_tuples)
+    #     n+=1
+    #     if n == 11:
+    #         break
+    p_map(process, big_tuples, num_cpus=12, desc="Processing audio files")
+    
 
-    #p_map(process, big_tuples, num_cpus=32)
-    count = 0
-    for tuple in big_tuples:
-        process(tuple)
-        count += 1
-        if count > 10:
-            break
 
 
 
