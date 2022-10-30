@@ -137,7 +137,7 @@ if __name__ == '__main__':
             # 1. remove extension
             title = os.path.splitext(title)[0] 
             # 2. replace _ with space
-            title.replace("_", " ")
+            title = title.replace("_", " ")
             text.append(title + ".")
 
             # process description: 
@@ -146,8 +146,10 @@ if __name__ == '__main__':
             # 2. if contains html tags, discard. 
             # html is context free, we simply can't use a regex to filter it, so I just use "<.*>".
             first_sentence = description_list[0]
-            liste = re.findall(r"<.*>", first_sentence)
-            if len(liste) == 0:
+            discard = False
+            if "<" in first_sentence or ">" in first_sentence:
+                discard = True
+            if discard == False: 
                 text.append(first_sentence + ".")
 
             # generate and save json file
