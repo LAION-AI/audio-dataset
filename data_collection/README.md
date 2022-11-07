@@ -149,25 +149,6 @@ For using the excat processed dataset for training your models, please contact L
 | Freesound (audio from other datasets excluded)   |2817.31hrs               | 460801             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv (same as )](https://drive.google.com/file/d/1WroT5fU3o0s-iztotest3yT0XiHqaA0w/view?usp=sharing)|Free sound      |
 | Epidemic Sound (Sound effect part)               |220.41hrs                | 75645              |2 captions per audio, audio    | [website](https://www.epidemicsound.com/sound-effects/)                                |                |
 
-\begin{table}[h]
-\centering
-\begin{tabular}{lccc}
-\toprule
-Data Source   & Number of Samples   & \multicolumn{1}{l}{Duration}  & Data Type  \\ 
-\midrule
-\href{https://sound-effects.bbcrewind.co.uk}{\color{blue}BBC sound effects} & 15973 & 463.48hrs & 1 caption per audio, audio \\
-\href{https://www.freetousesounds.com/product/all-in-one-sound-library-bundle}{\color{blue}Free To Use Sounds} & 6370 & 175.73hrs & Filename as caption, audio \\
-\href{https://sonniss.com/gameaudiogdc/}{\color{blue}Sonniss Game effects} & 5049 & 84.6hrs & Filename as caption, audio \\
-\href{https://www.wesoundeffects.com/}{\color{blue}We Sound Effects} & 488 & 12.00hrs & Filename as caption, audio \\
-\href{https://www.paramountmotion.com/odeon-sound-effects}{\color{blue}Paramount Motion Sound Effects} & 4420 & 19.49hrs & Filename as caption, audio \\
-\href{https://audiostock.net/se}{\color{blue}Audiostock} & 10000 & 46.30hrs & 1 caption per audio, audio \\
-\href{https://freesound.org/}{\color{blue}Freesound (audio from other datasets excluded)} & 414127 & 2528.15hrs & 1-2 captions per audio, audio \\
-\href{https://www.epidemicsound.com/sound-effects/}{\color{blue}Epidemic Sound (Sound effect part)} & 75645 & 220.41hrs & 2 captions per audio, audio \\
-\bottomrule
-\end{tabular}
-\caption{Training Datasets}
-\label{tab:training-datasets}
-\end{table}
 ## CLAP Training Datasets (Some samples from test/validation split are excluded)
 
 <!-- copy the table above, but without the "Disk Space column, add a column called "Data Type"-->
