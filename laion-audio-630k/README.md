@@ -39,6 +39,6 @@ We provide two version of Freesound dataset.
 | Epidemic Sound                                   |220.41hrs                | 75645              |2 captions per audio, audio    | [website](https://www.epidemicsound.com/sound-effects/) <br> [csv](https://drive.google.com/file/d/1og3gk2V1t52XSPStpJECJ4OzfDMFX3Do/view?usp=sharing)                                |                
 
 ## Credits & Licence
-- **!!!Term of use!!!**: **By downloading audios through the links provided in the csv files, you agree that you will use the audios for research purposes only, unless you get the permission from owner of the Datasource that you can use it for other purposes.**
+- **!!!Term of use!!!**: **By downloading audios through the links provided in the csv files, you agree that you will use the audios for research purposes only, unless you get the permission from owners of the Datasource that you can use it for other purposes.**
 - Freesound Credit: This repository uses many sounds from freesound,
 for the full list see here: https://drive.google.com/file/d/1kBH5M5zY_7ucHzktw_ng5AgqqV-J-Daq/view?usp=sharing
