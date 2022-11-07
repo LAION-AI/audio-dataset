@@ -10,10 +10,10 @@ CSV files are of the following structure:
   | <sub>url</sub> | <sub>caption1</sub> | <sub>caption2</sub> | <sub>...</sub> | <sub>caption_t5</sub> | <sub>{metadata1}</sub> | <sub>{metadata2}</sub> | <sub>...</sub> | 
   | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 
-    - **url**: The URL of the audio file
-    - **caption_i**: the i-th caption of the audio file
-    - **caption_t5**: For Epidemic Sound, we adopted keyword-to-caption data augmentation using T5 model. Details could be found in the datacard of Epidemic Sound. 
-    - **{metadata_i}**: Metadata could be the freesound id of the audio etc. 
+- **url**: The URL of the audio file
+- **caption_i**: the i-th caption of the audio file
+- **caption_t5**: For Epidemic Sound, we adopted keyword-to-caption data augmentation using T5 model. Details could be found in the datacard of Epidemic Sound. 
+- **{metadata_i}**: Metadata could be the freesound id of the audio etc. 
 
 ### Datacards
 We provide a datacard for each dataset we processed, which record how we process it. If you want to learn more about caption generation as well as details of keyword-to-caption data augmentation, please read datacards available [here](/data_card/).    
