@@ -2,9 +2,9 @@
 LAION-Audio-630K is a large-scale audio-text dataset consisting of 633,526 pairs with the total duration of 4,325.39 hours.  It contains audios of human activities, natural sounds and audio effects, consisting of 8 data sources (see the [*data source table*](#data-sources) below) from publicly available websites.  We collect these datasets by downloading audios and relevant text descriptions. Based on our current knowledge, LAION-Audio-630K is the largest audio-text dataset publicly available and a magnitude larger than previous audio-text datasets (by 2022-11-05).
 
 ## Content
-Among the 8 datasets, we **release 4 of them (BBC sound effects, Freesound, Epidemic Sound and Audiostock)** under [csv format](#csv-format), since they are public available by anyone through URL links provided by associated websites. However, as to the others, i.e. Free To Use Sounds, Sonniss Game Effects, We Sound Effects and Paramount Motion Sound Effects, we would not release them because they are pruchased by LAION. 
+Among the 8 datasets, we **only release 4 of them (BBC sound effects, Freesound, Epidemic Sound and Audiostock)** under [csv format](#csv-format), since they are public available by anyone through URL links provided by correspondent websites. However, as to the others, i.e. Free To Use Sounds, Sonniss Game Effects, We Sound Effects and Paramount Motion Sound Effects, we would not release them because they are pruchased by LAION. 
 
-### Csv Format
+### CSV Format
 CSV files are of the following structure:
   
   | <sub>url</sub> | <sub>caption1</sub> | <sub>caption2</sub> | <sub>...</sub> | <sub>caption_t5</sub> | <sub>{metadata1}</sub> | <sub>{metadata2}</sub> | <sub>...</sub> | 
@@ -12,11 +12,11 @@ CSV files are of the following structure:
 
 - **url**: The URL of the audio file
 - **caption_i**: the i-th caption of the audio file
-- **caption_t5**: For Epidemic Sound, we adopted keyword-to-caption data augmentation using T5 model. Details could be found in the datacard of Epidemic Sound. 
+- **caption_t5**: For Epidemic Sound, we adopted keywords-to-caption data augmentation using T5 model. Details could be found in the datacard of Epidemic Sound. 
 - **{metadata_i}**: Metadata could be the freesound id of the audio etc. 
 
 ### Datacards
-We provide a datacard for each dataset we processed, which record how we process it. If you want to learn more about caption generation as well as details of keyword-to-caption data augmentation, please read datacards available [here](/data_card/).    
+We provide a datacard for each dataset we processed, which record how we process it. If you want to learn more about caption generation as well as details of **keywords-to-caption data augmentation**, please read datacards available [here](/data_card/) (for Epidemic Sound dataset).    
 
 ### About Freesound
 We provide two version of Freesound dataset.
