@@ -1,9 +1,8 @@
 <div align = "center">
 <a href="./data_collection/README.md"><img src= "https://img.shields.io/badge/%20-List%20of%20all%20Datasets-red" width = "170px" /></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/orgs/LAION-AI/projects/2/views/1"><img src= "https://img.shields.io/badge/%20-Github%20Project%20Page-red" width = "175px" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./data_preprocess/README.md"><img src= "https://img.shields.io/badge/%20-Data%20Process%20Pipeline-red" width = "190px" /></a>
 </div> 
-<center>
-# [`LAION-Audio-630K`](laion-audio-630k/README.md)
-</center>
+
+# <center> [`LAION-Audio-630K`](laion-audio-630k/README.md)
 # What is Audio Dataset Project?
 
 This repository is created for Audio Dataset Project, an audio dataset collection initiative announced by [LAION](https://laion.ai/). These datasets, each containing enormous amount of audio-text pairs, will be eventually processed and used for training CLAP (Contrastive language-Audio Pretraining) model and other models.
