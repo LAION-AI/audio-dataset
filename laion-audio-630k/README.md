@@ -9,7 +9,7 @@ CSV files are of the following structure:
   
   | <sub>url</sub> | <sub>caption1</sub> | <sub>caption2</sub> | <sub>...</sub> | <sub>caption_t5</sub> | <sub>{metadata1}</sub> | <sub>{metadata2}</sub> | <sub>...</sub> | 
   | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-where
+
     - **url**: The URL of the audio file
     - **caption_i**: the i-th caption of the audio file
     - **caption_t5**: For Epidemic Sound, we adopted keyword-to-caption data augmentation using T5 model. Details could be found in the datacard of Epidemic Sound. 
