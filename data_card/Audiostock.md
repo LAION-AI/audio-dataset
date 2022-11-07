@@ -17,6 +17,10 @@ from the meta data (meta.csv) and form a 3-field `.json` file for each audio. He
 
 
 
+https://user-images.githubusercontent.com/64437243/200237210-18ce4718-4be4-45a3-86b5-88d02371a3c8.mov
+
+
+
 ```json
 {
     "text": [
