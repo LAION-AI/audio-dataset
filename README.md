@@ -63,7 +63,7 @@ There are mainly two ways to contribute to our audio dataset project.
 
 ## Contribution Delivery 
 
-Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Marianna Nezhurina(marianna13#7139)** so that she could move the dataset to the review board. (If possible, please also add the processed (not yet packed up) dataset to `S3://s-laion-audio/webdatset_tar`). 
+Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Marianna Nezhurina(marianna13#7139)** so that she could move the dataset to the review board. (If possible, please also add the processed (not yet packed up) dataset to `S3://s-laion-audio/processed_dataset`). 
 
 When it comes to AWS s3 accessibility problem, please see the LAION cluster part in [contact](#contact) entry above, because AWS s3 are accessible if visited from the LAION new cluster.
 
@@ -76,4 +76,4 @@ i.e. each line is an audio_url-text pair, by which we can write a batch file to 
 # The End
 Last updated on July 14 0:57 EST, 2022
 Last updated on September 5th 11:00 EST, 2022 (Marianna Nezhurina will take over the intern's work of Yuchen Hui)
-
+Last updated on November 8th 18:55 EST, 2022 (Release of LAION-Audio-630K dataset)
