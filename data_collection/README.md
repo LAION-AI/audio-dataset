@@ -143,12 +143,11 @@ For using the excat processed dataset for training your models, please contact L
 | BBC sound effects                                |463.48hrs                | 15973              |1 caption per audio, audio    | [website](https://sound-effects.bbcrewind.co.uk/) <br> [csv]()                         |                |
 | Free To Use Sounds                               |175.73hrs                | 6370               |Filename as caption, audio    | [website](https://www.freetousesounds.com/product/all-in-one-sound-library-bundle/)    |                |
 | Sonniss Game effects                             |84.6hrs                  | 5049               |Filename as caption, audio    | [website(need purchasing)](https://sonniss.com/gameaudiogdc/)                          |                |
-| We Sound Effects                                   |12.00hrs                 | 488                |Filename as caption, audio    | [website(need purchasing)](https://www.wesoundeffects.com/)                            |                |
-| Paramount Motion Sound Effects                |19.49hrs                 | 4420               |Filename as caption, audio    | [website(need purchasing)](https://www.paramountmotion.com/odeon-sound-effects)        |                |
+| We Sound Effects                                 |12.00hrs                 | 488                |Filename as caption, audio    | [website(need purchasing)](https://www.wesoundeffects.com/)                            |                |
+| Paramount Motion Sound Effects                   |19.49hrs                 | 4420               |Filename as caption, audio    | [website(need purchasing)](https://www.paramountmotion.com/odeon-sound-effects)        |                |
 | Audiostock                                       |46.30hrs                 | 10000              |1 caption per audio, audio    | [website](https://audiostock.net/se)                                                   |                |
-| Freesound (audio from other datasets excluded)   |2528.15hrs               | 414127             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv (same as )](https://drive.google.com/file/d/1WroT5fU3o0s-iztotest3yT0XiHqaA0w/view?usp=sharing)|Free sound      |
+| Freesound (audio from other datasets excluded)   |2817.31hrs               | 460801             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv (same as )](https://drive.google.com/file/d/1WroT5fU3o0s-iztotest3yT0XiHqaA0w/view?usp=sharing)|Free sound      |
 | Epidemic Sound (Sound effect part)               |220.41hrs                | 75645              |2 captions per audio, audio    | [website](https://www.epidemicsound.com/sound-effects/)                                |                |
-
 
 ## CLAP Training Datasets (Some samples from test/validation split are excluded)
 
@@ -158,19 +157,17 @@ For using the excat processed dataset for training your models, please contact L
 | ***AudioSet(unbalanced train)                                         |5311.2hrs                | 1912024            |2 captions per audio,audio    | [website](https://research.google.com/audioset/)                                       |Audioset        |
 | BBC sound effects                                |463.48hrs                | 15973              |1 caption per audio, audio    | [website](https://sound-effects.bbcrewind.co.uk/) <br> [csv]()                         |                |
 | ***AudioCaps                                        |136.87hrs                | 49274              |1 caption per audio, audio   | [website](https://audiocaps.github.io/)                                                |Audioset        |
-| ****Clotho                                    |37.0hrs                  | 5929               |5 captions per audio, audio    | [website](https://zenodo.org/record/4783391#.ygdaa9-znpy)                              |Free sound      |
+| ****Clotho                                    |23.99hrs                 | 3839               |5 captions per audio, audio    | [website](https://zenodo.org/record/4783391#.ygdaa9-znpy)                              |Free sound      |
 | Free To Use Sounds                               |175.73hrs                | 6370               |Filename as caption, audio    | [website](https://www.freetousesounds.com/product/all-in-one-sound-library-bundle/)    |                |
 | Sonniss Game effects                             |84.6hrs                  | 5049               |Filename as caption, audio    | [website(need purchasing)](https://sonniss.com/gameaudiogdc/)                          |                |
 | We Sound Effects                                   |12.00hrs                 | 488                |Filename as caption, audio    | [website(need purchasing)](https://www.wesoundeffects.com/)                            |                |
 | Paramount Motion Sound Effects                |19.49hrs                 | 4420               |Filename as caption, audio    | [website(need purchasing)](https://www.paramountmotion.com/odeon-sound-effects)        |                |
-| ****FSD50K                                           |108.3hrs                 | 51197              |1 caption per audio, audio    | [website](https://annotator.freesound.org/fsd/release/fsd50k/)                         |Free sound      |
+| ***FSD50K                                           |70.39hrs                 | 36796              |1 caption per audio, audio    | [website](https://annotator.freesound.org/fsd/release/fsd50k/)                         |Free sound      |
 | Audiostock                                       |46.30hrs                 | 10000              |1 caption per audio, audio    | [website](https://audiostock.net/se)                                                   |                |
 | ***MACS - Multi-Annotator Captioned Soundscapes     |9.825hrs                 | 3537               |Several (2~) captions per audio, audio    | [website](https://zenodo.org/record/5114771#.yq4kbnbmlb1)                              |                |
 | ***Freesound (audio from other datasets excluded)   |2528.15hrs               | 414127             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv (same as )](https://drive.google.com/file/d/1WroT5fU3o0s-iztotest3yT0XiHqaA0w/view?usp=sharing)|Free sound      |
-| ****wavtext5k                                        |25.48hrs               2528.15  | 4525               |1 caption per audio, audio    | [website](https://github.com/microsoft/WavText5K)                                      |                |
+| ***wavtext5k                                        |23.2hrs                 | 4072               |1 caption per audio, audio    | [website](https://github.com/microsoft/WavText5K)                                      |                |
 | Epidemic Sound (Sound effect part)               |220.41hrs                | 75645              |2 captions per audio, audio    | [website](https://www.epidemicsound.com/sound-effects/)                                |                |
-
-
 
 
 <!-- 
