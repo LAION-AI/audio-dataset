@@ -68,7 +68,7 @@ https://github.com/krishnakalyan3/slakh-datacard/raw/main/24.flac
 }
 ```
 ### I. Json file generation principles 
-The json was generated from `metadata.yaml` file within each audio stem. If a `mix`file was used, text used was `playing mix of {instrument_name1} {instrument_name2} ...` and `stems` use `playing {instrument_name} music synthesized with {plugin_name} plugin`
+The json was generated from `metadata.yaml` file within each audio file. If a `mix`file was used, text used was `playing mix of {instrument_name1} {instrument_name2} ...` and `stems` use `playing {instrument_name} music synthesized with {plugin_name} plugin`
 ### II. Audio filtering principles
 Discard all audios failed to be read by `soundfile.read()` method or denied by FFmpeg while processing.
 ### III. Audio format specifications
