@@ -3,7 +3,7 @@
 
 |Source|Collecting Method|
 |:---------:|:--------|
-| [Freesound website](https://freesound.org/)  |1.Scrape from the [Freesound website](https://freesound.org/) and get the [metadata](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/parquet/freesound_parquet.parquetb/main/metadata/freesound/parquet/freesound_parquet.parquet) <br>2. Download according to URLs provided in the metadata file, using a  [downloading script](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/freesound_stability_download.py) in python|
+| [Freesound website](https://freesound.org/)  |1.Scrape from the [Freesound website](https://freesound.org/) and get the [metadata](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/parquet/freesound_parquet.parquetb/main/metadata/freesound/parquet/freesound_parquet.parquet) <br>2. Download according to URLs provided in the metadata file, using a  [downloading script](https://github.com/LAION-AI/audio-dataset/blob/main/metadata/freesound/download_freesound/freesound_stability_download.py) in python|
 
 ## Preprocessing Principles
 
