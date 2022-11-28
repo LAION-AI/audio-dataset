@@ -28,8 +28,8 @@ We provide two version of Freesound dataset.
 ## Data Sources
 | Name                                             |Duration                 |Number of Samples   |Data Type                     | Source                                                                                                                                                                                                             | Data Card |                               
 |--------------------------------------------------|-------------------------|--------------------|---------                     |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------- |
-| Freesound (no overlap)                           |2817.31hrs               | 460801             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv_train+test](https://drive.google.com/file/d/1sm9pjPBEdXe1qGaGkiPRPj0Dq9cv0DPR/view?usp=sharing)<br>[csv_train](https://drive.google.com/file/d/1xekQ_mR_8-qEyzXmn5G7CGnWHb36XKdH/view?usp=sharing)<br>[csv_test](https://drive.google.com/file/d/1k7CnYjbkFZxNhtiP0vA7zLbM72xuG47G/view?usp=sharing)|[data card](/data_card/freesound.md)|
-| Freesound (full)                                 |3033.38hrs               | 515581             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [csv](https://drive.google.com/file/d/10LRzpJN7CweCceuI_rXKpUafzilGFAir/view?usp=sharing)                                                |[data card](/data_card/freesound.md)|
+| Freesound (no overlap)                           |2817.31hrs               | 460801             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [**licenses file**](https://drive.google.com/file/d/1xF3K5x0RAhBNGKSMvE13cuvrIZLs6M3K/view?usp=share_link) <br> [csv_train+test](https://drive.google.com/file/d/1sm9pjPBEdXe1qGaGkiPRPj0Dq9cv0DPR/view?usp=sharing)<br>[csv_train](https://drive.google.com/file/d/1xekQ_mR_8-qEyzXmn5G7CGnWHb36XKdH/view?usp=sharing)<br>[csv_test](https://drive.google.com/file/d/1k7CnYjbkFZxNhtiP0vA7zLbM72xuG47G/view?usp=sharing)|[data card](/data_card/freesound.md)|
+| Freesound (full)                                 |3033.38hrs               | 515581             |1-2 captions per audio, audio    | [website](https://freesound.org/) <br> [**licenses file**](https://drive.google.com/file/d/1xF3K5x0RAhBNGKSMvE13cuvrIZLs6M3K/view?usp=share_link)<br> [csv](https://drive.google.com/file/d/10LRzpJN7CweCceuI_rXKpUafzilGFAir/view?usp=sharing)                                                |[data card](/data_card/freesound.md)|
 | Epidemic Sound                                   |220.41hrs                | 75645              |2 captions per audio, audio    | [website](https://www.epidemicsound.com/sound-effects/) <br> [csv](https://drive.google.com/file/d/1og3gk2V1t52XSPStpJECJ4OzfDMFX3Do/view?usp=sharing)                                |[data card](/data_card/Epidemic_sound.md)           |     
 | Audiostock                                       |46.30hrs                 | 10000              |1 caption per audio, audio    | [website](https://audiostock.net/se) <br> [csv](https://drive.google.com/file/d/1FnOcrb6fREIDBzB2lknJnszVn-yNCPp6/view?usp=sharing)                                                           |[data card](/data_card/Audiostock.md) |                
 | BBC Sound Effects                                |463.48hrs                | 15973              |1 caption per audio, audio    | [website](https://sound-effects.bbcrewind.co.uk/) <br> [csv*(no longer available, click to see explication below)](#about-bbc-sound-effects)                                                                                                                                |[data card](/data_card/BBC.md)| 
@@ -43,9 +43,19 @@ Recently, BBC sound effects have modified their website structure. In consequenc
 
 
 ## Credits & Licence
-- **!!!Term of use!!!**: **By downloading audios through the links provided in the csv files, you agree that you will use the audios for research purposes only, unless you get the permission from owners of the Datasource that you can use it for other purposes.**
-- Freesound Credit: This repository uses many sounds from freesound,
-for the full list see here: https://drive.google.com/file/d/1kBH5M5zY_7ucHzktw_ng5AgqqV-J-Daq/view?usp=sharing (You may also find extra information about freesound dataset in this file)
+- **!!!TERM OF USE!!!**: **By downloading audios through the links provided in the csv files, you agree that you will use the audios for research purposes only, unless you get the permission from owners of the Datasource that you can use it for other purposes.**
+### Freesound Credit: 
+All audio clips from Freesound are released under Creative Commons (CC) licenses, while each clip has its own license as defined by the clip uploader in Freesound, some of them requiring attribution to their original authors and some forbidding further commercial reuse. Specifically, here is the statistics about licenses of audio clips involved in LAION-Audio-630K:
+- CC-BY:  196884
+- CC-BY-NC:  63693
+- CC0:  270843
+- CC Sampling+:  11556
 
+For attribution purposes and to facilitate attribution of these files to third parties, we include a mapping from the audio clips to their corresponding licenses, specified in [**`freesound_license.csv`**](https://drive.google.com/file/d/1xF3K5x0RAhBNGKSMvE13cuvrIZLs6M3K/view?usp=share_link)(size : about 240 MB). Please note that for each audio clip, the uploader's freesound username is also included in the csv file.
+![The csv file](csv_file.png)
+
+#### Usage of Freesound clips in LAION-Audio-630K for commercial purposes
+
+We would like to restate that **only academic uses** are allowed for LAION-Audio-630K. If you want to use Freesound clips in LAION-Audio-630K for commercial purposes, please contact Frederic Font Corbera at frederic.font@upf.edu.
 ## Acknowledgement
 The whole collection process as well as all usage of the LAION-Audio-630K are conducted by Germany non-profit pure research organization [LAION](https://laion.ai/). All contributors and collectors of the dataset are considered as open source contributors affiliated to LAION. These community contributors (Discord ids) include but not limited to: @marianna13#7139, @Chr0my#0173, @PiEquals4#1909, @Yuchen Hui#8574, @Antoniooooo#4758, @IYWO#9072, krishna#1648, @dicknascarsixtynine#3885, and @turian#1607. We would like to appreciate all of them for their efforts on the LAION-Audio-630k dataset. 
