@@ -11,6 +11,7 @@ random.seed(1234)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str, default=None, help='data directory')
+    parser.add_argument('--output_dir', type=str, default=None, help='output directory')
     args = parser.parse_args()
 
     test_portion = 0.1
@@ -27,7 +28,7 @@ if __name__ == '__main__':
 
     file_id = 1
     for split in splits:
-        split_output_dir = os.path.join(args.data_dir, split)
+        split_output_dir = os.path.join(args.output_dir, split)
         os.makedirs(split_output_dir, exist_ok=True)
         for audio_file in tqdm(split_file_list[split]):
             json_file = audio_file.replace('.flac', '.json')
