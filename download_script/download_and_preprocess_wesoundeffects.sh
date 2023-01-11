@@ -5,7 +5,7 @@ conda activate audio_clip
 mkdir /mnt/audio_clip/dataset_creation/raw_datasets/wesoundeffects
 cd /mnt/audio_clip/dataset_creation/raw_datasets/wesoundeffects
 
-wget -r -np -nH --cut-dirs=1 -R index.html https://deploy.laion.ai/0fed69941baaabaeccedc2aaaaaaaaaa/WeSoundEffects/
+wget -r -np -nH --cut-dirs=1 -R index.html #URL
 
 cd /mnt/audio_clip/audio-dataset/data_preprocess
 python preprocess_filename_dataset.py --data_dir /mnt/audio_clip/dataset_creation/raw_datasets/wesoundeffects/ --output_dir /mnt/audio_clip/dataset_creation/preprocessed_dataset/wesoundeffects
