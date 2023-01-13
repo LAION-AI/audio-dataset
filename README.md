@@ -1,6 +1,13 @@
 <div align = "center">
 <a href="./data_collection/README.md"><img src= "https://img.shields.io/badge/%20-List%20of%20all%20Datasets-red" width = "170px" /></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/orgs/LAION-AI/projects/2/views/1"><img src= "https://img.shields.io/badge/%20-Github%20Project%20Page-red" width = "175px" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./data_preprocess/README.md"><img src= "https://img.shields.io/badge/%20-Data%20Process%20Pipeline-red" width = "190px" /></a>
 </div> 
+<br><br><br>
+
+
+<div align = "center">
+<a href="./laion-audio-630k/README.md"><img src= "https://img.shields.io/badge/-LAION--Audio--630K-red" width = "400px" /></a>
+</div> 
+<br><br>
 
 # What is Audio Dataset Project?
 
@@ -56,7 +63,7 @@ There are mainly two ways to contribute to our audio dataset project.
 
 ## Contribution Delivery 
 
-Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Marianna Nezhurina(marianna13#7139)** so that she could move the dataset to the review board. (If possible, please also add the processed (not yet packed up) dataset to `S3://s-laion-audio/webdatset_tar`). 
+Ideally, in both cases mentioned above, we hope **receive from you the webdataset format dataset**. When you’ve packed up your dataset into webdataset format, **upload it** to our AWS S3 bucket: `aws s3 cp your/webdataset/ s3://s-laion-audio/webdataset_tar/your webdataset/` and **contact Marianna Nezhurina(marianna13#7139)** so that she could move the dataset to the review board. (If possible, please also add the processed (not yet packed up) dataset to `S3://s-laion-audio/processed_dataset`). 
 
 When it comes to AWS s3 accessibility problem, please see the LAION cluster part in [contact](#contact) entry above, because AWS s3 are accessible if visited from the LAION new cluster.
 
@@ -69,4 +76,4 @@ i.e. each line is an audio_url-text pair, by which we can write a batch file to 
 # The End
 Last updated on July 14 0:57 EST, 2022
 Last updated on September 5th 11:00 EST, 2022 (Marianna Nezhurina will take over the intern's work of Yuchen Hui)
-
+Last updated on November 8th 18:55 EST, 2022 (Release of LAION-Audio-630K dataset)
