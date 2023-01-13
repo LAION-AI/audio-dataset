@@ -22,7 +22,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
 from utils.make_tar_utils import tardir
 
-def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False, verbose=False):
+def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=True, verbose=False):
     if os.path.isfile(dest) and overwrite==False:
         if verbose==True:
             print(f'{dest} already exists, skiping')
@@ -81,8 +81,8 @@ def create_df(root_path:str, dataset_name:str=None):
 
         male_or_female = 'woman' if demograpthics_meta["Sex"].values[0] == 'Female' else 'man'
         intensity = '' if text_meta[2] == 'Unspecified' else f'and {text_meta[2]} '
-        text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity} voice.'
-        df_data.append({ 'path':wav, 'text':[text], 'tag':{'transcript':text_meta[0], 'language':'english', 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
+        text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity} voice. {text_meta[2]}'
+        df_data.append({ 'path':wav, 'text':text, 'tag':{'transcript':text_meta[0], 'language':'english', 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
 
     return pd.DataFrame(df_data)
 
@@ -98,14 +98,14 @@ if __name__ == '__main__':
     dataset_name = 'CREMA-D'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
+    s3_dest = f's-laion-audio/webdataset_tar/{dataset_name}/'
 
     original_tar_dir = '/fsx/knoriy/raw_datasets/CREMA-D/crema-d.tar.gz'
 
-    print('Extracting tar')
-    with tarfile.open(original_tar_dir, mode='r:gz') as file:
-        audio_path = os.path.split(original_tar_dir)[0]
-        file.extractall(audio_path)
+    # print('Extracting tar')
+    # with tarfile.open(original_tar_dir, mode='r:gz') as file:
+    #     audio_path = os.path.split(original_tar_dir)[0]
+    #     file.extractall(audio_path)
 
     # load metadata and configure audio paths
     df = create_df(root_path)
