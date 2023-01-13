@@ -16,6 +16,7 @@ import fsspec
 
 from sklearn.model_selection import train_test_split
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from multiprocessing import Pool
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
@@ -70,7 +71,7 @@ def create_df(root_path:str, dataset_name:str=None):
                                         'XX':'Unspecified',
                                         },
                 }
-    demographics = pd.read_csv('/home/knoriy/fsx/raw_datasets/CREMA-D/VideoDemographics.csv', names=["ActorID","Age","Sex","Race","Ethnicity"])
+    demographics = pd.read_csv('/fsx/knoriy/raw_datasets/CREMA-D/VideoDemographics.csv', names=["ActorID","Age","Sex","Race","Ethnicity"])
     df_data = []
     for wav in tqdm.tqdm(wavs):
         file_name = os.path.basename(wav).split('.')[0]
@@ -80,8 +81,8 @@ def create_df(root_path:str, dataset_name:str=None):
 
         male_or_female = 'woman' if demograpthics_meta["Sex"].values[0] == 'Female' else 'man'
         intensity = '' if text_meta[2] == 'Unspecified' else f'and {text_meta[2]} '
-        text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity}voice.'
-        df_data.append({ 'path':wav, 'text':text, 'tag':{'transcript':text_meta[0], 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
+        text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity} voice.'
+        df_data.append({ 'path':wav, 'text':[text], 'tag':{'transcript':text_meta[0], 'language':'english', 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
 
     return pd.DataFrame(df_data)
 
@@ -93,11 +94,18 @@ if __name__ == '__main__':
     print("Num workers: ", max_workers)
     chunk = 512
 
-    root_path = '/home/knoriy/fsx/raw_datasets/CREMA-D/AudioWAV/'
+    root_path = '/fsx/knoriy/raw_datasets/CREMA-D/AudioWAV/'
     dataset_name = 'CREMA-D'
 
     s3 = fsspec.filesystem('s3')
     s3_dest = f's-laion/knoriy/{dataset_name}/{dataset_name}_tars/'
+
+    original_tar_dir = '/fsx/knoriy/raw_datasets/CREMA-D/crema-d.tar.gz'
+
+    print('Extracting tar')
+    with tarfile.open(original_tar_dir, mode='r:gz') as file:
+        audio_path = os.path.split(original_tar_dir)[0]
+        file.extractall(audio_path)
 
     # load metadata and configure audio paths
     df = create_df(root_path)

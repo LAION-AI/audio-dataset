@@ -50,8 +50,8 @@ if __name__ == '__main__':
     chunk = 512
     generate_subset_tsv = True
 
-    root_path = '/home/knoriy/fsx/raw_datasets/mswc/'
-    tar_dir = "/home/knoriy/fsx/raw_datasets/mswc/mswc.tar.gz"
+    root_path = '/fsx/knoriy/raw_datasets/mswc/'
+    tar_dir = "/fsx/knoriy/raw_datasets/mswc/mswc.tar.gz"
     dataset_name = 'mswc'
 
     s3 = fsspec.filesystem('s3')
@@ -98,15 +98,19 @@ if __name__ == '__main__':
         df = pd.read_csv(csv_path)
         df['dest_path'] = [os.path.join(dest_path, f'{i}.flac') for i, _ in enumerate(df.iloc())]
         df['src_path'] = [os.path.join(src_path, row['LINK']) for i, row in enumerate(df.iloc())]
+        
+        print("nan found", len(df[df.isna().any(axis=1)]))
+        df = df.dropna()
+        print("nan after drop:", len(df[df.isna().any(axis=1)]))
 
-        split_all_audio_files(df, src_path, dest_path, max_workers)
+        split_all_audio_files(df, overwrite=True, chunksize=max_workers)
 
-    #     tardir(dest_path, dest_path, chunk, delete_file=True)
+        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-    #     # upload to s3 and delete local
-    #     s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
-    #     print('File Uploaded to: ', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
-    #     shutil.rmtree(dest_path)
+        # upload to s3 and delete local
+        s3.put(dest_path, os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev), recursive=True)
+        print('File Uploaded to: s3://', os.path.join(s3_dest, os.path.basename(dir.split('.')[0]), train_test_dev))
+        shutil.rmtree(dest_path)
 
     # # clean extracted files
     # shutil.rmtree(splits_path.replace('splits/', 'audio/'))
