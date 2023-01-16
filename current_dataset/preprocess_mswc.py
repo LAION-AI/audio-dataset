@@ -32,7 +32,7 @@ def convert_and_json_dump(df:pd.DataFrame, overwrite:bool=False, verbose:bool=Fa
         return
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':[df['WORD']], 'original_data':{'gender':df['GENDER'], 'language':dest.split('/')[-2]}}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[4:]), 'text':[df['WORD']], 'original_data':{'gender':df['GENDER'], 'language':dest.split('/')[-3]}}, f)
 
 def split_all_audio_files(df, overwrite:bool=False, verbose:bool=False, chunksize:int=1):
     print(f'starting pool')
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     dataset_name = 'mswc'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion/knoriy/mswc/{dataset_name}_tars/'
+    s3_dest = f's-laion-audio/webdataset_tar/{dataset_name}/'
 
     language_tars_dirs = sorted(glob.glob(os.path.join(root_path, "audio/**.tar.gz")))
     if not language_tars_dirs:
