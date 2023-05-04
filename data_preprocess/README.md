@@ -10,7 +10,7 @@ For audio dataset, our data process pipline is: <br> Raw dataset -> <br>Processe
 
 ## Raw dataset
 
-The raw dataset refers to the raw form of the dataset as they downloaded (presumably from [https://deploy.laion.ai](https://deploy.laion.ai)). They might have various file format, and might have metadata, captions, or labels, stored in different format. We will take the raw dataset and process them to a unified data storage format.
+The raw dataset refers to the raw form of the dataset as they downloaded (For example, downloaded datasets released on Zenodo). They might have various file format, and might have metadata, captions, or labels, stored in different format. We will take the raw dataset and process them to a unified data storage format.
 
 Please find the list of all datasets we have found [here](../data_collection/README.md) in our github repository.
 ## Processed dataset
