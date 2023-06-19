@@ -65,7 +65,7 @@ if __name__ == '__main__':
         class_metadata = pd.DataFrame(class_metadata, columns=header_list)
         class_metadata = dict(zip(class_metadata.YTID, class_metadata.positive_labels))
 
-    with open(os.path.join(args.metadata_dir,'/ontology.json')) as f:
+    with open(os.path.join(args.metadata_dir,'ontology.json')) as f:
         ontology = json.load(f)
         ontology_dict = {i['id']: (i['name'], i['description']) for i in ontology}
 
