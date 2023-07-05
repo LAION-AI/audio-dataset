@@ -122,10 +122,9 @@ if __name__ == '__main__':
         dest_path = os.path.join(root_path.replace('CREMA-D', 'CREMA-D_processed').replace('AudioWAV/', ''), key)
         os.makedirs(dest_path, exist_ok=True)
 
-
         split_all_audio_files(df, dest_path)
-        tardir(dest_path, dest_path, chunk, delete_file=False)
+        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-    #     # upload to s3 and delete local
-    #     s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
-    #     shutil.rmtree(dest_path)
+        # upload to s3 and delete local
+        s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
+        shutil.rmtree(dest_path)
