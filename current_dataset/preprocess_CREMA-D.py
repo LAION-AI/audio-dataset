@@ -58,7 +58,7 @@ def create_df(root_path:str, dataset_name:str=None):
                                 'TSI':"The surface is slick",
                                 'WSI':"We'll stop in a couple of minutes",
                                 },
-                'Emotion':{     'ANG':'angery',
+                'Emotion':{     'ANG':'angry',
                                 'DIS':'disgusted',
                                 'FEA':'fearful',
                                 'HAP':'happy',
