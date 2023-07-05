@@ -29,7 +29,7 @@ def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=True, verbose=F
         return
     audio_to_flac(file, dest)
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']]}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']], 'original_data':df['tag']}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):
@@ -44,7 +44,7 @@ def split_all_audio_files(df, dest_root_path, max_workers=96):
                 pbar.update(1)
 
 def create_df(root_path:str, dataset_name:str=None):
-    wavs = glob.glob(os.path.join(root_path, '**/*.wav'), recursive=True)
+    wavs = glob.glob(os.path.join(root_path, 'AudioWAV',  '**/*.wav'), recursive=True)
     codes = {   'Statement':{   'IEO':"It's eleven o'clock", 
                                 'TIE':"That is exactly what happened",
                                 'IOM':"I'm on my way to the meeting",
@@ -65,13 +65,13 @@ def create_df(root_path:str, dataset_name:str=None):
                                 'NEU':'neutral',
                                 'SAD':'sad',
                         },
-                'Emotional intensity':{ 'LO':'Low', 
-                                        'MD':'Medium',
-                                        'HI':'High',
-                                        'XX':'Unspecified',
+                'Emotional intensity':{ 'LO':'low', 
+                                        'MD':'medium',
+                                        'HI':'high',
+                                        'XX':'unspecified',
                                         },
                 }
-    demographics = pd.read_csv('/fsx/knoriy/raw_datasets/CREMA-D/VideoDemographics.csv', names=["ActorID","Age","Sex","Race","Ethnicity"])
+    demographics = pd.read_csv(os.path.join(root_path, 'VideoDemographics.csv'), names=["ActorID","Age","Sex","Race","Ethnicity"])
     df_data = []
     for wav in tqdm.tqdm(wavs):
         file_name = os.path.basename(wav).split('.')[0]
@@ -80,9 +80,9 @@ def create_df(root_path:str, dataset_name:str=None):
         demograpthics_meta = demographics.loc[demographics['ActorID'] == wav_codes[0]]
 
         male_or_female = 'woman' if demograpthics_meta["Sex"].values[0] == 'Female' else 'man'
-        intensity = '' if text_meta[2] == 'Unspecified' else f'and {text_meta[2]} '
-        text = f'A {male_or_female} saying "{text_meta[0]}" in a {text_meta[1]} {intensity} voice. {text_meta[2]}'
-        df_data.append({ 'path':wav, 'text':text, 'tag':{'transcript':text_meta[0], 'language':'english', 'emotion':text_meta[1], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
+        intensity = '' if text_meta[2] == 'unspecified' else f' with {text_meta[2]} emotional intensity'
+        text = f'A {demograpthics_meta["Age"].values[0]} year-old {male_or_female}, saying "{text_meta[0]}" in a {text_meta[1]} voice{intensity}.'
+        df_data.append({ 'path':wav, 'text':text, 'tag':{'transcript':text_meta[0], 'language':'english', 'emotion':text_meta[1], 'emotion_intensity':text_meta[2], 'gender':demograpthics_meta["Sex"].values[0], 'age':demograpthics_meta["Age"].values[0] }})
 
     return pd.DataFrame(df_data)
 
@@ -94,11 +94,11 @@ if __name__ == '__main__':
     print("Num workers: ", max_workers)
     chunk = 512
 
-    root_path = '/fsx/knoriy/raw_datasets/CREMA-D/AudioWAV/'
+    root_path = '/admin/home-knoriy/DELETEME/CREMA-D/'
     dataset_name = 'CREMA-D'
 
     s3 = fsspec.filesystem('s3')
-    s3_dest = f's-laion-audio/webdataset_tar/{dataset_name}/'
+    s3_dest = f'laion-west-audio/webdataset_tar/{dataset_name}/'
 
     original_tar_dir = '/fsx/knoriy/raw_datasets/CREMA-D/crema-d.tar.gz'
 
@@ -119,12 +119,13 @@ if __name__ == '__main__':
     for key in tqdm.tqdm(train_test_val, desc=f'processing:'):
         df = train_test_val[key]
         
-        dest_path = os.path.join(root_path.replace('raw_datasets', 'processed_datasets').replace('AudioWAV/', ''), key)
+        dest_path = os.path.join(root_path.replace('CREMA-D', 'CREMA-D_processed').replace('AudioWAV/', ''), key)
         os.makedirs(dest_path, exist_ok=True)
 
-        split_all_audio_files(df, dest_path)
-        tardir(dest_path, dest_path, chunk, delete_file=True)
 
-        # upload to s3 and delete local
-        s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
-        shutil.rmtree(dest_path)
+        split_all_audio_files(df, dest_path)
+        tardir(dest_path, dest_path, chunk, delete_file=False)
+
+    #     # upload to s3 and delete local
+    #     s3.put(dest_path, os.path.join(s3_dest, key), recursive=True)
+    #     shutil.rmtree(dest_path)
