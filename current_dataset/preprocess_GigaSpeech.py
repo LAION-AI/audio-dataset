@@ -21,10 +21,14 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
 from utils.make_tar_utils import tardir
 
-def convert_and_json_dump(file:str, dest:str, df):
+def convert_and_json_dump(file:str, dest:str, df, overwrite:bool=False):
+    if os.path.isfile(dest) and overwrite==False:
+        print(f'{dest} already exists, skiping')
+        return
+    
     audio_to_flac(file, dest, segment_start=df['begin_time'], segment_end=df['end_time'])
     with open(dest.replace('.flac', '.json'), 'w') as f:
-        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':df['text'], 'tag':df['tag']}, f)
+        json.dump({'filename': os.path.join(*dest.split('/')[5:]), 'text':[df['text']], 'original_data':df['original_data']}, f)
 
 
 def split_all_audio_files(df, dest_root_path, max_workers=96):
@@ -42,11 +46,11 @@ if __name__ == '__main__':
     import multiprocessing
 
     max_workers = multiprocessing.cpu_count()
-    max_workers = 2
+    print("Num workers: ", max_workers)
     chunk = 512
 
-    root_path = '/mnt/knoriy/raw_datasets/gigaspeech/'
-    metadata_dir = "/mnt/knoriy/raw_datasets/gigaspeech/GigaSpeech.json"
+    root_path = '/home/knoriy/fsx/raw_datasets/GigaSpeech/gigaspeech/'
+    metadata_dir = "/home/knoriy/fsx/raw_datasets/GigaSpeech/gigaspeech/GigaSpeech.json"
 
     dataset_name = 'gigaspeech'
 
@@ -54,30 +58,36 @@ if __name__ == '__main__':
     s3_dest = f's-laion/knoriy/GigaSpeech/{dataset_name}_tars/'
 
     # load metadata and configure audio paths
-    raw_df = pd.read_json(metadata_dir)[:2]
+    cache_df_path = os.path.join(root_path, 'temp_df.csv')
+    if os.path.isfile(cache_df_path):
+        df = pd.read_csv(cache_df_path, sep='\t')
+    else:
+        raw_df = pd.read_json(metadata_dir)
 
-    new_df_data = []
-    for row in tqdm.tqdm(raw_df.iloc(), total=len(raw_df), desc='Generating dataframe: '):
-        for seg in row['audios']['segments']:
-            try:
-                catagory = row['audios']['category']
-            except:
-                catagory = 'N/A'
-            
-            if seg['text_tn'] == '<SIL>':
-                continue
+        new_df_data = []
+        for row in tqdm.tqdm(raw_df.iloc(), total=len(raw_df), desc='Generating dataframe: '):
+            for seg in row['audios']['segments']:
+                try:
+                    catagory = row['audios']['category']
+                except:
+                    catagory = 'N/A'
+                
+                if seg['text_tn'] == '<SIL>' or seg['text_tn'] == '<NOISE>':
+                    continue
 
-            new_df_data.append(
-                {'path':f'{os.path.join(root_path, row["audios"]["path"])}', 
-                'begin_time': seg['begin_time'], 
-                'end_time': seg['end_time'], 
-                'text': seg['text_tn'],
-                'tag':{ 'language':row['language'], 
-                        'url':row['audios']['url'], 
-                        'category':catagory,
-                        'speaker':row['audios']['speaker']}
-                })
-    df = pd.DataFrame(new_df_data)
+                new_df_data.append(
+                    {'path':f'{os.path.join(root_path, row["audios"]["path"])}', 
+                    'begin_time': seg['begin_time'], 
+                    'end_time': seg['end_time'], 
+                    'text': seg['text_tn'],
+                    'original_data':{ 'language':row['language'], 
+                            'url':row['audios']['url'], 
+                            'category':catagory,
+                            'speaker':row['audios']['speaker']}
+                    })
+        df = pd.DataFrame(new_df_data)
+        df.to_csv(cache_df_path, sep='\t', index=False)
+        
     print(df.head())
 
     # create train, test, valid splits

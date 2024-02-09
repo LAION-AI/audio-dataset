@@ -4,6 +4,7 @@ import argparse
 import glob
 from tqdm import tqdm
 import sys
+import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from utils.audio_utils import audio_to_flac
@@ -56,24 +57,24 @@ if __name__ == '__main__':
 
     # Load metadata
     unbalanced_csv_path = os.path.join(args.metadata_dir, f'{args.metadata_name}.csv')
-    with open(unbalanced_csv_path, 'r') as f:
+    with open(unbalanced_csv_path) as f:
         lines = f.readlines()
+        lines = lines[3:]
+        header_list = ['YTID', 'start_seconds', 'end_seconds', 'positive_labels']
+        class_metadata = [l.strip().split(', ') for l in lines]
+        class_metadata = pd.DataFrame(class_metadata, columns=header_list)
+        class_metadata = dict(zip(class_metadata.YTID, class_metadata.positive_labels))
 
-    lines = lines[3:]
-    header_list = ['YTID', 'start_seconds', 'end_seconds', 'positive_labels']
-    class_metadata = [l.strip().split(', ') for l in lines]
-    class_metadata = pd.DataFrame(class_metadata, columns=header_list)
+    with open(os.path.join(args.metadata_dir,'ontology.json')) as f:
+        ontology = json.load(f)
+        ontology_dict = {i['id']: (i['name'], i['description']) for i in ontology}
 
-    class_to_name_map = pd.read_csv(os.path.join(args.metadata_dir, 'class_labels_indices.csv'))
-
-    class_metadata = dict(zip(class_metadata.YTID, class_metadata.positive_labels))
-    class_to_name_map = dict(zip(class_to_name_map.mid, class_to_name_map.display_name))
 
     wav_all = glob.glob(f'{args.wav_dir}/*.wav')
     futures = []
     for file in tqdm(wav_all):
         # process_single_audio(file, class_metadata, class_to_name_map, args.output_dir)
-        json_data = get_json(file, class_metadata, class_to_name_map)
+        json_data = get_json(file, class_metadata, ontology_dict)
         futures.append(
             executor.submit(partial(process_single_audio, file, json_data, args.output_dir)))
 
