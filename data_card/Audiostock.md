@@ -1,4 +1,4 @@
-# Audiostcok Data Card
+# Audiostock Data Card
 ## Dataset Overview
 |Size of dataset|Number of audios|
 |:----:|:-----:|
