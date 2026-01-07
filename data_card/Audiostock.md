@@ -1,4 +1,4 @@
-# Audiostcok Data Card
+# Audiostock Data Card
 ## Dataset Overview
 |Size of dataset|Number of audios|
 |:----:|:-----:|
@@ -84,3 +84,4 @@ https://user-images.githubusercontent.com/64437243/200237210-18ce4718-4be4-45a3-
 3. Split evry audio in segements with one sentence in each.
 ### III. Audio format specifications
 After the preprocessing work, all audio files should be in FLAC format with sampling rate of 48KHZ. (Processed by ffmpeg).
+
