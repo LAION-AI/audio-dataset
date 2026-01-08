@@ -1,4 +1,4 @@
-# Dataset proprocessing pipline
+# Dataset proprocessing pipeline
 
 Audio Dataset for training CLAP and other models. In this readme, we define the standard and method to store and process
 the audio data. Please feel free to propose idea or comments for this documentation. We will iterate several rounds to
