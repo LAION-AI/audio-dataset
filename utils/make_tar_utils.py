@@ -36,15 +36,15 @@ def tardir(
     if n_split * n_entry_each != len(filelist):
         n_split += 1
     size_dict = {
-        os.path.basename(tar_name) + str(i) + ".tar": n_entry_each
+        os.path.join(os.path.basename(tar_name), str(i) + ".tar"): n_entry_each
         for i in range(n_split)
     }
     if n_split * n_entry_each != len(filelist):
-        size_dict[os.path.basename(tar_name) + str(n_split - 1) + ".tar"] = (
+        size_dict[os.path.join(os.path.basename(tar_name), str(n_split - 1) + ".tar")] = (
             len(filelist) - (n_split - 1) * n_entry_each
         )
     for i in tqdm(range(start_idx, n_split + start_idx), desc='Creating .tar file:'):
-        with tarfile.open(tar_name + str(i) + ".tar", "w") as tar_handle:
+        with tarfile.open(os.path.join(tar_name, str(i) + ".tar"), "w") as tar_handle:
             for j in range(count, len(filelist)):
                 audio = filelist[j]
                 basename = ".".join(audio.split(".")[:-1])
