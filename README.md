@@ -48,7 +48,7 @@ We have created a [github project page](https://github.com/orgs/LAION-AI/project
 
 There are mainly two ways to contribute to our audio dataset project.
 
-1. **Collection of scattered audio sources by means of web scraping technique (and then convert them to webdatset format, i.e. the second point below)**. 
+1. **Collection of scattered audio sources by means of web scraping technique (and then convert them to webdataset format, i.e. the second point below)**. 
     > Example: crawling word-pronunciation pair from Cambridge Dictionary, or scrape videos from youtube, extract the sound and associate then with the title.
     
     Please join us in Discord if you want to know which scattered audio sources we currently focus on, or if you have suggestion about what we should scrape next.
